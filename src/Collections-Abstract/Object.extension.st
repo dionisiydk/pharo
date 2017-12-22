@@ -38,7 +38,8 @@ Object >> split: aSequenceableCollection do: aBlock [
 	Example:
 		$/ split: '/foo/bar' indicesDo: [ :item | ]"
 	self split: aSequenceableCollection indicesDo: [ :start :end | 
-		aBlock value: (aSequenceableCollection copyFrom: start to: end) ]
+		start <= end ifTrue: [
+			aBlock value: (aSequenceableCollection copyFrom: start to: end) ]]
 ]
 
 { #category : #'*Collections-Abstract-splitjoin' }

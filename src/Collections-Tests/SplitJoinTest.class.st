@@ -204,7 +204,7 @@ SplitJoinTest >> testJoinUsingLastOnArrayOfStrings [
 { #category : #running }
 SplitJoinTest >> testSplitArrayOnBlock [
 	self assert: ((1 to: 10) asArray splitOn: [:n| n even])
-		equals: #(#(1) #(3) #(5) #(7) #(9) #()) asOrderedCollection
+		equals: #(#(1) #(3) #(5) #(7) #(9)) asOrderedCollection
 ]
 
 { #category : #running }
@@ -222,6 +222,15 @@ SplitJoinTest >> testSplitArrayOnSequence [
 ]
 
 { #category : #running }
+SplitJoinTest >> testSplitEmptyCollection [
+
+	| actual |
+	actual := $, split: #().
+	
+	self assert: actual isEmpty
+]
+
+{ #category : #running }
 SplitJoinTest >> testSplitJoinBoundaryCases [
 	"Empty splitter, joiner or sequence."
 	self assert: (#() join: (#() split: #())) equals: #().
@@ -229,8 +238,8 @@ SplitJoinTest >> testSplitJoinBoundaryCases [
 	self assert: ('' join: #('')) equals: ''. 
 
 	"Overlapping splitters, or at end of sequence"
-	self assert: ('an' join: ('an' split: 'banana')) equals: 'banana'.
-	self assert: ('na' join: ('na' split: 'banana')) equals: 'banana'.
+	self assert: ('an' join: ('an' split: 'banana')) equals: 'bana'.
+	self assert: ('na' join: ('na' split: 'banana')) equals: 'ba'.
 	self assert: ('ana' join: ('ana' split: 'banana')) equals: 'banana'.
 
 ]
@@ -240,10 +249,10 @@ SplitJoinTest >> testSplitJoinIdentity [
 	| array string |
 	array := #(5 1 4 1 3 1 2 1).
 	string := 'how now brown cow'.
-	self assert: (1 join: (1 split: array)) equals: array.
+	self assert: (1 join: (1 split: array)) equals: array allButLast.
 	self assert: (#(1 3) join: (#(1 3) split: array)) equals: array.
 	self assert: ($o join: ($o split: string)) equals: string.
-	self assert: ('ow' join: ('ow' split: string)) equals: string.
+	self assert: ('ow' join: ('ow' split: string)) equals: (string allButLast: 2).
 ]
 
 { #category : #running }
@@ -302,7 +311,7 @@ SplitJoinTest >> testSplitSortedCollectionOnSortedCollection [
 { #category : #running }
 SplitJoinTest >> testSplitStringOnBlock [
 	self assert: ('foobar' splitOn: [:ch | 'aeiou' includes: ch])
-		equals: #('f' '' 'b' 'r') asOrderedCollection
+		equals: #('f' 'b' 'r') asOrderedCollection
 ]
 
 { #category : #running }
@@ -314,5 +323,5 @@ SplitJoinTest >> testSplitStringOnChar [
 { #category : #running }
 SplitJoinTest >> testSplitStringOnSubstring [
 	self assert: ('the banana man can can bananas' splitOn: 'an')
-		equals: #('the b' '' 'a m' ' c' ' c' ' b' '' 'as') asOrderedCollection
+		equals: #('the b' 'a m' ' c' ' c' ' b' 'as') asOrderedCollection
 ]
