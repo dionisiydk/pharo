@@ -106,7 +106,7 @@ EditableList >> initializeDialogWindow: aWindow [
 
 { #category : #initialization }
 EditableList >> initializePresenter [
-	super initializePresenter
+	super initializePresenter.
 	
 	addButton action: [ | requirement | 
 						requirement := addItemBlock value.
