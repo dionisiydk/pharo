@@ -4,9 +4,8 @@ Class {
 	#instVars : [
 		'id',
 		'width',
-		'cellModelBlock',
 		'cellClass',
-		'cellLayoutSelector'
+		'cellSpecSelector'
 	],
 	#category : #'Spec-Table'
 }
@@ -30,6 +29,12 @@ SpecTableColumn >> acquireWidth: anOwnerWidth [
 	^ self widthOrUndefined min: anOwnerWidth
 ]
 
+{ #category : #'cell creation' }
+SpecTableColumn >> createCellOn: anObject [
+
+	^(cellClass on: anObject) buildWithSpec: cellSpecSelector
+]
+
 { #category : #accessing }
 SpecTableColumn >> id [
 	^ id
@@ -44,13 +49,8 @@ SpecTableColumn >> id: anObject [
 SpecTableColumn >> initialize [
 	super initialize.
 	
-	cellClass := LabelModel.
-	cellLayoutSelector := #defaultSpec
-]
-
-{ #category : #accessing }
-SpecTableColumn >> transform: anObject [
-	^ anObject
+	cellClass := LabelPresenter.
+	cellSpecSelector := #defaultSpec
 ]
 
 { #category : #accessing }

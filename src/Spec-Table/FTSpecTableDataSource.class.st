@@ -15,12 +15,10 @@ FTSpecTableDataSource class >> on: aSpecTableModel [
 
 { #category : #accessing }
 FTSpecTableDataSource >> cellColumn: column row: rowIndex [
-	| object text |
+	| object |
 	object := self elementAt: rowIndex.
 	
-	text := column transform: (tablePresenter wrapItem: object).
-	
-	^ self createTextCell: text
+	^column createCellOn: object
 ]
 
 { #category : #accessing }
