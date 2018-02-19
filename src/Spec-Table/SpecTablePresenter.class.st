@@ -47,6 +47,46 @@ SpecTablePresenter class >> exampleMultipleSelection [
 ]
 
 { #category : #accessing }
+SpecTablePresenter >> addColumn: aSpecTableColumn [
+	
+	aSpecTableColumn id: columns size + 1.
+	columns add: aSpecTableColumn.
+	^aSpecTableColumn
+]
+
+{ #category : #api }
+SpecTablePresenter >> column: aBlockReturningString [
+
+	| column |
+	column := SpecTableColumn with: aBlockReturningString.
+	^self addColumn: column
+]
+
+{ #category : #api }
+SpecTablePresenter >> column: aBlockReturningString using: aPresenterClass [
+
+	| column |
+	column := SpecTableColumn with: aBlockReturningString using: aPresenterClass.
+	^self addColumn: column
+]
+
+{ #category : #api }
+SpecTablePresenter >> column: aBlockReturningString using: aPresenterClass width: aNumber [
+
+	| column |
+	column := SpecTableColumn with: aBlockReturningString using: aPresenterClass width: aNumber.
+	^self addColumn: column
+]
+
+{ #category : #api }
+SpecTablePresenter >> column: aBlockReturningString width: aNumber [
+
+	| column |
+	column := SpecTableColumn with: aBlockReturningString width: aNumber.
+	^self addColumn: column
+]
+
+{ #category : #accessing }
 SpecTablePresenter >> columns [
 	^ columns
 ]
@@ -114,7 +154,7 @@ SpecTablePresenter >> handlesDoubleClick: aBoolean [
 { #category : #initialization }
 SpecTablePresenter >> initialize [
 	super initialize.
-	columns := {FTColumn new}
+	columns := OrderedCollection new
 ]
 
 { #category : #initialization }

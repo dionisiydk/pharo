@@ -2,7 +2,7 @@ Class {
 	#name : #SpecTableExample,
 	#superclass : #ComposableModel,
 	#instVars : [
-		'tableModel'
+		'methodTable'
 	],
 	#category : #'Spec-Table'
 }
@@ -12,7 +12,7 @@ SpecTableExample class >> defaultSpec [
 	<spec>
 	
 	^ SpecLayout composed 
-			add: #tablePresenter origin: 0@0 corner: 1@1;
+			add: #methodTable origin: 0@0 corner: 1@1;
 			yourself
 ]
 
@@ -31,38 +31,29 @@ SpecTableExample class >> title [
 { #category : #initialization }
 SpecTableExample >> initializePresenter [
 
-	tableModel whenSelectedItemChanged: [:method |
+	methodTable whenSelectedItemChanged: [:method |
 		self inform: method printString].
-	tableModel doubleClickAction: [ self confirm: 'double click?' ]
+	methodTable doubleClickAction: [ self confirm: 'double click?' ]
 ]
 
 { #category : #initialization }
 SpecTableExample >> initializeWidgets [
 
-	tableModel := self instantiate: SpecTablePresenter.
-	tableModel numberOfColumns: 3 withWidths: #(250 250 50).
-	tableModel displayBlock: [ :item |  self printMethod: item ].
-	tableModel items: CompiledMethod allInstances.
-]
-
-{ #category : #initialization }
-SpecTableExample >> printItem: item [ 
+	methodTable := self instantiate: SpecTablePresenter.
+	methodTable 
+		column: #selector width: 250; 
+		column: [:m | m methodClass name] width: 250;
+		column: [:m | m package name] width: 50.
+	methodTable items: CompiledMethod allInstances
 	
-	^item printString
-]
-
-{ #category : #initialization }
-SpecTableExample >> printMethod: aMethod [ 
-	
-	^{aMethod selector. aMethod origin name. aMethod package printString}
 ]
 
 { #category : #accessing }
-SpecTableExample >> tablePresenter [
-	^ tableModel
+SpecTableExample >> methodTable [
+	^ methodTable
 ]
 
 { #category : #accessing }
-SpecTableExample >> tablePresenter: anObject [
-	tableModel := anObject
+SpecTableExample >> methodTable: anObject [
+	methodTable := anObject
 ]

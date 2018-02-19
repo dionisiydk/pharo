@@ -4,18 +4,12 @@ Class {
 	#instVars : [
 		'id',
 		'width',
-		'cellClass',
-		'cellSpecSelector'
+		'cellModelBlock',
+		'cellSpecSelector',
+		'cellPresenterClass'
 	],
 	#category : #'Spec-Table'
 }
-
-{ #category : #'instance creation' }
-SpecTableColumn class >> id: anObject [
-	^ self new
-		id: anObject;
-		yourself
-]
 
 { #category : #accessing }
 SpecTableColumn class >> undefinedColumnWidth [
@@ -24,15 +18,79 @@ SpecTableColumn class >> undefinedColumnWidth [
 	^ 0
 ]
 
+{ #category : #'instance creation' }
+SpecTableColumn class >> with: aBlockReturingString [
+
+	^self new 
+		cellModelBlock: aBlockReturingString
+]
+
+{ #category : #'instance creation' }
+SpecTableColumn class >> with: aBlock using: aPresenterClass [
+
+	^self new 
+		cellModelBlock: aBlock;
+		cellPresenterClass: aPresenterClass
+]
+
+{ #category : #'instance creation' }
+SpecTableColumn class >> with: aBlock using: aPresenterClass width: aNumber [
+
+	^self new 
+		cellModelBlock: aBlock;
+		cellPresenterClass: aPresenterClass;
+		width: aNumber
+]
+
+{ #category : #'instance creation' }
+SpecTableColumn class >> with: aBlockReturingString width: aNumber [
+
+	^self new 
+		cellModelBlock: aBlockReturingString;
+		width: aNumber
+]
+
 { #category : #layout }
 SpecTableColumn >> acquireWidth: anOwnerWidth [
 	^ self widthOrUndefined min: anOwnerWidth
 ]
 
+{ #category : #accessing }
+SpecTableColumn >> cellModelBlock [
+	^ cellModelBlock
+]
+
+{ #category : #accessing }
+SpecTableColumn >> cellModelBlock: anObject [
+	cellModelBlock := anObject
+]
+
+{ #category : #accessing }
+SpecTableColumn >> cellPresenterClass [
+	^ cellPresenterClass
+]
+
+{ #category : #accessing }
+SpecTableColumn >> cellPresenterClass: anObject [
+	cellPresenterClass := anObject
+]
+
+{ #category : #accessing }
+SpecTableColumn >> cellSpecSelector [
+	^ cellSpecSelector
+]
+
+{ #category : #accessing }
+SpecTableColumn >> cellSpecSelector: anObject [
+	cellSpecSelector := anObject
+]
+
 { #category : #'cell creation' }
 SpecTableColumn >> createCellOn: anObject [
 
-	^(cellClass on: anObject) buildWithSpec: cellSpecSelector
+	| cellModel |
+	cellModel := cellModelBlock value: anObject.
+	^(cellPresenterClass on: cellModel) buildWithSpec: cellSpecSelector
 ]
 
 { #category : #accessing }
@@ -49,8 +107,9 @@ SpecTableColumn >> id: anObject [
 SpecTableColumn >> initialize [
 	super initialize.
 	
-	cellClass := LabelPresenter.
-	cellSpecSelector := #defaultSpec
+	cellModelBlock := [:rowModel | rowModel asString].
+	cellPresenterClass := LabelPresenter.
+	cellSpecSelector := #defaultTableCellSpec
 ]
 
 { #category : #accessing }
