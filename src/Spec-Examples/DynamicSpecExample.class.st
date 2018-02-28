@@ -17,20 +17,17 @@ Class {
 
 { #category : #example }
 DynamicSpecExample class >> exampleInt [
-	<sampleInstance>
 	^ self new open: 42
 ]
 
 { #category : #example }
 DynamicSpecExample class >> exampleNil [
-	<sampleInstance>
 	^ self new
 		open: nil
 ]
 
 { #category : #example }
 DynamicSpecExample class >> exampleString [
-	<sampleInstance>
 	^ self new
 		open: 'Hello World'
 ]

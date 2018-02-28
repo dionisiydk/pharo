@@ -40,7 +40,6 @@ ClassMethodBrowser class >> defaultSpec2 [
 
 { #category : #example }
 ClassMethodBrowser class >> example [
-	<sampleInstance>
 	| example |
 	example := ClassMethodBrowser new.
 	example

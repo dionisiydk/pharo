@@ -23,7 +23,6 @@ LabelledDropList class >> defaultSpec [
 
 { #category : #example }
 LabelledDropList class >> example [
-	<sampleInstance>
 	| example |
 	example := self abstractExample.
 example

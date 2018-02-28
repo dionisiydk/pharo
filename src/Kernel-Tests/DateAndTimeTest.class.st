@@ -44,7 +44,8 @@ DateAndTimeTest >> testArithmeticAcrossDateBoundary [
 ]
 
 { #category : #'tests - under design' }
-DateAndTimeTest >> testAsDateAndTime [	
+DateAndTimeTest >> testAsDateAndTime [
+	"self debug: #testAsDateAndTime"
 	
 		#('-1199-01-05T20:33:14.321-05:00' 
 		' 2002-05-16T17:20:45.1+01:01' 
@@ -291,7 +292,8 @@ DateAndTimeTest >> testMonotonicity [
 
 { #category : #'tests - under design' }
 DateAndTimeTest >> testNotSymmetricWithString [
-		
+	"self debug: #testNotSymmetricWithString"
+	
 	| t1 t2 |
 	t1 := DateAndTime 
 			year: 1 month: 1 day: 2 
@@ -325,6 +327,8 @@ DateAndTimeTest >> testOffset [
 
 { #category : #tests }
 DateAndTimeTest >> testPrintString [
+	"self debug: #testPrintString"
+
 	| dt dtNoOffset |
 	dt :=DateAndTime
 		year: 2004
@@ -366,7 +370,8 @@ DateAndTimeTest >> testPrintStringNoOffset [
 ]
 
 { #category : #'tests - under design' }
-DateAndTimeTest >> testPrintStringSecond [	
+DateAndTimeTest >> testPrintStringSecond [
+	"self debug: #testPrintStringSecond"
 
 	self assert: '-1199-01-05T20:33:14.321-05:00' asDateAndTime printString equals: '-1199-01-05T20:33:14.321-05:00'.
 	self assert: '2002-05-16T17:20:45.1+01:01' asDateAndTime printString equals: '2002-05-16T17:20:45.1+01:01'.
@@ -432,6 +437,7 @@ DateAndTimeTest >> testReadFromDateOnly [
 
 { #category : #'tests - offset' }
 DateAndTimeTest >> testReadFromDefaultOffsetNotSpecified [
+	"self debug: #testReadFromDefaultOffsetSpecified"
 
 	self assert: (DateAndTime readFrom: '2016-07-03T21:16:16.708241' readStream defaultOffset: Duration zero) offset equals: Duration zero.
 
@@ -439,6 +445,7 @@ DateAndTimeTest >> testReadFromDefaultOffsetNotSpecified [
 
 { #category : #'tests - offset' }
 DateAndTimeTest >> testReadFromDefaultOffsetSpecified [
+	"self debug: #testReadFromDefaultOffsetSpecified"
 
 	self assert: (DateAndTime readFrom: '2016-07-03T21:16:16.708241+02:00' readStream defaultOffset: Duration zero) offset equals: (Duration hours: 2).
 
@@ -447,6 +454,7 @@ DateAndTimeTest >> testReadFromDefaultOffsetSpecified [
 { #category : #tests }
 DateAndTimeTest >> testReadFromFoolProofExtension [
 	"Convenient extension without a time, only a date"
+	"self debug: #testReadFromFoolProofExtension"
 	
 	self assert: (DateAndTime fuzzyReadFrom: '2008' readStream) printString = '2008-01-01T00:00:00+00:00'.
 	self assert: (DateAndTime fuzzyReadFrom: '2008-08' readStream)   printString = '2008-08-01T00:00:00+00:00'.
@@ -459,20 +467,23 @@ DateAndTimeTest >> testReadFromFoolProofExtension [
 
 { #category : #'tests - under design' }
 DateAndTimeTest >> testReadFromNoOffset [
-	
+	"self debug: #testReadFromNoOffset"
+
 	self assert: (DateAndTime readFrom: '2010-01-05T20:33:14.321' readStream) offset equals: DateAndTime localOffset
 ]
 
 { #category : #'tests - offset' }
 DateAndTimeTest >> testReadFromOffset [
-		
+	"self debug: #testReadFromOffset"
+	
 	self assert: (DateAndTime readFrom: '-1199-01-05T20:33:14.321-05:00' readStream) offset printString equals: '-0:05:00:00'.
 
 ]
 
 { #category : #'tests - under design' }
 DateAndTimeTest >> testReadFromSecond [
-		
+	"self debug: #testReadFromSecond"
+	
 	self assert: ('-1199-01-05T20:33:14.321-05:00' asDateAndTime printString = '-1199-01-05T20:33:14.321-05:00').
 	self assert: ('2002-05-16T17:20:45.1+01:01' asDateAndTime printString = '2002-05-16T17:20:45.1+01:01').
 	self assert: (' 2002-05-16T17:20:45.02+01:01' asDateAndTime printString = '2002-05-16T17:20:45.02+01:01').  
@@ -759,7 +770,8 @@ DateAndTimeTest >> testTimeZoneEquivalence2 [
 ]
 
 { #category : #'tests - under design' }
-DateAndTimeTest >> testTransitive [	
+DateAndTimeTest >> testTransitive [
+	"self debug: #testTransitive"
 	| t1 t2 t3 |
 	t1 := DateAndTime 
 			year: 1 month: 1 day: 2 

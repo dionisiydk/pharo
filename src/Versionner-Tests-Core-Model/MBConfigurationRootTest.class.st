@@ -76,7 +76,6 @@ MBConfigurationRootTest >> tearDown [
 	gofer := Gofer new.
 	self tearDownPackages do: [:pkgName | (self hasPackage: pkgName) ifTrue: [ gofer package: pkgName ]].
 	gofer references notEmpty ifTrue: [ gofer unload ].
-	super tearDown
 
 ]
 

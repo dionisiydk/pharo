@@ -69,12 +69,10 @@ GTSUnitDebugSession >> initializeAssestionContextFrom: aContext [
 				^ self  ].
 		anotherContext sender notNil and: [ 
 			 (frameworkTestClasses anySatisfy: [ :aTestClass |
-				 aTestClass includesMethod: anotherContext sender method]) not ] ].
-	assertionContext
-        ifNotNil: [ "if this is not an assertion but a halt we should not move up!"
-            assertionCallerContext := name = 'Halt'
-                ifTrue: [ assertionContext ]
-                ifFalse: [ assertionContext sender ] ]
+				 aTestClass includesSelector: anotherContext sender method selector]) not ] ].
+	assertionContext 
+		ifNotNil: [ assertionCallerContext := assertionContext sender]
+	
 		
 ]
 

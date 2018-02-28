@@ -346,7 +346,7 @@ MessageBrowser >> handleClassRenamed: anAnnouncement [
 		interestedClass := anAnnouncement classRenamed.
 		rgMethod isMetaSide ifTrue: [ 
 			interestedClassName := interestedClassName, ' class'.
-			interestedClass := interestedClass classSide ].
+			interestedClass := interestedClass theMetaClass ].
 		rgMethod parentName = interestedClassName ifTrue: [ 
 			(interestedClass >> rgMethod selector) asFullRingDefinition.
 		 	] ifFalse: [ rgMethod ] ].

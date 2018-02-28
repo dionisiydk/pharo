@@ -14,6 +14,7 @@ SelfEvaluatingObjectTest >> assertCode: code print: aString [
 
 { #category : #tests }
 SelfEvaluatingObjectTest >> testArray [
+	"self debug: #testArray"
 
 	self assertCode: '#(1 2 3)' print: '#(1 2 3)'.
 	self assertCode: '{1 . 2 . 3}' print: '#(1 2 3)'.

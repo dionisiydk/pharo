@@ -35,21 +35,24 @@ AnnouncerTest >> setUp [
 
 { #category : #tests }
 AnnouncerTest >> testAnnounceClass [
-	self assert: (announcer announce: AnnouncementMockA) class equals: AnnouncementMockA
+	self assert: (announcer announce: AnnouncementMockA) 
+		class = AnnouncementMockA
 ]
 
 { #category : #tests }
 AnnouncerTest >> testAnnounceInstance [
 	| instance |
 	instance := AnnouncementMockA new.
-	self assert: (announcer announce: instance) equals: instance
+	self assert: (announcer announce: instance) = instance
 ]
 
 { #category : #tests }
 AnnouncerTest >> testAnnouncingReentrant [
-	"Test that it is safe to announce when handling announcement,
-	so announcer are reentrant"
- 
+	" Test that it is safe to announce when handling announcement,
+	so announcer are reentrant "
+
+	" self run: #testAnnouncingReentrant "
+
 	| bool ok |
 
 	ok := bool := false.
@@ -74,7 +77,7 @@ AnnouncerTest >> testNoArgBlock [
 	counter := nil.
 	announcer subscribe: AnnouncementMockA do: [ counter := 1 ].
 	announcer announce: AnnouncementMockA new.
-	self assert: counter equals: 1
+	self assert: counter = 1
 ]
 
 { #category : #tests }
@@ -115,7 +118,7 @@ AnnouncerTest >> testSubscribeBlock [
 		
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
-	self assert: announcement equals: instance.
+	self assert: announcement = instance.
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
@@ -131,7 +134,7 @@ AnnouncerTest >> testSubscribeClassWithExclusion [
 		
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
-	self assert: announcement equals: instance.
+	self assert: announcement = instance.
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
@@ -159,7 +162,7 @@ AnnouncerTest >> testSubscribeOnSpecificAnnouncer [
 
 	announcement := nil.
 	instance := announcer announce: (AnnouncementMockB with: #expectedParam).
-	self assert: announcement equals: instance.
+	self assert: announcement = instance.
 	
 	announcement := nil.
 	instance := announcer announce: (AnnouncementMockC with: #expectedParam).
@@ -189,7 +192,7 @@ AnnouncerTest >> testSubscribeSet [
 		
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
-	self assert: announcement equals: instance.
+	self assert: announcement = instance.
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
@@ -197,7 +200,7 @@ AnnouncerTest >> testSubscribeSet [
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
-	self assert: announcement equals: instance
+	self assert: announcement = instance
 ]
 
 { #category : #'tests - subscribing' }
@@ -209,11 +212,11 @@ AnnouncerTest >> testSubscribeSetWithExclusion [
 		
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
-	self assert: announcement equals: instance.
+	self assert: announcement = instance.
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
-	self assert: announcement equals: instance.
+	self assert: announcement = instance.
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
@@ -233,7 +236,7 @@ AnnouncerTest >> testSubscribeSetWithExclusionOfMultipleAnnouncements [
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
-	self assert: announcement equals: instance.
+	self assert: announcement = instance.
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
@@ -253,7 +256,7 @@ AnnouncerTest >> testSubscribeSetWithExclusionOfSetItem [
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
-	self assert: announcement equals: instance
+	self assert: announcement = instance
 ]
 
 { #category : #'tests - subscribing' }
@@ -269,11 +272,11 @@ AnnouncerTest >> testSubscribeSubclass [
 
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
-	self assert: announcement equals: instance.
+	self assert: announcement = instance.
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
-	self assert: announcement equals: instance.
+	self assert: announcement = instance.
 ]
 
 { #category : #tests }

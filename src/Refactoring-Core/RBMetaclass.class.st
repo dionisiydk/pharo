@@ -26,29 +26,22 @@ RBMetaclass class >> named: aSymbol [
 
 { #category : #accessing }
 RBMetaclass >> allClassVariableNames [
-	^ self instanceSide allClassVariableNames
+	^ self theNonMetaClass allClassVariableNames
 ]
 
 { #category : #accessing }
 RBMetaclass >> allPoolDictionaryNames [
-	^ self instanceSide allPoolDictionaryNames
-]
-
-{ #category : #accessing }
-RBMetaclass >> classSide [
-	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test." 
-	
-	^ self
+	^ self theNonMetaClass allPoolDictionaryNames
 ]
 
 { #category : #testing }
 RBMetaclass >> directlyDefinesClassVariable: aString [ 
-	^ self instanceSide directlyDefinesClassVariable: aString
+	^ self theNonMetaClass directlyDefinesClassVariable: aString
 ]
 
 { #category : #testing }
 RBMetaclass >> directlyDefinesPoolDictionary: aString [ 
-	^ self instanceSide directlyDefinesPoolDictionary: aString
+	^ self theNonMetaClass directlyDefinesPoolDictionary: aString
 ]
 
 { #category : #testing }
@@ -73,7 +66,7 @@ RBMetaclass >> storeOn: aStream [
 	aStream nextPutAll: ' class'
 ]
 
-{ #category : #'accessing - deprecated' }
+{ #category : #accessing }
 RBMetaclass >> theMetaClass [
 	^ self
 ]

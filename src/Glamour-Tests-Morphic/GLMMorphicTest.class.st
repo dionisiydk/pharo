@@ -97,8 +97,7 @@ GLMMorphicTest >> send: treeMorph mouseUpWithShift: aBoolean onItem: treeNodeMor
 
 { #category : #running }
 GLMMorphicTest >> tearDown [
-	window ifNotNil: [ window delete ].
-	super tearDown
+	window ifNotNil: [window delete]
 ]
 
 { #category : #private }
@@ -109,9 +108,9 @@ maxWaitSeconds have passed,
 value"
 
 	| startTime result |
-	startTime := Time millisecondClockValue.
+	startTime := Time millisecondClockValue // 1000.
 	[result := validateBlock value = expectedResult] whileFalse:
-			[(Time millisecondClockValue - startTime > (maxWaitSeconds * 1000)) ifTrue: [^result].
+			[Time secondClock - startTime > maxWaitSeconds ifTrue: [^result].
 			(Delay forMilliseconds: 50) wait].
 	^ result
 

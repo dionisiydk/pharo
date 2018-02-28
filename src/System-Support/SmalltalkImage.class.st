@@ -258,7 +258,7 @@ SmalltalkImage >> backupImageInFileNamed: aFileReference [
 { #category : #saving }
 SmalltalkImage >> backupTo: newNameWithoutSuffix [
 	"Create a new backup of this image. 
-	Unlike #saveAs:, I do not transfer the default execution to the new image. 
+	Unlike #saveAs: do not transfer the default execution to the new image. 
 	Results:
 		true  when continuing in the new session
 		false for the current session"
@@ -777,7 +777,7 @@ SmalltalkImage >> image [
 SmalltalkImage >> imageDirectory [
 	"Answer the directory containing the current image."
 
-	^ self primImagePath asFileReference parent
+	^ (Path from: self primImagePath) parent
 ]
 
 { #category : #'image, changes name' }

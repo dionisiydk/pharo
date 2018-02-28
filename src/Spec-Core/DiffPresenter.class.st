@@ -41,7 +41,7 @@ DiffPresenter class >> exampleWithOptions [
 	"
 	self exampleWithOptions
 	"
-	<sampleInstance>
+
 	^ self new
 		showOptions: true;
 		leftText: (True >> #and:) sourceCode;
@@ -55,8 +55,7 @@ DiffPresenter class >> exampleWithoutOptions [
 	"
 	self exampleWithoutOptions
 	"
-	<sampleInstance>
-	
+
 	^ self new
 		showOptions: false;
 		leftText: 'Old text';

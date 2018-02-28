@@ -25,6 +25,8 @@ RGMethodDefinitionTest >> testManifestReadOn [
 
 { #category : #'*Manifest-Tests' }
 RGMethodDefinitionTest >> testReadFrom [
+	"self debug: #testReadFrom"
+	
 	
 	| st rg |
 	rg := (Point>>#x) asRingDefinition.
@@ -37,7 +39,9 @@ RGMethodDefinitionTest >> testReadFrom [
 
 { #category : #'*Manifest-Tests' }
 RGMethodDefinitionTest >> testStoreOn [
-
+	"self debug: #testStoreOn"
+	
+	
 	| st |
 	st := String streamContents: [:s |
 		

@@ -67,7 +67,7 @@ KMPragmaKeymapBuilder >> collectRegistrations [
 	menu := PragmaMenuAndShortcutRegistration model: self.
 	self pragmaCollector
 		do: [ :prg | 
-			prg methodClass instanceSide
+			prg methodClass theNonMetaClass
 				perform: prg methodSelector
 				with:
 					(menu

@@ -17,8 +17,7 @@ GLMAnnouncementPropagationTest >> setUp [
 
 { #category : #running }
 GLMAnnouncementPropagationTest >> tearDown [
-	GLMLogger reset.
-	super tearDown
+	GLMLogger reset
 ]
 
 { #category : #tests }

@@ -43,8 +43,8 @@ RBClassEnvironment >> addClass: aClass [
 { #category : #adding }
 RBClassEnvironment >> addClassAndMetaClassFor: aClassOrMetaClass [
 	self
-		addClass: aClassOrMetaClass classSide;
-		addClass: aClassOrMetaClass instanceSide
+		addClass: aClassOrMetaClass theMetaClass;
+		addClass: aClassOrMetaClass theNonMetaClass
 ]
 
 { #category : #accessing }
@@ -91,8 +91,8 @@ RBClassEnvironment >> classesDo: aBlock [
 		metaClasses do: [ :each | 
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
-		(class notNil and: [ environment includesClass: class classSide ])
-			ifTrue: [ aBlock value: class classSide ] ]
+		(class notNil and: [ environment includesClass: class theMetaClass ])
+			ifTrue: [ aBlock value: class theMetaClass ] ]
 ]
 
 { #category : #private }

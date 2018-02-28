@@ -133,13 +133,13 @@ PackageTreeSelection >> renameTarget: target [
 { #category : #converting }
 PackageTreeSelection >> withClassesIn: anEnvironment createHierarchySorter: aHierarchyClass [ 
 	| classes defined extensions |
-	classes := self definedClasses collect: [:each | each instanceSide].
+	classes := self definedClasses collect: #theNonMetaClass.
 	anEnvironment isSystem
 		ifFalse: [ classes := classes intersection: anEnvironment classes ].
 
 	defined := aHierarchyClass buildHierarchyForClasses: classes.
 	
-	classes := self extensionClasses collect: [:each | each instanceSide].
+	classes := self extensionClasses collect: #theNonMetaClass.
 	anEnvironment isSystem
 		ifFalse: [ classes := classes intersection: anEnvironment classes ].
 	

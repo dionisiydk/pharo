@@ -12,8 +12,7 @@ Class {
 
 { #category : #running }
 GLMScrollListBrickTest >> tearDown [
-	window ifNotNil: [ :aWindow | aWindow delete ].
-	super tearDown
+	window ifNotNil: [ :aWindow | aWindow delete ]
 ]
 
 { #category : #tests }

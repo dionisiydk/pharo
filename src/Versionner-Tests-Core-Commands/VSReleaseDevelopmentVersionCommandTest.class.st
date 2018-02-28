@@ -54,10 +54,9 @@ VSReleaseDevelopmentVersionCommandTest >> setUp [
 
 { #category : #running }
 VSReleaseDevelopmentVersionCommandTest >> tearDown [
-
+	super tearDown.
 	ASTCache reset.
-	classFactory cleanUp.
-	super tearDown	
+	classFactory cleanUp
 ]
 
 { #category : #tests }

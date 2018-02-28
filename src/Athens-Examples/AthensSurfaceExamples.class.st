@@ -200,6 +200,7 @@ Draw simple filled path, changing the transformation and colors to get some anim
 
  self example3 
 "
+
 	| surf |
 	
 	surf := self newSurface: 800@800.
@@ -313,6 +314,7 @@ Note how #moveTo: command implicitly starts new contour
 when inssued in the middle of command chain.
 self example5
 "
+
 	| surf |
 	
 	surf := self newSurface: 100@100.
@@ -420,6 +422,7 @@ Draw two rectangles, stoked by linear gradient.
 Note that it should produce same rectangles with exact same fills, because gradient paint 
 coordinates are affected by pathTransform matrix.
 "
+
 	| surf paint |
 	
 	surf := self newSurface: 100@100.
@@ -492,6 +495,7 @@ AthensSurfaceExamples class >> example8 [
 "Draw a rectangle filled by radial gradient. 
 self example8
 "
+
 	| surf paint |
 	
 	surf := self newSurface: 200@200.
@@ -521,6 +525,7 @@ AthensSurfaceExamples class >> example9 [
 Fill the rectangle using image paint.
 self example9
 "
+
 	| surf paint f  |
 	
 	surf := self newSurface: 200@200.

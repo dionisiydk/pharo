@@ -91,7 +91,7 @@ KomitterUI class >> taskbarIconName [
 KomitterUI >> addRoot: aPackage [
 	| aPackageNode |
 	
-	aPackageNode := KomitPackageNode new content: aPackage.
+	aPackageNode := KomitTreeBuilder buildRootForPackage: aPackage.
 	
 	tree roots: (tree roots
 		add: aPackageNode;
@@ -388,12 +388,11 @@ KomitterUI >> populateRemotesFor: aCollection [
 { #category : #initialization }
 KomitterUI >> populateTreeFor: newModel [
 	| roots |
-	roots := newModel stagingArea 
-		collect: [ :each | KomitPackageNode new content: each]
-		thenSelect: [:each | each isEmpty not ].
+	roots := (KomitTreeBuilder rootsForStagingArea: newModel stagingArea) asOrderedCollection
+		sorted.
 	tree
 		beCheckList;
-		roots: roots asOrderedCollection sorted;
+		roots: roots;
 		expandAll;
 		collapseAll;
 		expandRoots.

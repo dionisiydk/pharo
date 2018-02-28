@@ -21,7 +21,7 @@ RGVariableDefinitionTest >> testClassInstanceVariable [
 	
 	newClass:= RGClassDefinition named: #OrderedCollection.
 	newClass withMetaclass.
-	metaClass:= newClass classSide.
+	metaClass:= newClass theMetaClass.
 	instVar:= metaClass addInstVarNamed: 'sizes'.
 	self assert: (instVar parent = metaClass).	
 	self assert: (metaClass instanceVariables size = 1).

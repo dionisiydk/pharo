@@ -66,8 +66,7 @@ OCCompilerTest >> setUp [
 
 { #category : #running }
 OCCompilerTest >> tearDown [
-	Smalltalk globals removeKey: #OCCompilerTestTestVar.
-	super tearDown
+	Smalltalk globals removeKey: #OCCompilerTestTestVar
 ]
 
 { #category : #utilities }

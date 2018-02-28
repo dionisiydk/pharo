@@ -575,7 +575,7 @@ FinderUI >> doItContext [
 { #category : #'do it requirements' }
 FinderUI >> doItReceiver [
 
-	^ self selectedClass ifNotNil: [ :selectedClass | selectedClass instanceSide ]
+	^ self selectedClass ifNotNil: [:selectedClass | selectedClass theNonMetaClass].
 ]
 
 { #category : #'events handling' }

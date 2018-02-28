@@ -32,8 +32,7 @@ ReflectivityTest >> tearDown [
 	link2 ifNotNil: [link2 uninstall].
 	tag := nil.
 	count := 0.
-	(ReflectivityExamples>>#exampleWithArg:)  recompile.
-	super tearDown 
+	(ReflectivityExamples>>#exampleWithArg:)  recompile
 ]
 
 { #category : #tests }

@@ -25,7 +25,7 @@ Class {
 Metaclass >> acceptsLoggingOfCompilation [
 	"Answer whether the receiver's method submisions and class defintions should be logged to the changes file and to the current change set.  The metaclass follows the rule of the class itself."
 
-	^ self instanceSide acceptsLoggingOfCompilation
+	^ self theNonMetaClass acceptsLoggingOfCompilation
 ]
 
 { #category : #'instance variables' }
@@ -47,7 +47,12 @@ Metaclass >> addObsoleteSubclass: aClass [
 { #category : #'instance variables' }
 Metaclass >> addSlot: aClassSlot [
 
-	^self instanceSide addClassSlot: aClassSlot
+	<localMetaclassMethod> 
+    "This method is supposed to be local in Metaclass because of a good reason.
+    We use this pragma to test if Metaclass does not contain some accidental 
+    local selectors."
+
+	^self theNonMetaClass addClassSlot: aClassSlot
 ]
 
 { #category : #'class hierarchy' }
@@ -97,8 +102,13 @@ Metaclass >> assertConsistantCompositionsForNew: aTraitComposition [
 				for existing traits or add a trait which does not have any methods on the class side.)']
 ]
 
-{ #category : #'accessing parallel hierarchy - deprecated' }
+{ #category : #'accessing parallel hierarchy' }
 Metaclass >> baseClass [
+
+	<localMetaclassMethod> 
+    "This method is supposed to be local in Metaclass because of a good reason.
+    We use this pragma to test if Metaclass does not contain some accidental 
+    local selectors."
 
 	^thisClass.
 ]
@@ -109,11 +119,21 @@ Metaclass >> basicLocalSelectors [
 	Since localSelectors is lazily initialized, this may 
 	return nil, which means that all selectors are local."
 
+	<localMetaclassMethod> 
+    "This method is supposed to be local in Metaclass because of a good reason.
+    We use this pragma to test if Metaclass does not contain some accidental 
+    local selectors."
+
 	^ localSelectors
 ]
 
 { #category : #accessing }
 Metaclass >> basicLocalSelectors: aSetOrNil [
+
+	<localMetaclassMethod> 
+    "This method is supposed to be local in Metaclass because of a good reason.
+    We use this pragma to test if Metaclass does not contain some accidental 
+    local selectors."
 
 	localSelectors := aSetOrNil
 ]
@@ -130,7 +150,7 @@ Metaclass >> binding [
 { #category : #compiling }
 Metaclass >> bindingOf: varName [
 
-	^self instanceSide classBindingOf: varName
+	^self theNonMetaClass classBindingOf: varName
 ]
 
 { #category : #testing }
@@ -143,11 +163,16 @@ Metaclass >> canZapMethodDictionary [
 
 { #category : #accessing }
 Metaclass >> category [
-	^ self instanceSide category
+	^ self theNonMetaClass category
 ]
 
-{ #category : #'accessing parallel hierarchy - deprecated' }
+{ #category : #'accessing parallel hierarchy' }
 Metaclass >> classClass [
+
+	<localMetaclassMethod> 
+    "This method is supposed to be local in Metaclass because of a good reason.
+    We use this pragma to test if Metaclass does not contain some accidental 
+    local selectors."
 
 	^self
 ]
@@ -156,24 +181,15 @@ Metaclass >> classClass [
 Metaclass >> classPool [
 	"Answer the dictionary of class variables."
 
-	^self instanceSide classPool
-]
-
-{ #category : #'accessing parallel hierarchy' }
-Metaclass >> classSide [
-	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
-	"Point classSide >>> Point class"
-	"Point class classSide >>> Point class"
-	
-	^ self
+	^self theNonMetaClass classPool
 ]
 
 { #category : #'accessing instances and variables' }
 Metaclass >> classVarNames [
 	"Answer a set of the names of the class variables defined in the receiver's instance."
 	
-	self instanceSide ifNil: [ ^ Set new ].
-	^self instanceSide classVarNames
+	self theNonMetaClass ifNil: [ ^ Set new ].
+	^self theNonMetaClass classVarNames
 ]
 
 { #category : #'fileIn/Out' }
@@ -205,12 +221,17 @@ Metaclass >> definition [
 { #category : #accessing }
 Metaclass >> environment [
 
+	<localMetaclassMethod> 
+    "This method is supposed to be local in Metaclass because of a good reason.
+    We use this pragma to test if Metaclass does not contain some accidental 
+    local selectors."
+
 	^thisClass environment
 ]
 
-{ #category : #'accessing parallel hierarchy - deprecated' }
+{ #category : #'accessing hierarchy protocol' }
 Metaclass >> hasClassSide [
-	^ false
+	^false
 ]
 
 { #category : #initialize }
@@ -221,15 +242,6 @@ Metaclass >> initializeFrom: anotherClassTrait [
 	self basicOrganization: self organization copy.
 ]
 
-{ #category : #'accessing parallel hierarchy' }
-Metaclass >> instanceSide [
-	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
-	"Point instanceSide >>> Point"
-	"Point class instanceSide >>> Point"
-	
-	^ self soleInstance
-]
-
 { #category : #testing }
 Metaclass >> isAnonymous [
 	^self soleInstance isAnonymous 
@@ -237,6 +249,11 @@ Metaclass >> isAnonymous [
 
 { #category : #testing }
 Metaclass >> isClass [
+
+	<localMetaclassMethod> 
+    "This method is supposed to be local in Metaclass because of a good reason.
+    We use this pragma to test if Metaclass does not contain some accidental 
+    local selectors."
 
 	^ true
 ]
@@ -249,7 +266,8 @@ Metaclass >> isMeta [
 { #category : #'class hierarchy' }
 Metaclass >> isMetaclassOfClassOrNil [
 	
-	^ self instanceSide 
+	
+	^ self theNonMetaClass 
 		ifNil: [ true ] 
 		ifNotNil: [ :nonMetaClass | nonMetaClass == Class ] 
 ]
@@ -296,7 +314,12 @@ Metaclass >> new [
 { #category : #'instance creation' }
 Metaclass >> newAnonymousSubclass [
 
-	^self instanceSide newAnonymousSubclass class
+	<localMetaclassMethod> 
+    "This method is supposed to be local in Metaclass because of a good reason.
+    We use this pragma to test if Metaclass does not contain some accidental 
+    local selectors."
+
+	^self theNonMetaClass newAnonymousSubclass class
 ]
 
 { #category : #composition }
@@ -326,19 +349,25 @@ Metaclass >> obsoleteSubclasses [
 	"Answer the receiver's subclasses."
 
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
-	^ self instanceSide obsoleteSubclasses collect: [ :aSubclass | aSubclass classSide ]
+
+	^ self theNonMetaClass obsoleteSubclasses collect: [ :aSubclass | aSubclass theMetaClass ]
 ]
 
 { #category : #compiling }
 Metaclass >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 
-	^ self instanceSide possibleVariablesFor: misspelled continuedFrom: oldResults
+	^ self theNonMetaClass possibleVariablesFor: misspelled continuedFrom: oldResults
 
 ]
 
 { #category : #copying }
 Metaclass >> postCopy [
 	"Don't share the reference to the sole instance."
+
+	<localMetaclassMethod> 
+    "This method is supposed to be local in Metaclass because of a good reason.
+    We use this pragma to test if Metaclass does not contain some accidental 
+    local selectors."
 
 	super postCopy.
 	thisClass := nil.
@@ -371,7 +400,7 @@ Metaclass >> sharedPools [
 Metaclass >> slots: slotsDefinition [ 
 	"Declare additional named variables for my instance."
 	| theClass |
-	theClass := self instanceSide.
+	theClass := self theNonMetaClass.
 	
 	theClass := theClass classInstaller make: [ :builder |
 		builder
@@ -384,7 +413,7 @@ Metaclass >> slots: slotsDefinition [
 			traitComposition: theClass traitComposition;
 			category: theClass category asString;
 			classSlots: slotsDefinition].
-	^ theClass classSide
+	^ theClass theMetaClass
 ]
 
 { #category : #accessing }
@@ -399,7 +428,8 @@ Metaclass >> subclasses [
 	"Answer the receiver's subclasses."
 	
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
-	^ self instanceSide subclasses collect: [ :aSubclass | aSubclass classSide ].
+	
+	^ self theNonMetaClass subclasses collect: [ :aSubclass | aSubclass theMetaClass ].
 ]
 
 { #category : #'class hierarchy' }
@@ -407,11 +437,17 @@ Metaclass >> subclassesDo: aBlock [
 	"Evaluate aBlock for each of the receiver's immediate subclasses."
 	
 	self isMetaclassOfClassOrNil ifTrue: [ ^ self ].
-	self instanceSide subclasses do: [ :each | aBlock value: each classSide ]
+	
+	self theNonMetaClass subclasses do: [ :each | aBlock value: each theMetaClass ]
 ]
 
 { #category : #accessing }
 Metaclass >> traitComposition [
+
+	<localMetaclassMethod> 
+    "This method is supposed to be local in Metaclass because of a good reason.
+    We use this pragma to test if Metaclass does not contain some accidental 
+    local selectors."
 
 	traitComposition ifNil: [traitComposition := TraitComposition new].
 	^traitComposition
@@ -419,6 +455,11 @@ Metaclass >> traitComposition [
 
 { #category : #accessing }
 Metaclass >> traitComposition: aTraitComposition [
+
+	<localMetaclassMethod> 
+    "This method is supposed to be local in Metaclass because of a good reason.
+    We use this pragma to test if Metaclass does not contain some accidental 
+    local selectors."
 
 	traitComposition := aTraitComposition
 ]
@@ -468,6 +509,11 @@ Metaclass >> uses: aTraitCompositionOrArray slots: slotArray [
 { #category : #copying }
 Metaclass >> veryDeepCopyWith: deepCopier [
 
+	<localMetaclassMethod> 
+    "This method is supposed to be local in Metaclass because of a good reason.
+    We use this pragma to test if Metaclass does not contain some accidental 
+    local selectors."
+
 	"Return self.  Must be created, not copied.  Do not record me."
 ]
 
@@ -475,12 +521,12 @@ Metaclass >> veryDeepCopyWith: deepCopier [
 Metaclass >> wantsChangeSetLogging [
 	"Answer whether code submitted for the receiver should be remembered by the changeSet mechanism.The metaclass follows the rule of the class itself."
 
-	^ self instanceSide wantsChangeSetLogging
+	^ self theNonMetaClass wantsChangeSetLogging
 ]
 
 { #category : #compiling }
 Metaclass >> wantsRecompilationProgressReported [
 	"The metaclass follows the rule of the class itself."
 
-	^ self instanceSide wantsRecompilationProgressReported
+	^ self theNonMetaClass wantsRecompilationProgressReported
 ]

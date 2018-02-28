@@ -10,10 +10,6 @@ Class {
 		'pages',
 		'pagesLimit'
 	],
-	#classVars : [
-		'DefaultCacheDirectory',
-		'DefaultStashDirectory'
-	],
 	#classInstVars : [
 		'instance',
 		'cacheDirectory',
@@ -53,22 +49,12 @@ GTPlayBook class >> customDirectory: aFileReference [
 
 { #category : #'accessing-defaults' }
 GTPlayBook class >> defaultCacheDirectory [
-	^ (DefaultCacheDirectory ifNil: [ DefaultCacheDirectory := FileLocator localDirectory / 'play-cache' ]) asFileReference
-]
-
-{ #category : #'accessing-defaults' }
-GTPlayBook class >> defaultCacheDirectory: aFileReference [
-	DefaultCacheDirectory := aFileReference
+	^ (FileLocator localDirectory / 'play-cache') asFileReference
 ]
 
 { #category : #'accessing-defaults' }
 GTPlayBook class >> defaultStashDirectory [
-	^ (DefaultCacheDirectory ifNil: [ DefaultCacheDirectory := FileLocator localDirectory / 'play-stash' ]) asFileReference
-]
-
-{ #category : #'accessing-defaults' }
-GTPlayBook class >> defaultStashDirectory: aFileReference [
-	^ DefaultStashDirectory := aFileReference
+	^ (FileLocator localDirectory / 'play-stash') asFileReference
 ]
 
 { #category : #private }

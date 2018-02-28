@@ -20,17 +20,13 @@ RFValueReification class >> key [
 { #category : #generate }
 RFValueReification >> genForInstanceVariableSlot [
 	"entity in this case is the binding of the instance variable"
-
-	^ RBMessageNode
-		receiver: (RFLiteralVariableNode value: entity)
-		selector: #read:
-		arguments: {(RBVariableNode named: 'self')}
+	^RBMessageNode receiver: entity asLiteralNode selector: #read: arguments: { RBVariableNode named: 'self' }
 ]
 
 { #category : #generate }
 RFValueReification >> genForLiteralVariable [
 	"entity in this case is the binding of the literal variable"
-	^RFLiteralVariableNode value: entity value
+	^entity value asLiteralNode
 ]
 
 { #category : #generate }
@@ -50,7 +46,7 @@ RFValueReification >> genForRBReturnNode [
 
 { #category : #generate }
 RFValueReification >> genForRBVariableNode [
-	entity isGlobal ifTrue: [^RFLiteralVariableNode value: entity binding value]. 
+	entity isGlobal ifTrue: [^entity binding value asLiteralNode]. 
 	^RBVariableNode named: entity name.
 ]
 

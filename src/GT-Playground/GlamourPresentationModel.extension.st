@@ -23,7 +23,6 @@ GlamourPresentationModel class >> examplePlaygroundAndInspectorOn42 [
 
 { #category : #'*GT-Playground' }
 GlamourPresentationModel class >> examplePlaygroundOn42 [
-	<sampleInstance>
 	"open a playground on 42"
 	^ self playgroundOn: '42'
 ]

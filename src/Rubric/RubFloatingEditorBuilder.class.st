@@ -39,7 +39,6 @@ Class {
 
 { #category : #example }
 RubFloatingEditorBuilder class >> exampleCommandLauncher [
-	<sampleInstance>
 	<example>
  	^RubFloatingEditorBuilder new
 		acceptOnCR: false;

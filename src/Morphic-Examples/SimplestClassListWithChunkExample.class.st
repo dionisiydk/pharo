@@ -9,7 +9,6 @@ Class {
 
 { #category : #examples }
 SimplestClassListWithChunkExample class >> example [
-	<sampleInstance>
 
 	^SimplestClassListWithChunkExample new openOn: Object
 ]

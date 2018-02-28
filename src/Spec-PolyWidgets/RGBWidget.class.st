@@ -35,7 +35,6 @@ RGBWidget class >> defaultSpec [
 
 { #category : #example }
 RGBWidget class >> example [
-	<sampleInstance>
 	| example |
 	example := self new.
 	example

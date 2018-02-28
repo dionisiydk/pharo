@@ -20,8 +20,7 @@ LazyTabGroupTest >> setUp [
 
 { #category : #running }
 LazyTabGroupTest >> tearDown [
-	window ifNotNil: [ window delete ].
-	super tearDown
+	window ifNotNil: [window delete]
 ]
 
 { #category : #tests }

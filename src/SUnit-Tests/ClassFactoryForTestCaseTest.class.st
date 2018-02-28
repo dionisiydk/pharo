@@ -28,9 +28,8 @@ ClassFactoryForTestCaseTest >> setUp [
 
 { #category : #running }
 ClassFactoryForTestCaseTest >> tearDown [
-	
-	factory cleanUp.
-	super tearDown
+	super tearDown.
+	factory cleanUp
 ]
 
 { #category : #testing }

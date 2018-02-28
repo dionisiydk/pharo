@@ -33,7 +33,7 @@ RBAddMethodChange >> oldVersionTextToDisplay [
 				at: className asSymbol
 				ifAbsent: [ ^ super oldVersionTextToDisplay ].
 				
-	isMeta ifTrue: [ class := class classSide ].
+	isMeta ifTrue: [ class := class theMetaClass ].
 				
 	^ class methodDict 
 			at: self selector

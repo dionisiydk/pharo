@@ -31,9 +31,8 @@ GTEventDeliveryTest >> setUp [
 
 { #category : #running }
 GTEventDeliveryTest >> tearDown [
-	
+	super tearDown.
 	delivery deactivate.
-	super tearDown
 ]
 
 { #category : #tests }

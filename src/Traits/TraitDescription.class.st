@@ -313,7 +313,7 @@ TraitDescription >> classComment: aString stamp: aStamp [
 TraitDescription >> classCommentBlank [
 
 	| existingComment stream |
-	existingComment := self instanceSide organization classComment.
+	existingComment := self theNonMetaClass organization classComment.
 	existingComment isEmpty
 		ifFalse: [^existingComment].
 
@@ -353,7 +353,7 @@ stream cr; cr; nextPutAll: '    Implementation Points'.
 
 { #category : #'accessing parallel hierarchy' }
 TraitDescription >> classSide [
-	^ self classTrait
+	^self theMetaClass.
 ]
 
 { #category : #'instance variables' }
@@ -710,7 +710,7 @@ TraitDescription >> forceNewFrom: anArray [
 
 { #category : #'accessing parallel hierarchy' }
 TraitDescription >> hasClassSide [
-	^ self subclassResponsibility
+	^self subclassResponsibility.
 ]
 
 { #category : #'accessing comment' }
@@ -819,7 +819,7 @@ TraitDescription >> instVarNamesAndOffsetsDo: aBinaryBlock [
 
 { #category : #'accessing parallel hierarchy' }
 TraitDescription >> instanceSide [
-	^ self baseTrait
+	^ self theNonMetaClass
 ]
 
 { #category : #accessing }
@@ -866,7 +866,7 @@ TraitDescription >> isLocalMethodsProtocol: aProtocol [
 
 { #category : #'accessing parallel hierarchy' }
 TraitDescription >> isMeta [
-	^ self isClassSide
+	^self isClassSide
 ]
 
 { #category : #testing }
@@ -1364,12 +1364,12 @@ TraitDescription >> tagsForMethods [
 	^tags
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy' }
+{ #category : #'accessing parallel hierarchy' }
 TraitDescription >> theMetaClass [
 	^ self classTrait
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy' }
+{ #category : #'accessing parallel hierarchy' }
 TraitDescription >> theNonMetaClass [
 	^ self baseTrait
 ]

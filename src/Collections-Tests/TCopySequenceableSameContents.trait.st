@@ -24,7 +24,6 @@ TCopySequenceableSameContents >> nonEmpty [
 
 { #category : #'tests - fixture' }
 TCopySequenceableSameContents >> test0FixtureCopySameContentsTest [
-
 	self nonEmpty.
 	self deny: self nonEmpty isEmpty.
 	self empty.
@@ -41,43 +40,38 @@ TCopySequenceableSameContents >> testReverse [
 		[:i | self assert: ((result at: i) 
 			= (self nonEmpty at: (self nonEmpty size - i + 1)))].
 	"verify size of 'result' :"
-	self assert: result size=self nonEmpty size
+	self assert: result size=self nonEmpty size.
 ]
 
 { #category : #'tests - copying same contents' }
 TCopySequenceableSameContents >> testReversed [
-
 	| result |
-	result := self nonEmpty reversed.
+	result := self nonEmpty reversed .
 	
-	"Verify content"
-	result withIndexDo:
-		[:el :i | self assert: el equals: (self nonEmpty at: (self nonEmpty size - i + 1))].
-
-	"Verify size"
+	"verify content of 'result: '"
+	1 to:  result size do:
+		[:i | self assert: ((result at:i)=(self nonEmpty at:(self nonEmpty size-i+1)))].
+	"verify size of 'result' :"
 	self assert: result size=self nonEmpty size.
 ]
 
 { #category : #'tests - copying same contents' }
 TCopySequenceableSameContents >> testShallowCopy [
-
 	| result |
-	result := self nonEmpty shallowCopy.
+	result := self nonEmpty shallowCopy .
 	
-	"Verfy content"
-	self nonEmpty withIndexDo:
-		[:el :i | self assert: (result at:i) equals: (self nonEmpty at:i)].
-	
-	"Verify size"
-	self assert: result size equals: self nonEmpty size.
+	"verify content of 'result: '"
+	1 to: self nonEmpty size do:
+		[:i | self assert: ((result at:i)=(self nonEmpty at:i))].
+	"verify size of 'result' :"
+	self assert: result size=self nonEmpty size.
 ]
 
 { #category : #'tests - copying same contents' }
 TCopySequenceableSameContents >> testShallowCopyEmpty [
-
 	| result |
-	result := self empty shallowCopy.
-	self assert: result isEmpty
+	result := self empty shallowCopy .
+	self assert: result isEmpty .
 ]
 
 { #category : #'tests - copying same contents' }

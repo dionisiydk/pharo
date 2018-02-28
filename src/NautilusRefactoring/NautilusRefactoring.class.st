@@ -343,10 +343,10 @@ NautilusRefactoring >> chooseMultipleFrom: anArray title: aString [
 { #category : #display }
 NautilusRefactoring >> class: aClass andClassVariable: aBlock [
 	| variables index variable class |
-	variables := aClass instanceSide allClassVarNames asArray sort.
+	variables := aClass theNonMetaClass allClassVarNames asArray sort.
 	index := self chooseFrom: variables.
 	variable := variables at: index.
-	class := aClass instanceSide whichClassDefinesClassVar: variable.
+	class := aClass theNonMetaClass whichClassDefinesClassVar: variable.
 	^ aBlock value: class value: variable
 ]
 
@@ -360,7 +360,7 @@ NautilusRefactoring >> class: aClass andInstVariable: aBlock [
 	class := aClass whichClassDefinesInstVar: variable.
 	class := class isMeta not
 				ifTrue: [ RBClassModelFactory rbClass existingNamed: class name ] 
-				ifFalse: [ RBClassModelFactory rbMetaclass existingNamed: class instanceSide name ].
+				ifFalse: [ RBClassModelFactory rbMetaclass existingNamed: class theNonMetaClass name ].
 	class model: environment.
 	^ aBlock value: class value: variable
 ]
@@ -401,7 +401,7 @@ NautilusRefactoring >> classRegexText [
 NautilusRefactoring >> classRemovalRefactoringObjectFor: aCollection [
 	^ RBRemoveClassRefactoring 
 		model: environment 
-		classNames: (aCollection collect: [:e | e instanceSide name ])
+		classNames: (aCollection collect: [:e | e theNonMetaClass name ])
 ]
 
 { #category : #source }
@@ -462,7 +462,7 @@ NautilusRefactoring >> generateAccessors [
 
 { #category : #class }
 NautilusRefactoring >> generateSubclass [
-	self performRefactoringFor: #privateGenerateSubclassFor: with: self model selectedClass instanceSide
+	self performRefactoringFor: #privateGenerateSubclassFor: with: self model selectedClass theNonMetaClass
 
 ]
 
@@ -471,7 +471,7 @@ NautilusRefactoring >> generateSuperClass [
 	"Execute the refactoring of the receiver."
 
 	| refactoring |
-	refactoring := self privateGenerateSuperClassFor: self model selectedClass instanceSide.
+	refactoring := self privateGenerateSuperClassFor: self model selectedClass theNonMetaClass.
 	self performRefactoring: refactoring.
 ]
 
@@ -535,12 +535,12 @@ NautilusRefactoring >> inlineTemporaryBetween: anInterval from: aMethod [
 
 { #category : #class }
 NautilusRefactoring >> insertSubclass [
-	self performRefactoringFor: #privateInsertSubclassFor: with: self model selectedClass instanceSide
+	self performRefactoringFor: #privateInsertSubclassFor: with: self model selectedClass theNonMetaClass
 ]
 
 { #category : #class }
 NautilusRefactoring >> insertSuperclass [
-	self performRefactoringFor: #privateInsertSuperclassFor: with: self model selectedClass instanceSide
+	self performRefactoringFor: #privateInsertSuperclassFor: with: self model selectedClass theNonMetaClass
 ]
 
 { #category : #performing }
@@ -649,11 +649,14 @@ NautilusRefactoring >> performRefactorings: aCollectionRefactoring [
 	aCollectionRefactoring ifNil: [ ^ self ].
 	aCollectionRefactoring do: [ :each | each model environment: self model browsedEnvironment ].
 	[ 
+	[ 
 	[ self internalPerformRefactorings: aCollectionRefactoring ]
 		on: RBRefactoringFailure
 		do: [ :exception | self handleFailure: exception ] ]
 		on: RBRefactoringWarning
-		do: [ :exception | self handleWarning: exception ] 
+		do: [ :exception | self handleWarning: exception ] ]
+		on: RBRefactoringError
+		do: [ :exception | self handleError: exception ]
 ]
 
 { #category : #private }
@@ -721,7 +724,7 @@ NautilusRefactoring >> privateAddClassVarFrom: aClass [
 	^ RBAddClassVariableRefactoring 
 		model: environment 
 		variable: (self request: self newVariableRequestText initialAnswer: 'Var')
-		class: aClass instanceSide
+		class: aClass theNonMetaClass
 ]
 
 { #category : #'private-inst var' }
@@ -729,7 +732,7 @@ NautilusRefactoring >> privateAddInstVarFrom: aClass [
 	^ RBAddInstanceVariableRefactoring 
 		model: environment 
 		variable: (self request: self newVariableRequestText initialAnswer: 'inst') 
-		class: aClass instanceSide
+		class: aClass theNonMetaClass
 ]
 
 { #category : #'private-source' }
@@ -985,7 +988,7 @@ NautilusRefactoring >> privatePushDownMethodsFor: aCollection [
 
 { #category : #'private-class' }
 NautilusRefactoring >> privateRealizeClassFor: aClass [
-	^ RBRealizeClassRefactoring model: environment className: aClass instanceSide name
+	^ RBRealizeClassRefactoring model: environment className: aClass theNonMetaClass name
 ]
 
 { #category : #'private-class var' }
@@ -1135,7 +1138,7 @@ NautilusRefactoring >> privateSplitCascadeBetween: anInterval from: aMethod [
 { #category : #'private-class' }
 NautilusRefactoring >> privateSplitClassFor: aClass [
 	| class |
-	class := aClass instanceSide.
+	class := aClass theNonMetaClass.
 	^ RBSplitClassRefactoring
 		model: environment
 		class: class
@@ -1218,7 +1221,7 @@ NautilusRefactoring >> pushDownMethodsFor: aCollection [
 
 { #category : #class }
 NautilusRefactoring >> realizeClass [
-	self performRefactoringFor: #privateRealizeClassFor: with: self model selectedClass instanceSide
+	self performRefactoringFor: #privateRealizeClassFor: with: self model selectedClass theNonMetaClass
 
 ]
 

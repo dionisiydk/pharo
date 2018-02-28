@@ -15,7 +15,6 @@ Class {
 
 { #category : #example }
 DADependencyReport class >> example [
-	<sampleInstance>
 	^ self new 
 		add: #A dependencies: #();
 		add: #B dependencies: #(#A);

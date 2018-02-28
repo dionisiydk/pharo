@@ -7,5 +7,5 @@ Symbol >> implementors [
 
 { #category : #'*System-Support' }
 Symbol >> senders [
-	^ SystemNavigation default allSendersOf: self
+	^SystemNavigation new allSendersOf: self
 ]

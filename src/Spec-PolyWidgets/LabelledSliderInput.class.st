@@ -16,7 +16,6 @@ Class {
 
 { #category : #example }
 LabelledSliderInput class >> example [
-	<sampleInstance>
 	| example |
 	example := self new
 		min: 0;

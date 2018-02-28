@@ -130,10 +130,7 @@ CompiledCode >> allLiterals [
 
 { #category : #'source code management' }
 CompiledCode >> argumentNames [
-	^self 
-		propertyValueAt: #argumentNames 
-		ifAbsent: [ self ast argumentNames ]
-
+	^self ast argumentNames
 ]
 
 { #category : #converting }

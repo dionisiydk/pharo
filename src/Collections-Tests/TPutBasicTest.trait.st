@@ -53,6 +53,7 @@ TPutBasicTest >> test0FixturePutTest [
 
 { #category : #'tests - at put' }
 TPutBasicTest >> testAtPut [
+	"self debug: #testAtPut"
 	
 	self nonEmpty at: self anIndex put: self aValue.
 	self assert: (self nonEmpty at: self anIndex) = self aValue.
@@ -61,6 +62,7 @@ TPutBasicTest >> testAtPut [
 
 { #category : #'tests - at put' }
 TPutBasicTest >> testAtPutOutOfBounds [
+	"self debug: #testAtPutOutOfBounds"
 	
 	self should: [self empty at: self anIndex put: self aValue] raise: Error
 	
@@ -68,6 +70,7 @@ TPutBasicTest >> testAtPutOutOfBounds [
 
 { #category : #'tests - at put' }
 TPutBasicTest >> testAtPutTwoValues [
+	"self debug: #testAtPutTwoValues"
 	
 	self nonEmpty at: self anIndex put: self aValue.
 	self nonEmpty at: self anIndex put: self anotherValue.

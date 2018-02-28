@@ -52,7 +52,6 @@ TextInputFieldPresenter class >> defaultSpec [
 
 { #category : #example }
 TextInputFieldPresenter class >> example [
-	<sampleInstance>
 	^ self new
 	 extent: 300 @ 25;
 	 openWithSpec;

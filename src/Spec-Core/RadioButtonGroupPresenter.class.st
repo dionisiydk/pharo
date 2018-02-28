@@ -48,7 +48,6 @@ RadioButtonGroupPresenter class >> defaultSpec [
 
 { #category : #example }
 RadioButtonGroupPresenter class >> example [
-	<sampleInstance>
 	| example |
 	example := RadioButtonGroupPresenter new.
 	example
@@ -67,7 +66,7 @@ RadioButtonGroupPresenter >> addRadioButton: aButton [
 	buttons add: aButton.
 	aButton privateSetState: false;
 		owner: self.
-	self focusOrder add: aButton.
+	self focusOrder add: aButton ..
 	self rebuildWidget
 ]
 

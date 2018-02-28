@@ -80,7 +80,7 @@ RBCreateAccessorsForVariableRefactoring >> defineSetterMethod [
 { #category : #'private-accessing' }
 RBCreateAccessorsForVariableRefactoring >> definingClass [
 	^ classVariable 
-		ifTrue: [ class classSide ]
+		ifTrue: [ class theMetaClass ]
 		ifFalse: [ class ]
 ]
 
@@ -191,10 +191,10 @@ RBCreateAccessorsForVariableRefactoring >> usesAssignmentOf: aString in: aClass 
 		matches: aString , ' := ``@object'
 			do: [ :aNode :answer | answer or: [ aNode isUsed and: [ aNode methodNode selector ~= aString] ] ].
 	definingClass := isClassVar 
-		ifTrue: [ aClass instanceSide ]
+		ifTrue: [ aClass theNonMetaClass ]
 		ifFalse: [ aClass ].
 	^ (definingClass withAllSubclasses , (isClassVar 
-			ifTrue: [ definingClass classSide withAllSubclasses ]
+			ifTrue: [ definingClass theMetaClass withAllSubclasses ]
 			ifFalse: 
 				[ #() ]) 
 		detect: 

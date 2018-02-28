@@ -42,7 +42,6 @@ ListSelectionPresenter class >> defaultSpec [
 
 { #category : #example }
 ListSelectionPresenter class >> example [
-	<sampleInstance>
 	^ self new openWithSpec
 ]
 

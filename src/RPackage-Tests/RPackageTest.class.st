@@ -9,11 +9,10 @@ Class {
 
 { #category : #running }
 RPackageTest >> tearDown [ 
-	
+	super tearDown.
 	#(TestClass TestClassOther) 
 		do: [ :each | 
-			self class environment at: each ifPresent: #removeFromSystem ].
-	super tearDown	
+			self class environment at: each ifPresent: #removeFromSystem ]
 ]
 
 { #category : #tests }

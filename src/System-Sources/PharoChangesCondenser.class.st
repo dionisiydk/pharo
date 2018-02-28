@@ -55,11 +55,11 @@ PharoChangesCondenser >> condense [
 PharoChangesCondenser >> condenseClassOrTrait: classOrTrait [
 	self writeClassComment: classOrTrait.
 	
-	classOrTrait instanceSide methodsDo: [ :method |
+	classOrTrait theNonMetaClass methodsDo: [ :method |
 		(self shouldCondenseMethod: method)
 			ifTrue: [ self writeMethodSource: method ]].
 	
-	classOrTrait classSide methodsDo: [ :method |
+	classOrTrait theMetaClass methodsDo: [ :method |
 		(self shouldCondenseMethod: method)
 			ifTrue: [ self writeMethodSource: method ]]
 ]

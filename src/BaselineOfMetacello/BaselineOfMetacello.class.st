@@ -32,7 +32,6 @@ BaselineOfMetacello >> baseline: spec [
 			package: 'STON-Core';
 			package: 'Metacello-GitBasedRepository';
 			package: 'Metacello-GitHub';
-			package: 'Metacello-Gitlab';
 			package: 'Metacello-Bitbucket';
 			package: 'Metacello-Platform';
 			package: 'Metacello-ToolBox';

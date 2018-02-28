@@ -6,6 +6,7 @@ Class {
 
 { #category : #examples }
 GLMTreeBrick class >> exampleOpen [
+	
 	self gtExample openInBrickWindowLabeled: 'Tree Example'
 	
 ]

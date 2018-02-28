@@ -25,5 +25,4 @@ GlobalIdentifierFuelPersistenceTest >> tearDown [
 	(FileLocator workingDirectory / self folderName) 
 		ensureDeleteAllChildren; 
 		ensureDelete.
-	super tearDown 
 ]

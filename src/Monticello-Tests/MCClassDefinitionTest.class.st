@@ -47,8 +47,7 @@ MCClassDefinitionTest >> setUp [
 
 { #category : #running }
 MCClassDefinitionTest >> tearDown [
-	Smalltalk globals at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ].
-	super tearDown
+	Smalltalk globals at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ]
 ]
 
 { #category : #tests }

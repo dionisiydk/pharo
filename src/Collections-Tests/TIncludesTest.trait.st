@@ -59,14 +59,14 @@ TIncludesTest >> testIdentityIncludesNonSpecificComportement [
 
 { #category : #'tests - includes' }
 TIncludesTest >> testIncludesAllNoneThere [
-
+	"self debug: #testIncludesAllOfNoneThere'"
 	self deny: (self empty includesAll: self nonEmpty ).
 	self deny: (self nonEmpty includesAll: { self elementNotIn. self anotherElementNotIn })
 ]
 
 { #category : #'tests - includes' }
 TIncludesTest >> testIncludesAnyAllThere [
-
+	"self debug: #testIncludesAnyOfAllThere'"
 	self deny: (self nonEmpty includesAny: self empty).
 	self assert: (self nonEmpty includesAny: { self nonEmpty anyOne }).
 	self assert: (self nonEmpty includesAny: self nonEmpty).
@@ -74,6 +74,7 @@ TIncludesTest >> testIncludesAnyAllThere [
 
 { #category : #'tests - includes' }
 TIncludesTest >> testIncludesAnyNoneThere [
+	"self debug: #testIncludesAnyOfNoneThere'"
 	
 	self deny: (self nonEmpty includesAny: self empty).
 	self deny: (self nonEmpty includesAny: { self elementNotIn. self anotherElementNotIn })
@@ -81,6 +82,7 @@ TIncludesTest >> testIncludesAnyNoneThere [
 
 { #category : #'tests - includes' }
 TIncludesTest >> testIncludesElementIsNotThere [
+	"self debug: #testIncludesElementIsNotThere"
 	
 	self deny: (self nonEmpty includes: self elementNotIn).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
@@ -89,6 +91,7 @@ TIncludesTest >> testIncludesElementIsNotThere [
 
 { #category : #'tests - includes' }
 TIncludesTest >> testIncludesElementIsThere [
+	"self debug: #testIncludesElementIsThere"
 	
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 ]

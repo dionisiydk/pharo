@@ -18,8 +18,7 @@ DelayMillisecondSchedulerTest >> busyWaitMilliseconds: milliseconds [
 { #category : #running }
 DelayMillisecondSchedulerTest >> tearDown [ 	
 	"Trigger system timingSempaphore, in case it was replaced"
-	Delay testCaseSupportTimingSemaphore signal.
-	super tearDown
+	Delay testCaseSupportTimingSemaphore signal
 ]
 
 { #category : #tests }

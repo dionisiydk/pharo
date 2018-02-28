@@ -283,9 +283,9 @@ GTSpotterStepTest >> subclassesOf: aClass inPackage: aPackageName [
 
 { #category : #running }
 GTSpotterStepTest >> tearDown [
+	super tearDown.
 	
-	spotter := currentStep := currentProcessor := currentCandidate := nil.
-	super tearDown
+	spotter := currentStep := currentProcessor := currentCandidate := nil
 ]
 
 { #category : #tests }

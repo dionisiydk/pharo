@@ -39,7 +39,6 @@ TIncludesWithIdentityCheckTest >> nonEmpty [
 
 { #category : #'tests - fixture' }
 TIncludesWithIdentityCheckTest >> test0FixtureIncludeTest [
-
 	| anElementIn |
 	self nonEmpty.
 	self deny: self nonEmpty isEmpty.
@@ -57,7 +56,6 @@ TIncludesWithIdentityCheckTest >> test0FixtureIncludeTest [
 
 { #category : #'tests - fixture' }
 TIncludesWithIdentityCheckTest >> test0FixtureIncludeWithIdentityTest [
-
 	| anElement |
 	self collectionWithCopyNonIdentical.
 	anElement := self collectionWithCopyNonIdentical anyOne.
@@ -78,33 +76,33 @@ TIncludesWithIdentityCheckTest >> testIdentityIncludes [
 
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIdentityIncludesNonSpecificComportement [
-	"Test the same comportement than 'includes: '."
-	
+	" test the same comportement than 'includes: '  "
 	| collection |	
-	collection := self nonEmpty.
+	collection := self nonEmpty  .
 	
-	self deny: (collection identityIncludes: self elementNotIn).
-	self assert: (collection identityIncludes: collection anyOne)
+	self deny: (collection identityIncludes: self elementNotIn ).
+	self assert:(collection identityIncludes: collection anyOne)
 
 ]
 
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesAllNoneThere [
-
-	self deny: (self empty includesAll: self nonEmpty).
+	"self debug: #testIncludesAllOfNoneThere'"
+	self deny: (self empty includesAll: self nonEmpty ).
 	self deny: (self nonEmpty includesAll: { self elementNotIn. self anotherElementNotIn })
 ]
 
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesAnyAllThere [
-
+	"self debug: #testIncludesAnyOfAllThere'"
 	self deny: (self nonEmpty includesAny: self empty).
 	self assert: (self nonEmpty includesAny: { self nonEmpty anyOne }).
-	self assert: (self nonEmpty includesAny: self nonEmpty)
+	self assert: (self nonEmpty includesAny: self nonEmpty).
 ]
 
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesAnyNoneThere [
+	"self debug: #testIncludesAnyOfNoneThere'"
 	
 	self deny: (self nonEmpty includesAny: self empty).
 	self deny: (self nonEmpty includesAny: { self elementNotIn. self anotherElementNotIn })
@@ -112,6 +110,7 @@ TIncludesWithIdentityCheckTest >> testIncludesAnyNoneThere [
 
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesElementIsNotThere [
+	"self debug: #testIncludesElementIsNotThere"
 	
 	self deny: (self nonEmpty includes: self elementNotIn).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
@@ -120,6 +119,7 @@ TIncludesWithIdentityCheckTest >> testIncludesElementIsNotThere [
 
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesElementIsThere [
+	"self debug: #testIncludesElementIsThere"
 	
-	self assert: (self nonEmpty includes: self nonEmpty anyOne)
+	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 ]

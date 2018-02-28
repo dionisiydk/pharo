@@ -9,7 +9,7 @@ RGMetaclassDefinition >> arrayStringForManifest [
 		at: 2
 		put:
 			{(name asSymbol).
-			(self instanceSide asString asSymbol)}.
+			(self theNonMetaClass asString asSymbol)}.
 	^ array
 ]
 

@@ -23,7 +23,6 @@ Class {
 
 { #category : #examples }
 LimitingLineStreamWrapper class >> example1 [
-	<sampleInstance>
 	"LimitingLineStreamWrapper example1"
 	"Separate chunks of text delimited by a special string"
 	| inStream msgStream messages |
@@ -39,7 +38,6 @@ LimitingLineStreamWrapper class >> example1 [
 
 { #category : #examples }
 LimitingLineStreamWrapper class >> example2 [
-	<sampleInstance>
 	"LimitingLineStreamWrapper example2"
 	"Demo nesting wrappers - get header lines from some messages"
 	| inStream msgStream headers headerStream |
@@ -58,7 +56,6 @@ LimitingLineStreamWrapper class >> example2 [
 
 { #category : #examples }
 LimitingLineStreamWrapper class >> exampleStream [
-	<sampleInstance>
 	^ 'From me@somewhere
 From: me
 To: you

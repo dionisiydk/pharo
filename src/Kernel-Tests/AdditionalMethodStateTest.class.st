@@ -5,7 +5,7 @@ Class {
 	#name : #AdditionalMethodStateTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'amState'
+		'atState'
 	],
 	#category : #'Kernel-Tests-Methods'
 }
@@ -17,7 +17,7 @@ AdditionalMethodStateTest >> setUp [
 	super setUp.
 	pragma := (Object compiledMethodAt: #at:) penultimateLiteral at: #primitive:.
 	
-	amState := AdditionalMethodState selector: #at: with: pragma copy.
+	atState := AdditionalMethodState selector: #at: with: pragma copy.
 
 ]
 
@@ -39,14 +39,14 @@ AdditionalMethodStateTest >> testAnalogousCodeTo [
 AdditionalMethodStateTest >> testCopy [
 
 	| copy |
-	copy := amState copy.
+	copy := atState copy.
 
-	self deny: amState == copy.
-	self assert: amState method == copy method.
-	self assert: amState selector == copy selector.
+	self deny: atState == copy.
+	self assert: atState method == copy method.
+	self assert: atState selector == copy selector.
 
-	self assert: amState pragmas equals: copy pragmas.
-	self assert: amState properties equals: copy properties.
+	self assert: atState pragmas = copy pragmas.
+	self assert: atState properties = copy properties.
 
-	amState pragmas withIndexDo: [:el :index| self deny: el == (copy pragmas at: index)].
+	1 to: atState pragmas size do: [:index | self deny: (atState pragmas at: index) == (copy pragmas at: index)].
 ]

@@ -12,6 +12,9 @@ Class {
 
 { #category : #tests }
 StickynessBugsTest >> testForTiltedStickyness [
+	"self new testForTiltedStickyness"
+
+	"self run: #testForTiltedStickyness"
 
 	| m |
 	m := Morph new openCenteredInWorld.

@@ -32,8 +32,6 @@ OmDeferrerTest >> increase [
 { #category : #tests }
 OmDeferrerTest >> testExecuteOnceAfterScheduling [
 
-	self skipOnPharoCITestingEnvironment.
-
 	self count: 0.
 	deferrer := OmDeferrer 
 		send: #increase
@@ -48,8 +46,6 @@ OmDeferrerTest >> testExecuteOnceAfterScheduling [
 
 { #category : #tests }
 OmDeferrerTest >> testExecuteOnceAfterSchedulingMultipleTimes [
-
-	self skipOnPharoCITestingEnvironment.
 
 	self count: 0.
 	deferrer := OmDeferrer 
@@ -68,8 +64,6 @@ OmDeferrerTest >> testExecuteOnceAfterSchedulingMultipleTimes [
 
 { #category : #tests }
 OmDeferrerTest >> testExecuteWithoutDelay [
-
-	self skipOnPharoCITestingEnvironment.
 
 	self count: 0.
 	deferrer := OmDeferrer 

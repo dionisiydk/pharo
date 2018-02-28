@@ -93,6 +93,7 @@ SlotClassBuilderTest >> makeWithLayout: aClassLayout andSlots: someSlots [
 { #category : #running }
 SlotClassBuilderTest >> tearDown [
 	"We remove the classes that could have been created during test run"
+	super tearDown.
 
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		{ self aClassName. self anotherClassName. self yetAnotherClassName. self yetYetAnotherClassName } do: [ :each | 
@@ -111,8 +112,6 @@ SlotClassBuilderTest >> tearDown [
 		packageNamed: self aCategory
 		ifAbsent: [ ^ self ]) 
 		unregister.
-		
-	super tearDown.	
 ]
 
 { #category : #'helpers-names' }

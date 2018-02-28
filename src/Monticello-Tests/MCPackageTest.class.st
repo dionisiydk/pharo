@@ -15,8 +15,7 @@ MCPackageTest >> aMethodRemoved: anEvent [
 { #category : #running }
 MCPackageTest >> tearDown [
 	self mockSnapshot install.
-	MCDataStream initialize. "MCMockClassG ends up in the DataStream TypeMap -- we need to reset"
-	super tearDown
+	MCDataStream initialize "MCMockClassG ends up in the DataStream TypeMap -- we need to reset"
 ]
 
 { #category : #tests }

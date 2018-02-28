@@ -81,6 +81,8 @@ FileStreamTest >> testDetectFileDo [
 FileStreamTest >> testFileTruncation [
 	"Ensure that nextChunkPut:/nextChunk works properly on a caching file"
 
+	"self debug: #testFileTruncation"
+
 	| file |
 	file := 'TruncationTest.txt' asFileReference.
 	[ 
@@ -95,6 +97,8 @@ FileStreamTest >> testFileTruncation [
 
 { #category : #testing }
 FileStreamTest >> testNextChunkOutOfBounds [
+	"self debug: #testNextChunkOutOfBounds"
+	
 	"Ensure that nextChunkPut:/nextChunk works properly on a caching file"
 	| file text read filename |
 	filename := 'testNextChunkOutOfBounds'.

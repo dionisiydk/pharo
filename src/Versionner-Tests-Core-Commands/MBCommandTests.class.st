@@ -71,7 +71,6 @@ MBCommandTests >> tearDown [
 	Smalltalk at: self configurationName ifPresent: [:cls | cls removeFromSystem ].
 
 	MetacelloPlatform current authorName: authorName.
-	super tearDown
 ]
 
 { #category : #accessing }

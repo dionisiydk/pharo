@@ -1253,7 +1253,7 @@ AbstractNautilusUI >> addSubclassesOf: aClass in: result withIndex: index [
 
 	classes do: [:each |
 		result at: each put: index.
-		self addSubclassesOf: each instanceSide in: result withIndex: index + 1 ]
+		self addSubclassesOf: each theNonMetaClass in: result withIndex: index + 1 ]
 ]
 
 { #category : #private }
@@ -2256,7 +2256,7 @@ AbstractNautilusUI >> classRemoved: anAnnouncement [
 			self selectedClass
 				ifNotNil:
 					[ :selectedClass | 
-					selectedClass instanceSide = class
+					selectedClass theNonMetaClass = class
 						ifTrue: [ self selectedClass: nil ] ].
 			window isDisplayed
 				ifFalse: [ ^ self ].
@@ -2415,7 +2415,7 @@ AbstractNautilusUI >> copyClasses [
 	
 	| association |
 	self okToChange ifFalse: [^ self].
-	association := self copyClasses: (self selectedClasses collect: [:e | e instanceSide ]).
+	association := self copyClasses: (self selectedClasses collect: [:e | e theNonMetaClass ]).
 	association key
 		ifTrue: [
 			self selectedClass: association value.
@@ -2471,7 +2471,7 @@ AbstractNautilusUI >> createTestForClass: aClass [
 { #category : #'test creation' }
 AbstractNautilusUI >> createTestForSelectedClass [
  
-	self createTestForClass: self selectedClass instanceSide 
+	self createTestForClass: self selectedClass theNonMetaClass 
 ]
 
 { #category : #'source code area' }
@@ -2508,7 +2508,7 @@ AbstractNautilusUI >> doItContext [
 AbstractNautilusUI >> doItReceiver [
 
 	^ self selectedClass 
-		ifNotNil: [:class | class instanceSide ]
+		ifNotNil: [:class | class theNonMetaClass ]
 ]
 
 { #category : #'events handling' }
@@ -2629,7 +2629,7 @@ AbstractNautilusUI >> findClassInHierarchy [
 	"Search for a subclass of the selected class from a pattern or from the recent list"
 	
 	self selectedClass ifNotNil: [ :class| 
-		self findClass: (SearchFacade hierarchySearchFor: class instanceSide)].
+		self findClass: (SearchFacade hierarchySearchFor: class theNonMetaClass)].
 ]
 
 { #category : #'menus behavior' }
@@ -2650,14 +2650,14 @@ AbstractNautilusUI >> findSubclass [
 	"Search for a subclass of the selected class from a pattern or from the recent list"
 	
 	self selectedClass ifNotNil: [ :class| 
-		self findClass: (SearchFacade subclassSearchFor: class instanceSide)].
+		self findClass: (SearchFacade subclassSearchFor: class theNonMetaClass)].
 ]
 
 { #category : #'menus behavior' }
 AbstractNautilusUI >> findSuperclass [
 	"Search for a superclass of the selected class from a pattern or from the recent list"
 	self selectedClass ifNotNil: [ :class| 
-		self findClass: (SearchFacade superclassSearchFor: class instanceSide)].
+		self findClass: (SearchFacade superclassSearchFor: class theNonMetaClass)].
 ]
 
 { #category : #private }
@@ -2934,7 +2934,7 @@ AbstractNautilusUI >> instanceButtonLabel [
 	^ self selectedClass
 		ifNil: [ label ]
 		ifNotNil: [ :class | 
-			class classSide hasMethods
+			class theMetaClass hasMethods
 				ifTrue: [ label emphasis: 1 ]
 				ifFalse: [ label ] ]
 ]
@@ -3295,13 +3295,13 @@ AbstractNautilusUI >> openCommentEditor: aClass [
 
 	newComment := Smalltalk ui theme
 		textEditorIn: window
-		text: 'Enter a comment for the class ', aClass instanceSide name,':'
+		text: 'Enter a comment for the class ', aClass theNonMetaClass name,':'
 		title: 'Comment Editor'
-		entryText: aClass instanceSide comment
+		entryText: aClass theNonMetaClass comment
 		entryHeight: 300.
 	
 	newComment
-		ifNotNil: [ aClass instanceSide comment: newComment asString ]
+		ifNotNil: [ aClass theNonMetaClass comment: newComment asString ]
 ]
 
 { #category : #private }
@@ -3329,7 +3329,7 @@ AbstractNautilusUI >> openSubclass [
 	"Search for a superclass of the selected class from a pattern or from the recent list"
 
 	self selectedClass ifNotNil: [ :class| | search |
-		search := SearchFacade subclassSearchFor: class instanceSide.
+		search := SearchFacade subclassSearchFor: class theNonMetaClass.
 		self openClass: (search chooseFromOwner: self window) ].
 ]
 
@@ -3571,7 +3571,7 @@ AbstractNautilusUI >> removeClasses [
 	| result scroll |
 	self okToChange ifFalse: [^ false].
 	scroll := self classWidget vScrollValue.
-	result := self removeClasses: (self selectedClasses collect: [:each | each instanceSide]).
+	result := self removeClasses: (self selectedClasses collect: #theNonMetaClass).
 
 	result
 		ifTrue: [	
@@ -3689,7 +3689,7 @@ AbstractNautilusUI >> renameCategory [
 AbstractNautilusUI >> renameClass [
 	self okToChange ifFalse: [ ^ self ].
 	self selectedClass ifNil: [ ^ self ].
-	self basicRenameClass: self selectedClass instanceSide
+	self basicRenameClass: self selectedClass theNonMetaClass
 ]
 
 { #category : #'menus behavior' }
@@ -3779,7 +3779,7 @@ AbstractNautilusUI >> restrictedBrowseClass [
 AbstractNautilusUI >> restrictedBrowseClasses: classes [
 
 	| newEnvironment |
-	newEnvironment := self browsedEnvironment forClasses: (classes collect: [:each | each instanceSide ]).
+	newEnvironment := self browsedEnvironment forClasses: (classes collect:#theNonMetaClass).
 	self model class 
 		openOnClass:self selectedClass 
 		inEnvironment: newEnvironment 
@@ -4206,9 +4206,9 @@ AbstractNautilusUI >> showInstance: aBoolean [
 			self selectedClass 
 				ifNotNil: [:class |
 					aBoolean 
-						ifTrue: [self selectedClass: class instanceSide.
+						ifTrue: [self selectedClass: class theNonMetaClass.
 								acceptor := ClassOrMethodDefinitionAcceptor model: self ]
-						ifFalse: [self selectedClass: class classSide.
+						ifFalse: [self selectedClass: class theMetaClass.
 								acceptor := ClassDefinitionAcceptor model: self ]].
 			self updateCategoryAndMethodList.
 			self changed: #instanceButtonState.

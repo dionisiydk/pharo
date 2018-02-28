@@ -15,7 +15,6 @@ Class {
 
 { #category : #examples }
 RubWorkspaceExample class >> exampleWindowWithScrolledText [
-	<sampleInstance>
 
 	^self open
 ]

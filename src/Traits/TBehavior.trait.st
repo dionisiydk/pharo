@@ -165,7 +165,7 @@ TBehavior >> allInstancesOrNil [
 TBehavior >> allLocalCallsOn: aSymbol [
 	"Answer a SortedCollection of all the methods that call on aSymbol, anywhere in my class hierarchy."
 
-	^ SystemNavigation new allLocalCallsOn: aSymbol ofClass: self instanceSide
+	^(SystemNavigation new allLocalCallsOn: aSymbol ofClass: (self theNonMetaClass)).
 
 ]
 
@@ -649,7 +649,7 @@ TBehavior >> dependentClasses [
 	self superclass ifNotNil: [ cll add: self superclass ].
 	
 	"We unify a class and its metaclass"
-	(self methods, self classSide methods) 
+	(self methods, self theMetaClass methods) 
 		do: [ :m | m literalsDo: [ :l | 
 					"We also check if the method is not an extension"
 					((((l isVariableBinding 
@@ -787,14 +787,6 @@ TBehavior >> includesLocalSelector: aSymbol [
 	^self basicLocalSelectors 
 		ifNil: [self includesSelector: aSymbol]
 		ifNotNil: [self localSelectors includes: aSymbol]
-]
-
-{ #category : #'testing method dictionary' }
-TBehavior >> includesMethod: aMethod [ 
-	"Answer whether aMethod is in the method dictionary. Use identityIncludes
-	as = of CompiledMethod is too weak (ignores the selector)"
-
-	^ self methodDict identityIncludes: aMethod
 ]
 
 { #category : #'testing method dictionary' }

@@ -12,7 +12,7 @@ RBScannerTest >> buildScannerForText: source [
 	^RBScanner on: (ReadStream on: source)
 ]
 
-{ #category : #tests }
+{ #category : #next }
 RBScannerTest >> testNextLiteralCharacterWithAMissingCharacter [
 	| source scanner scannedToken |
 	source := '$'.
@@ -22,7 +22,7 @@ RBScannerTest >> testNextLiteralCharacterWithAMissingCharacter [
 
 ]
 
-{ #category : #tests }
+{ #category : #next }
 RBScannerTest >> testNextWithAWrongSymbolGetError [
 	| source scanner scannedToken |
 	source := '#^'.
@@ -31,7 +31,7 @@ RBScannerTest >> testNextWithAWrongSymbolGetError [
 	self verifyErrorToken: scannedToken message: 'Expecting a literal type' translated valueExpected: '^'
 ]
 
-{ #category : #tests }
+{ #category : #next }
 RBScannerTest >> testNextWithAnIdentifierTokenGetTheIdentifierToken [
 	| source scanner token |
 	
@@ -40,10 +40,10 @@ RBScannerTest >> testNextWithAnIdentifierTokenGetTheIdentifierToken [
 	token := scanner next.
 	self assert: token isIdentifier.
 	self deny: token isError.
-	self assert: token value equals: source
+	self assert: token value equals: source.
 ]
 
-{ #category : #tests }
+{ #category : #next }
 RBScannerTest >> testNextWithAnOpeningCommentAtEndGetError [
 	| source |
 	
@@ -51,7 +51,7 @@ RBScannerTest >> testNextWithAnOpeningCommentAtEndGetError [
 	self should: [(self buildScannerForText: source) next] raise: SyntaxErrorNotification
 ]
 
-{ #category : #tests }
+{ #category : #next }
 RBScannerTest >> testNextWithAnOpeningCommentGetError [
 	| source |
 	
@@ -59,7 +59,7 @@ RBScannerTest >> testNextWithAnOpeningCommentGetError [
 	self should: [(self buildScannerForText: source) next] raise: SyntaxErrorNotification
 ]
 
-{ #category : #tests }
+{ #category : #next }
 RBScannerTest >> testNextWithAnOpeningStringsGetError [
 	| source scannedToken |
 	source := '''only the opening'.
@@ -67,7 +67,7 @@ RBScannerTest >> testNextWithAnOpeningStringsGetError [
 	self verifyErrorToken: scannedToken message: 'Unmatched '' in string literal.' translated valueExpected: 'only the opening'
 ]
 
-{ #category : #tests }
+{ #category : #next }
 RBScannerTest >> testNextWithAnUnknownCharacterGetError [
 	| source scanner scannedToken |
 	
@@ -77,17 +77,17 @@ RBScannerTest >> testNextWithAnUnknownCharacterGetError [
 	self verifyErrorToken: scannedToken message: 'Unknown character' translated valueExpected: source
 ]
 
-{ #category : #tests }
+{ #category : #next }
 RBScannerTest >> testNextWithTwoDoubleQuotesInComment [
 	| source scanner token |
 	source := '"only the"" opening"'.
 	self
 		shouldnt: [ token := (scanner := self buildScannerForText: source) next ]
 		raise: SyntaxErrorNotification.
-	self assert: token comments first equals: (1 to: source size)
+	self assert: token comments first = (1 to: source size)
 ]
 
-{ #category : #tests }
+{ #category : #next }
 RBScannerTest >> testNextWithTwoDoubleQuotesInCommentGetError [
 	| source scanner token |
 	source := '"only the"" opening'.
@@ -96,7 +96,7 @@ RBScannerTest >> testNextWithTwoDoubleQuotesInCommentGetError [
 		raise: SyntaxErrorNotification
 ]
 
-{ #category : #utilities }
+{ #category : #testing }
 RBScannerTest >> verifyErrorToken: scannedToken message: message valueExpected: valueExpected [
 	self assert: scannedToken isError.
 	self assert: scannedToken cause equals: message.

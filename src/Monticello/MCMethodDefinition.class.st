@@ -245,7 +245,7 @@ MCMethodDefinition >> isExternalStructureFieldDefinition [
 		and: [classIsMeta
 			and: [
 				(Smalltalk globals at: #ExternalStructure ifPresent: [:externalStructure |
-					self actualClass instanceSide inheritsFrom: externalStructure]) == true]]
+					self actualClass theNonMetaClass inheritsFrom: externalStructure]) == true]]
 
 ]
 
@@ -305,10 +305,10 @@ MCMethodDefinition >> postloadOver: aDefinition [
 		(self isInitializer
 			and: [ self actualClass isTrait not 
 					and: [ aDefinition isNil or: [ self source ~= aDefinition source ]]]) ifTrue: [
-				self actualClass instanceSide initialize ] ].
+				self actualClass theNonMetaClass initialize ] ].
 	"Postloading of FFI fields. This code will be called when loading FFI structures that are not by default in the image. This is NOT dead code."
 	self isExternalStructureFieldDefinition
-		ifTrue: [self actualClass instanceSide compileFields].
+		ifTrue: [self actualClass theNonMetaClass compileFields].
 ]
 
 { #category : #annotations }

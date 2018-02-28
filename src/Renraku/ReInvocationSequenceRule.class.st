@@ -26,7 +26,6 @@ ReInvocationSequenceRule class >> checksNode [
 
 { #category : #example }
 ReInvocationSequenceRule class >> exampleSequenceMethods [
-	<sampleInstance>
 	<gtExample>
 	<label: 'You should not do this. Instead subclass and call #add:… in the initialization method'>
 	

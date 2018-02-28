@@ -350,6 +350,8 @@ SymbolTest >> testIsLiteralSymbol [
 
 { #category : #requirements }
 SymbolTest >> testNew [
+	"self debug: #testNew"
+
 	
 	self should: [Symbol new: 5 ] raise: self defaultTestError. 
 ]

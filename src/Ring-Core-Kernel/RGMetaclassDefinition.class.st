@@ -21,7 +21,7 @@ RGMetaclassDefinition class >> class: anORClassDefinition [
 { #category : #variables }
 RGMetaclassDefinition >> allClassVarNames [
 
-	^self instanceSide allClassVarNames
+	^self theNonMetaClass allClassVarNames
 ]
 
 { #category : #variables }
@@ -39,25 +39,13 @@ RGMetaclassDefinition >> baseClass: aRGClassDefinition [
 
 { #category : #accessing }
 RGMetaclassDefinition >> category [
-	^ self instanceSide category
-]
-
-{ #category : #'accessing - parallel hierarchy' }
-RGMetaclassDefinition >> classSide [
-	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
-	^ self
+	^ self theNonMetaClass category
 ]
 
 { #category : #accessing }
 RGMetaclassDefinition >> environment [
 
 	^baseClass environment
-]
-
-{ #category : #'accessing - parallel hierarchy' }
-RGMetaclassDefinition >> instanceSide [
-	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
-	^ baseClass
 ]
 
 { #category : #testing }
@@ -83,7 +71,7 @@ RGMetaclassDefinition >> package [
 { #category : #accessing }
 RGMetaclassDefinition >> realClass [
 
-	^baseClass realClass classSide
+	^baseClass realClass theMetaClass
 ]
 
 { #category : #printing }
@@ -92,19 +80,19 @@ RGMetaclassDefinition >> storeOn: aStream [
 	aStream nextPut: $(. 
 	super storeOn: aStream.
 	aStream nextPutAll: ' baseClass:'.
-	self instanceSide storeOn: aStream.
+	self theNonMetaClass storeOn: aStream.
 	aStream nextPut: $).
 	
 
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy' }
+{ #category : #accessing }
 RGMetaclassDefinition >> theMetaClass [
 
 	^self
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy' }
+{ #category : #accessing }
 RGMetaclassDefinition >> theNonMetaClass [
 
 	^baseClass

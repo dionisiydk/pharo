@@ -20,8 +20,7 @@ MCPatchTest >> setUp [
 
 { #category : #running }
 MCPatchTest >> tearDown [
-	self restoreMocks.
-	super tearDown
+	self restoreMocks
 ]
 
 { #category : #tests }

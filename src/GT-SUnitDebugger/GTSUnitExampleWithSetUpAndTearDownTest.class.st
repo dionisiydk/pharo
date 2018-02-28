@@ -28,8 +28,7 @@ GTSUnitExampleWithSetUpAndTearDownTest >> setUp [
 
 { #category : #running }
 GTSUnitExampleWithSetUpAndTearDownTest >> tearDown [
-	a := nil.
-	super tearDown
+	a := nil
 ]
 
 { #category : #testing }

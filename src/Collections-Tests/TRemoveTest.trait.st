@@ -25,7 +25,6 @@ TRemoveTest >> nonEmptyWithoutEqualElements [
 
 { #category : #'tests - fixture' }
 TRemoveTest >> test0FixtureTRemoveTest [
-
 	| duplicate |
 	self empty.
 	self nonEmptyWithoutEqualElements.
@@ -43,7 +42,7 @@ TRemoveTest >> test0FixtureTRemoveTest [
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveAll [
-
+	"self debug: #testRemoveElementThatExists"
 	| el aSubCollection collection res |
 	collection := self nonEmptyWithoutEqualElements.
 	el := collection anyOne.
@@ -55,11 +54,10 @@ TRemoveTest >> testRemoveAll [
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveAllError [
-
+	"self debug: #testRemoveElementThatExists"
 	| el aSubCollection |
 	el := self elementNotIn.
 	aSubCollection := self nonEmptyWithoutEqualElements copyWith: el.
-	
 	self 
 		should: [ | res | res := self nonEmptyWithoutEqualElements removeAll: aSubCollection ]
 		raise: Error
@@ -67,31 +65,29 @@ TRemoveTest >> testRemoveAllError [
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveAllFoundIn [
-
-	| el aSubCollection   |
+	"self debug: #testRemoveElementThatExists"
+	| el aSubCollection res |
 	el := self nonEmptyWithoutEqualElements anyOne.
 	aSubCollection := (self nonEmptyWithoutEqualElements copyWithout: el) copyWith: self elementNotIn.
-	self nonEmptyWithoutEqualElements removeAllFoundIn: aSubCollection.
-	
-	self assert: self nonEmptyWithoutEqualElements size equals: 1.
-	self nonEmptyWithoutEqualElements do: [ :each | self assert: each equals: el ]
+	res := self nonEmptyWithoutEqualElements removeAllFoundIn: aSubCollection.
+	self assert: self nonEmptyWithoutEqualElements size = 1.
+	self nonEmptyWithoutEqualElements do: [ :each | self assert: each = el ]
 ]
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveAllSuchThat [
-
+	"self debug: #testRemoveElementThatExists"
 	| el aSubCollection |
 	el := self nonEmptyWithoutEqualElements anyOne.
 	aSubCollection := self nonEmptyWithoutEqualElements copyWithout: el.
 	self nonEmptyWithoutEqualElements removeAllSuchThat: [ :each | aSubCollection includes: each ].
-	
-	self assert: self nonEmptyWithoutEqualElements size equals: 1.
-	self nonEmptyWithoutEqualElements do: [ :each | self assert: each equals: el ]
+	self assert: self nonEmptyWithoutEqualElements size = 1.
+	self nonEmptyWithoutEqualElements do: [ :each | self assert: each = el ]
 ]
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveElementFromEmpty [
-
+	"self debug: #testRemoveElementFromEmpty"
 	self 
 		should: [ self empty remove: self nonEmptyWithoutEqualElements anyOne ]
 		raise: Error
@@ -99,15 +95,16 @@ TRemoveTest >> testRemoveElementFromEmpty [
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveElementReallyRemovesElement [
-
+	"self debug: #testRemoveElementReallyRemovesElement"
 	| size |
 	size := self nonEmptyWithoutEqualElements size.
 	self nonEmptyWithoutEqualElements remove: self nonEmptyWithoutEqualElements anyOne.
-	self assert: size - 1 equals: self nonEmptyWithoutEqualElements size
+	self assert: size - 1 = self nonEmptyWithoutEqualElements size
 ]
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveElementThatExists [
+	"self debug: #testRemoveElementThatExists"
 
 	| el res |
 	el := self nonEmptyWithoutEqualElements anyOne.
@@ -117,9 +114,10 @@ TRemoveTest >> testRemoveElementThatExists [
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveIfAbsent [
- 
+	"self debug: #testRemoveElementThatExists"
+
 	| el res |
 	el := self elementNotIn.
 	res := self nonEmptyWithoutEqualElements remove: el ifAbsent: [ 33 ].
-	self assert: res equals: 33
+	self assert: res = 33
 ]

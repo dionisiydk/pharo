@@ -63,7 +63,7 @@ RBPullUpMethodRefactoring >> checkClassVars [
 
 { #category : #preconditions }
 RBPullUpMethodRefactoring >> checkClassVarsFor: aSelector [ 
-	class instanceSide classVariableNames do: 
+	class theNonMetaClass classVariableNames do: 
 		[ :each | 
 		((class whichSelectorsReferToClassVariable: each) includes: aSelector) ifTrue: 
 			[ self refactoringError: ('<1p> refers to <2s> which is defined in <3p>' 

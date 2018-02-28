@@ -12,7 +12,6 @@ Class {
 
 { #category : #accessing }
 OSWindowGenericRendererExampleEventHandler >> example [
-	<sampleInstance>
 	^ example
 ]
 

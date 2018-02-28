@@ -32,7 +32,8 @@ WeakKeyToCollectionDictionaryTest >> testKeysAndValuesRemove [
 ]
 
 { #category : #'errors - those methods should be tested with collection keys' }
-WeakKeyToCollectionDictionaryTest >> testRemoveKey [	
+WeakKeyToCollectionDictionaryTest >> testRemoveKey [
+	"self debug: #testRemoveKey"
 
 "	| collection oldSize keyIn |
 	collection := self nonEmptyDict .

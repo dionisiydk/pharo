@@ -9,7 +9,6 @@ Class {
 
 { #category : #examples }
 PackageTreeExample class >> example [
-	<sampleInstance>
 
 	^PackageTreeExample new open
 ]

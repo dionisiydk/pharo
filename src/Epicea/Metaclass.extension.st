@@ -4,9 +4,9 @@ Extension { #name : #Metaclass }
 Metaclass >> asEpiceaRingDefinition [
 
 	| baseClassDefinition |
-	baseClassDefinition  := self instanceSide asEpiceaRingDefinition.
+	baseClassDefinition  := self theNonMetaClass asEpiceaRingDefinition.
 
-	^ baseClassDefinition withMetaclass classSide 
+	^ baseClassDefinition withMetaclass theMetaClass 
 		traitCompositionSource: self classSide traitCompositionString;
 		definitionSource: self classSide definition;
 		addInstanceVariables: self classSide instVarNames;

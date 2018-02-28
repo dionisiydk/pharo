@@ -13,13 +13,11 @@ MethodMapExamples >> defineCopiedVarBecomeDeadContext [
 
 { #category : #examples }
 MethodMapExamples >> exampleCopiedVarFromDeadContext [
-	<sampleInstance>
 	^ self defineCopiedVarBecomeDeadContext value
 ]
 
 { #category : #examples }
 MethodMapExamples >> exampleSimpleTemp [
-	<sampleInstance>
 	| b |
 	b := 1.
 	^(DebuggerMethodMapOpal forMethod: thisContext method) tempNamed: 'b' in: thisContext
@@ -27,7 +25,6 @@ MethodMapExamples >> exampleSimpleTemp [
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedCopying [
-	<sampleInstance>
 	| b |
 	b := 1.
 	^[ | a |
@@ -36,7 +33,6 @@ MethodMapExamples >> exampleTempNamedCopying [
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedCopying2 [
-	<sampleInstance>
 	| b |
 	b := 1.
 	^[ | a |
@@ -45,7 +41,6 @@ MethodMapExamples >> exampleTempNamedCopying2 [
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedPutCopying [
-	<sampleInstance>
 	| b |
 	b := 1.
 	^[ | a |
@@ -54,7 +49,6 @@ MethodMapExamples >> exampleTempNamedPutCopying [
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedPutCopying2 [
-	<sampleInstance>
 	| b |
 	b := 1.
 	^[ | a |
@@ -63,7 +57,6 @@ MethodMapExamples >> exampleTempNamedPutCopying2 [
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedPutTempVector [
-	<sampleInstance>
 	| b |
 	b := 1.
 	^[ | a |
@@ -72,7 +65,6 @@ MethodMapExamples >> exampleTempNamedPutTempVector [
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedPutTempVector2 [
-	<sampleInstance>
 	| b |
 	b := 1.
 	^[ | a |
@@ -81,7 +73,6 @@ MethodMapExamples >> exampleTempNamedPutTempVector2 [
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedTempCopyingNestedBlock [
-	<sampleInstance>
 	
 	^[| b |
 		b := 1.
@@ -92,7 +83,6 @@ MethodMapExamples >> exampleTempNamedTempCopyingNestedBlock [
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedTempCopyingNestedBlockPROBLEM [
-	<sampleInstance>
 	 | a |
 		 a := 2. 
 	^[| b | 
@@ -103,7 +93,6 @@ MethodMapExamples >> exampleTempNamedTempCopyingNestedBlockPROBLEM [
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedTempVector [
-	<sampleInstance>
 	| b |
 	b := 1.
 	^[ | a |
@@ -112,7 +101,6 @@ MethodMapExamples >> exampleTempNamedTempVector [
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedTempVector2 [
-	<sampleInstance>
 	| b |
 	b := 1.
 	^[ | a |
@@ -121,7 +109,6 @@ MethodMapExamples >> exampleTempNamedTempVector2 [
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedTempVectorInOptimizedBlock [
-	<sampleInstance>
 "temp a is in a temp vector and is accessed from with in the optimized ifTrue:ifFalse: block. But 
 the definition is not in the outer block, but in the method scope"
 	| result a |
@@ -134,7 +121,6 @@ the definition is not in the outer block, but in the method scope"
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedTempVectorInlinedLoop [
-	<sampleInstance>
 "This test is for accessing temp var c within an inlined loop scope. 
 Temp var c is written in the loop and closed in a block -> therefore it is in a tempvector. "
 	| a b c |
@@ -149,7 +135,6 @@ Temp var c is written in the loop and closed in a block -> therefore it is in a 
 
 { #category : #examples }
 MethodMapExamples >> exampleTempNamedTempVectorNestedBlock [
-	<sampleInstance>
 	 | a |
       a  := 1.
 	^[| b |

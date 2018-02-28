@@ -8,7 +8,7 @@ The second step of decompilation is to interpret the byte code to create corresp
 
 Then the AST is returned. The Flashback Decompiler's job stops there, because there are already some frameworks to generate Smalltalk code from an AST.
 
-The returned AST does not take optimized messages into account. Use FBDOptimizedMessagesRewriter to recover the optimized messages.
+The returned AST is does not take optimized messages into account. Use FBDOptimizdMessagesRewriter to recover the optimized messages.
 
 Instance Variables
 	simulatedStack <OrderedCollection> Simulates the bytecode stack, pushing AST nodes instead of concrete values
@@ -32,8 +32,7 @@ Class {
 		'argCount',
 		'tempCount',
 		'jumpSize',
-		'loopsArray',
-		'method'
+		'loopsArray'
 	],
 	#category : #'Flashback-Decompiler'
 }
@@ -57,15 +56,10 @@ FBDDecompiler >> canDecompile: aCompiledMethod [
 
 { #category : #initialize }
 FBDDecompiler >> createNArgs: numArgs [
-	
-	| argName |
 	^ (1 to: numArgs)
 		collect: [ :i | 
 			self incrArgCount.
-			argName := (method propertyAt: #argumentNames)
-				ifNil: [ 'arg' , argCount printString ]
-				ifNotNil: [ :args | args at: argCount ].
-			builder codeArgument: argName ]
+			builder codeArgument: 'arg' , argCount printString ]
 ]
 
 { #category : #initialize }
@@ -137,14 +131,10 @@ FBDDecompiler >> decompile: aCompiledMethod [
 ]
 
 { #category : #'public api' }
-FBDDecompiler >> decompile: aSelector in: aClass method: anInitialCompiledMethod [
-	| aCompiledMethod |
+FBDDecompiler >> decompile: aSelector in: aClass method: aCompiledMethod [
 	builder := FBDASTBuilder newFor: aClass.
-	(self canDecompile: anInitialCompiledMethod)
-		ifFalse: [ ^ self generateNativeBoostCallErrorMethodFrom: anInitialCompiledMethod ].
-	aCompiledMethod := (self shouldUseOriginalMethod: anInitialCompiledMethod)
-		ifTrue: [ anInitialCompiledMethod propertyAt: #ffiNonCompiledMethod ]
-		ifFalse: [ anInitialCompiledMethod ].
+	(self canDecompile: aCompiledMethod)
+		ifFalse: [ ^ self generateNativeBoostCallErrorMethodFrom: aCompiledMethod ].
 	self initializeForMethod: aCompiledMethod.
 	self interpretMethod: aCompiledMethod.
 	^ FBDOptimizedMessagesRewriter new
@@ -259,21 +249,20 @@ FBDDecompiler >> initializeErrorCode: cm [
 
 { #category : #initialize }
 FBDDecompiler >> initializeForMethod: aCompiledMethod [
-	method := aCompiledMethod.
-	loopsArray := FBDLoopScanner scan: method.
-	instructionStream := InstructionStream on: method.
-	self initializeStack.
+	loopsArray := FBDLoopScanner scan: aCompiledMethod .
+	instructionStream := InstructionStream on: aCompiledMethod.
+	self initializeStackForMethod: aCompiledMethod.
 	jumpSize := 0
 ]
 
 { #category : #initialize }
-FBDDecompiler >> initializeStack [
+FBDDecompiler >> initializeStackForMethod: aCompiledMethod [
 	argCount := 0.
 	tempCount := 0.
 	self
-		initializeStackNumArgs: method numArgs
+		initializeStackNumArgs: aCompiledMethod numArgs
 		copied: #()
-		numTemps: method numTemps - method numArgs
+		numTemps: aCompiledMethod numTemps - aCompiledMethod numArgs
 ]
 
 { #category : #initialize }
@@ -559,11 +548,6 @@ FBDDecompiler >> send: selector super: supered numArgs: numberArguments [
 	supered 
 		ifTrue:[ self superSend: selector numArgs: numberArguments ]
 		ifFalse: [ self send: selector numArgs: numberArguments ]
-]
-
-{ #category : #asserting }
-FBDDecompiler >> shouldUseOriginalMethod: aCompiledMethod [
-	^ aCompiledMethod hasProperty: #ffiNonCompiledMethod
 ]
 
 { #category : #'data flow instructions' }

@@ -46,7 +46,6 @@ GTSpotter class >> dontShowPreview [
 
 { #category : #example }
 GTSpotter class >> exampleInWindow [
-	<sampleInstance>
 	
 	^ GTSpotterMorph new
 		extent: 400@500;
@@ -58,7 +57,7 @@ GTSpotter class >> exampleInWindow [
 { #category : #example }
 GTSpotter class >> exampleMC [
 	"self exampleMC"
-	<sampleInstance>
+	
 	^ GTSpotterMorph new
 		extent: 400@500;
 		doLayout;
@@ -68,7 +67,6 @@ GTSpotter class >> exampleMC [
 
 { #category : #example }
 GTSpotter class >> exampleSpotterWithoutMorph [
-	<sampleInstance>
 	<gtExample>
 	<label: 'A GTSpotter without UI'>
 	
@@ -77,7 +75,6 @@ GTSpotter class >> exampleSpotterWithoutMorph [
 
 { #category : #example }
 GTSpotter class >> exampleWithPreview [
-	<sampleInstance>
 	^ GTSpotterMorph new
 		extent: (World width / 2.5 @ (World height / 1.5)) asIntegerPoint;
 		spotterModel: self new;
@@ -87,7 +84,7 @@ GTSpotter class >> exampleWithPreview [
 
 { #category : #example }
 GTSpotter class >> exampleWorldMenu [
-	<sampleInstance>
+	
 	^ GTSpotterMorph new
 		extent: 400@500;
 		doLayout;

@@ -9,6 +9,7 @@ Class {
 
 { #category : #tests }
 RxParserTest >> DoesNotWorktestBackQuotesEscape [
+	"self debug: #testBackQuotesEscape"
 	
 	"Regular expressions can also include the following backquote escapes
 to refer to popular classes of characters:
@@ -30,6 +31,8 @@ minus'."
 
 { #category : #tests }
 RxParserTest >> test [
+	"self debug: #test"
+	
 
 	self assert: ('\<t\w+' asRegexIgnoringCase
 		copy: 'now is the Time'
@@ -40,6 +43,8 @@ RxParserTest >> test [
 
 { #category : #tests }
 RxParserTest >> testCadrMatching [
+	"self debug: #testCadrMatching"
+
 	"A bit more complex example is the following expression, matching the
 name of any of the Lisp-style `car', `cdr', `caar', `cadr',
 ... functions:"
@@ -52,7 +57,9 @@ name of any of the Lisp-style `car', `cdr', `caar', `cadr',
 ]
 
 { #category : #tests }
-RxParserTest >> testCharacterSet [		
+RxParserTest >> testCharacterSet [
+	"self debug: #testCharacterSet"
+	
 	"So far, we have used only characters as the 'smallest' components of
 regular expressions. There are other, more `interesting', components.
 A character set is a string of characters enclosed in square
@@ -67,7 +74,9 @@ brackets. For example, `[01]' matches either `0' or `1':"
 ]
 
 { #category : #tests }
-RxParserTest >> testCharacterSetBinaryNumber [	
+RxParserTest >> testCharacterSetBinaryNumber [
+	"self debug: #testCharacterSetBinaryNumber"
+	
 	"Using plus operator, we can build the following binary number
 recognizer:"
 	self assert: ('10010100' matchesRegex: '[01]+').	 	
@@ -75,7 +84,9 @@ recognizer:"
 ]
 
 { #category : #tests }
-RxParserTest >> testCharacterSetInversion [	
+RxParserTest >> testCharacterSetInversion [
+	"self debug: #testCharacterSetInversion"
+	
 	"If the first character after the opening bracket is `^', the set is
 inverted: it matches any single character *not* appearing between the
 brackets:"
@@ -94,6 +105,8 @@ brackets:"
 
 { #category : #tests }
 RxParserTest >> testCharacterSetRange [
+	"self debug: #testCharacterSetRange"
+	
 	"For convenience, a set may include ranges: pairs of characters
 separated with `-'. This is equivalent to listing all characters
 between them: `[0-9]' is the same as `[0123456789]'. "	
@@ -115,6 +128,8 @@ RxParserTest >> testLookaround [
 
 { #category : #tests }
 RxParserTest >> testMatchesInwW [
+	"self debug: #testMatchesInwW"
+	
 	"1. Backslash escapes similar to those in Perl are allowed in patterns:
 	\w	any word constituent character (equivalent to [a-zA-Z0-9:=])
 	\W	any character but a word constituent (equivalent to [^a-xA-Z0-9:=]"
@@ -128,6 +143,8 @@ RxParserTest >> testMatchesInwW [
 
 { #category : #tests }
 RxParserTest >> testOrOperator [
+	"self debug: #testOrOperator"
+	
 	"The last operator is `|' meaning `or'. It is placed between two
 regular expressions, and the resulting expression matches if one of
 the expressions matches. It has the lowest possible precedence (lower
@@ -193,6 +210,8 @@ RxParserTest >> testQuantifierSimple [
 
 { #category : #tests }
 RxParserTest >> testQuotingOperators [
+	"self debug: #testQuotingOperators"
+	
 	"As we have seen, characters `*', `+', `?', `(', and `)' have special
 meaning in regular expressions. If one of them is to be used
 literally, it should be quoted: preceded with a backslash. (Thus,
@@ -207,6 +226,8 @@ further)."
 
 { #category : #tests }
 RxParserTest >> testSimpleMatchesRegex [
+	"self debug: #testSimpleMatchesRegex"
+	
 	"The simplest regular expression is a single character.  It matches
 exactly that character. A sequence of characters matches a string with
 exactly the same sequence of characters:"
@@ -218,6 +239,8 @@ exactly the same sequence of characters:"
 
 { #category : #tests }
 RxParserTest >> testSimpleMatchesRegexWithStar [
+	"self debug: #testSimpleMatchesRegexWithStar"
+	
 	"The above paragraph in testSimpleMatchesRegex introduced a primitive regular expression (a
 character), and an operator (sequencing). Operators are applied to
 regular expressions to produce more complex regular expressions.
@@ -236,6 +259,8 @@ expression. For example:"
 
 { #category : #tests }
 RxParserTest >> testSpecialCharacterInSetRange [
+	"self debug: #testSpecialCharacterInSetRange"
+	
 	"Special characters within a set are `^', `-', and `]' that closes the
 set. Below are the examples of how to literally use them in a set:
 	[01^]		-- put the caret anywhere except the beginning
@@ -257,6 +282,8 @@ set. Below are the examples of how to literally use them in a set:
 
 { #category : #tests }
 RxParserTest >> testStarPlusQuestionMark [
+	"self debug: #testStarPlusQuestionMark"
+	
 	"Two other operators similar to `*' are `+' and `?'. `+' (positive
 closure, or simply `plus') matches one or more occurrences of the
 original expression. `?' (`optional') matches zero or one, but never
@@ -271,6 +298,8 @@ more, occurrences."
 
 { #category : #tests }
 RxParserTest >> testStarPrecedence [
+	"self debug: #testStarPrecedence"
+	
 	"A star's precedence is higher than that of sequencing. A star applies
 to the shortest possible subexpression that precedes it. For example,
 'ab*' means `a followed by zero or more occurrences of b', not `zero
@@ -287,6 +316,9 @@ or more occurrences of ab':"
 
 { #category : #tests }
 RxParserTest >> testTranslatingMatchesUsing [
+	"self debug: #testTranslatingMatchesUsing"
+	
+
 	self assert: ('\<t\w+' asRegexIgnoringCase
 		copy: 'now is the Time'
 		translatingMatchesUsing: [:match | match asUppercase]) = 'now is THE TIME'.
@@ -296,6 +328,7 @@ RxParserTest >> testTranslatingMatchesUsing [
 
 { #category : #tests }
 RxParserTest >> toDotestSpecialCharacterInSetRange [
+	"self debug: #testSpecialCharacterInSetRange"
 	
 	"Special characters within a set are `^', `-', and `]' that closes the
 set. Below are the examples of how to literally use them in a set:

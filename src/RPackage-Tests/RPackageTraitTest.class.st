@@ -126,8 +126,10 @@ RPackageTraitTest >> testPackageOfTraitMethodIsTraitPackage [
 
 { #category : #tests }
 RPackageTraitTest >> testStartingSituation [
-	
-	self deny: (p5 includesClass: a1).
+	"self debug: #testStartingSituation"
+
+
+.	self deny: (p5 includesClass: a1).
 	self assert: (p4 includesClass: a1).
 	self assert: (p4 includesClass: t1).
 	self assert: (p4 definesOrExtendsClass: a1).

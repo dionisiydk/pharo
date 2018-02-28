@@ -123,6 +123,7 @@ MetacelloDictionaryRepositoryTest >> setUp [
 { #category : #running }
 MetacelloDictionaryRepositoryTest >> tearDown [
   | aGofer finalWorkingCopyList diff |
+  super tearDown.
   aGofer := Gofer new.
   self tearDownPackages: aGofer.
   aGofer references notEmpty
@@ -144,8 +145,7 @@ MetacelloDictionaryRepositoryTest >> tearDown [
         cr;
         show:
             'leaked package from ' , self printString , ' -> ' , leak printString ].
-  self assert: diff isEmpty.
-  super tearDown
+  self assert: diff isEmpty
 ]
 
 { #category : #running }

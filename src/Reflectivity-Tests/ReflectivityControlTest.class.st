@@ -28,8 +28,7 @@ ReflectivityControlTest >> tagExec: aTag [
 
 { #category : #running }
 ReflectivityControlTest >> tearDown [
-	link ifNotNil: [ link uninstall ].
-	super tearDown 
+	link ifNotNil: [link uninstall].
 ]
 
 { #category : #'tests - after' }

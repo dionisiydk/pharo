@@ -15,7 +15,7 @@ MCClassDefinition >> asRingDefinition [
 		stamp: self commentStamp;
 		definitionSource: self definitionString;
 		withMetaclass.
-	ring classSide 
+	ring theMetaClass 
 		traitCompositionSource: self classTraitCompositionString;
 		addInstanceVariables: self classInstVarNames;
 		definitionSource: self classDefinitionString.

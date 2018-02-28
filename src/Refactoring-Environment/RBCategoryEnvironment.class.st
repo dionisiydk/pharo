@@ -66,7 +66,7 @@ RBCategoryEnvironment >> defaultLabel [
 
 { #category : #testing }
 RBCategoryEnvironment >> definesClass: aClass [ 
-	^ (super definesClass: aClass) and: [ categories includes: aClass instanceSide category ]
+	^ (super definesClass: aClass) and: [ categories includes: aClass theNonMetaClass category ]
 ]
 
 { #category : #testing }
@@ -77,7 +77,7 @@ RBCategoryEnvironment >> includesCategory: aCategory [
 
 { #category : #testing }
 RBCategoryEnvironment >> includesClass: aClass [ 
-	^ (super includesClass: aClass) and: [ categories includes: aClass instanceSide category ]
+	^ (super includesClass: aClass) and: [ categories includes: aClass theNonMetaClass category ]
 ]
 
 { #category : #initialization }

@@ -20,10 +20,11 @@ SystemAnnouncerTest >> setUp [
 
 { #category : #running }
 SystemAnnouncerTest >> tearDown [
-
-	SystemAnnouncer announcer: oldSystemAnnouncer.	
-	factory cleanUp.
 	super tearDown.
+
+	SystemAnnouncer announcer: oldSystemAnnouncer.
+	
+	factory cleanUp.
 ]
 
 { #category : #tests }

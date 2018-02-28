@@ -3,11 +3,11 @@ Extension { #name : #Metaclass }
 { #category : #'*Ring-Core-Kernel' }
 Metaclass >> asFullRingDefinition [
 
-	^ self instanceSide asFullRingDefinition classSide
+	^ self theNonMetaClass asFullRingDefinition theMetaClass
 ]
 
 { #category : #'*Ring-Core-Kernel' }
 Metaclass >> asRingDefinition [
 
-	^ self instanceSide asRingDefinition classSide
+	^ self theNonMetaClass asRingDefinition theMetaClass
 ]

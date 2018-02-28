@@ -27,7 +27,7 @@ LayoutFrameTest >> testAsLayoutFrame [
 
 { #category : #'tests - conversion' }
 LayoutFrameTest >> testIdentity [
-	self assert: LayoutFrame new equals: LayoutFrame identity
+	self assert: (LayoutFrame fractions: (0 @ 0 corner: 1 @ 1)) = LayoutFrame identity
 ]
 
 { #category : #tests }

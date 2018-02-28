@@ -7,20 +7,20 @@ Class {
 	#category : #'Kernel-Tests-Objects'
 }
 
-{ #category : #utilities }
+{ #category : #utils }
 SizeInMemoryTest >> align64Bits: size [
 	size % 8 = 0
 		ifTrue: [ ^ size ]
 		ifFalse:[ ^ size + 8 - (size % 8) ].
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 SizeInMemoryTest >> headerSize [
 	" The header is 64 bits"
 	^ 8
 ]
 
-{ #category : #utilities }
+{ #category : #utils }
 SizeInMemoryTest >> paddedByteStringSize: numberOfChars [ 
 	"64 bits for the header"
 	| originalSize  |

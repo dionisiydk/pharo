@@ -42,9 +42,8 @@ SystemSettingsPersistenceTest >> systemSettingNodeList [
 
 { #category : #running }
 SystemSettingsPersistenceTest >> tearDown [
-	
-	MockSettings cleanUp.
 	super tearDown.
+	MockSettings cleanUp.
 
 ]
 

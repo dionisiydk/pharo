@@ -40,7 +40,6 @@ FTExamples class >> example2 [
 { #category : #examples }
 FTExamples class >> exampleDragAndDrop1 [
 	"Show drag&drop between two lists"
-	<sampleInstance>
 	<example>
 	| list1 list2 |
 
@@ -80,7 +79,6 @@ FTExamples class >> exampleDragAndDrop1 [
 { #category : #examples }
 FTExamples class >> exampleDragAndDrop2 [
 	"Show drag&drop between two lists, multiple selection"
-	<sampleInstance>
 	<example>
 	| list1 list2 |
 
@@ -122,7 +120,6 @@ FTExamples class >> exampleDragAndDrop2 [
 FTExamples class >> exampleDragAndDrop3 [
 	"Show drag&drop between two lists, multiple selection. 
 	 Showing 50 elements, so we can test Cmd+A (select all)"
-	<sampleInstance>
 	<example>
 	| list1 list2 |
 
@@ -163,7 +160,6 @@ FTExamples class >> exampleDragAndDrop3 [
 { #category : #examples }
 FTExamples class >> exampleDragAndDrop4 [
 	"Show drag&drop in one list, with autoscroll"
-	<sampleInstance>
 	<example>
 	| list |
 
@@ -181,7 +177,6 @@ FTExamples class >> exampleDragAndDrop4 [
 { #category : #examples }
 FTExamples class >> exampleEasyList1 [
 	"Show an easy list with all Morph methods"
-	<sampleInstance>
 	<example>
 	| list |
 
@@ -200,7 +195,6 @@ FTExamples class >> exampleEasyList1 [
 FTExamples class >> exampleEasyList2 [
 	"Show an easy list with all Morph methods and a simple menu"
 	<example>
-	<sampleInstance>
 	| list |
 
 	list := FTEasyListMorph new
@@ -227,7 +221,6 @@ FTExamples class >> exampleEasyList2 [
 FTExamples class >> exampleEasyList3 [
 	"Show an easy list with all Morph methods and a simple menu, with a list header"
 	<example>
-	<sampleInstance>
 	| list |
 
 	list := FTEasyListMorph new
@@ -253,7 +246,6 @@ FTExamples class >> exampleEasyList3 [
 
 { #category : #examples }
 FTExamples class >> exampleEditableList1 [
-	<sampleInstance>
 	<example>
 	| list data|
 	data := OrderedCollection with: 'A' with: 'B' with: 'C'.
@@ -298,7 +290,6 @@ FTExamples class >> exampleFilterableList [
 FTExamples class >> exampleList1 [
 	"Show a list with all Object methods"
 	<example>
-	<sampleInstance>
 	| list |
 
 	list := FTTableMorph new
@@ -314,7 +305,6 @@ FTExamples class >> exampleList1 [
 FTExamples class >> exampleList2 [
 	"Show a list with all Object methods and preselects one item"
 	<example>
-	<sampleInstance>
 	| list |
 
 	list := FTTableMorph new
@@ -335,7 +325,6 @@ FTExamples class >> exampleList3 [
 		- preselects one element
 	 	- responds to selection changes"
 	<example>
-	<sampleInstance>
 	| list |
 
 	list := FTTableMorph new
@@ -356,7 +345,6 @@ FTExamples class >> exampleList4 [
 		- preselects one element 
 		- respond to selection changes
 		- respond to strong selections (double click)"
-	<sampleInstance>
 	<example>
 	| list |
 
@@ -381,7 +369,6 @@ FTExamples class >> exampleList5 [
 		- respond to selection changes
 		- respond to strong selections (double click)
 		- allows multiple selection"
-	<sampleInstance>
 	<example>
 	| list |
 
@@ -484,7 +471,6 @@ FTExamples class >> exampleOutline2 [
 { #category : #examples }
 FTExamples class >> exampleTable1 [
 	"Show a table with all Object methods"
-	<sampleInstance>
 	<example>
 	| table |
 
@@ -509,7 +495,6 @@ FTExamples class >> exampleTable1 [
 { #category : #examples }
 FTExamples class >> exampleTable2 [
 	"Show a table with all Object methods, with a fixed width"
-	<sampleInstance>
 	<example>
 	| table |
 
@@ -534,7 +519,6 @@ FTExamples class >> exampleTable2 [
 { #category : #examples }
 FTExamples class >> exampleTable3 [
 	"Show a table with all Object methods, with a header"
-	<sampleInstance>
 	<example>
 	| table |
 
@@ -561,7 +545,6 @@ FTExamples class >> exampleTable3 [
 { #category : #examples }
 FTExamples class >> exampleTable4 [
 	"Show a table with all Object methods, with a resizable header"
-	<sampleInstance>
 	<example>
 	| table |
 
@@ -585,34 +568,6 @@ FTExamples class >> exampleTable4 [
 		yourself.
 		
 	^ table openInWindow
-]
-
-{ #category : #examples }
-FTExamples class >> exampleTableHorizontalScroll [
-	"Show a table with all Object methods, with a header,
-	 all fixed width columns as horizontal scroll."
-	<example>
-	"self exampleTableHorizontalScroll"
-	| table |
-	
-	table := FTTableMorph newTrialHorizontalScrollBar
-		extent: 650@500;
-		addColumn: ((FTColumn id: '#') width: 40);
-		addColumn: ((FTColumn id: 'Name') width: 350);
-		addColumn: ((FTColumn id: 'Protocol') width: 200);
-		addColumn: ((FTColumn id: 'Origin') width: 200);
-		intercellSpacing: 1;
-		dataSource: (FTExampleMethodTableDataSource for: Morph);
-		selectRowIndex: 1;
-		showFirstRowSelection;
-		onAnnouncement: FTSelectionChanged 
-			do: [ :ann | ('rows selected: ', (ann newSelectedRowIndexes asString)) crLog ];
-		onAnnouncement: FTStrongSelectionChanged 
-			do: [ :ann | ('double-click on row: ', (ann selectedRowIndex asString)) crLog ];
-		beMultipleSelection;
-		yourself.
-		
-	^table openInWindow.
 ]
 
 { #category : #'tree examples' }

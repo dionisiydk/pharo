@@ -17,9 +17,9 @@ Class {
 	#category : #'FuzzyMatcher-Tests'
 }
 
-{ #category : #examples }
+{ #category : #'as yet unclassified' }
 FuzzyMatcherExample class >> exampleAuthors [
-	<sampleInstance>
+
 	| authors blk |
 	
 	authors := OrderedCollection new.
@@ -30,9 +30,10 @@ FuzzyMatcherExample class >> exampleAuthors [
 			]
 		] 
 	].
-	Smalltalk globals allClassesAndTraitsDo: [ :each |
+	
+	Smalltalk allClassesAndTraitsDo: [ :each |
 		each methodsDo: blk. 
-		each classSide methodsDo: blk.
+		each theMetaClass methodsDo: blk.
 	].
 
 	^ self new 
@@ -42,17 +43,15 @@ FuzzyMatcherExample class >> exampleAuthors [
 
 { #category : #examples }
 FuzzyMatcherExample class >> exampleClasses [
-	<sampleInstance>
 
 	^ self new 
 		pattern: 'mph';
-		elements: (Smalltalk globals allClassesAndTraits collect: #name);
+		elements: (Smalltalk allClassesAndTraits collect: #name);
 		open
 ]
 
 { #category : #examples }
 FuzzyMatcherExample class >> examplePackages [
-	<sampleInstance>
 
 	^ self new 
 		pattern: '-st';
@@ -62,7 +61,6 @@ FuzzyMatcherExample class >> examplePackages [
 
 { #category : #examples }
 FuzzyMatcherExample class >> exampleSelectors [
-	<sampleInstance>
 
 	^ self new 
 		pattern: '::::::::::';

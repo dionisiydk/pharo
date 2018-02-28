@@ -18,18 +18,17 @@ ObsoleteTest >> setUp [
 
 { #category : #running }
 ObsoleteTest >> tearDown [
-
+	super tearDown.
 	classFactory cleanUp.
-	Smalltalk fixObsoleteReferences.
-	super tearDown	
+	Smalltalk fixObsoleteReferences
 ]
 
 { #category : #tests }
 ObsoleteTest >> testClassObsolete [
-	| aClass |
+	| aClass obj |
 	Smalltalk globals at: #ClassForObsoleteTest ifPresent: [ :cls | cls removeFromSystem ].
 	aClass := classFactory newClass.
-	
+	obj := aClass new.
 	self deny: aClass isObsolete.
 	self deny: aClass class isObsolete.
 	aClass removeFromSystem.
@@ -69,13 +68,14 @@ ObsoleteTest >> testFixObsoleteSharedPools [
 
 { #category : #tests }
 ObsoleteTest >> testTraitObsolete [
-	| aClass aTrait |
+	| aClass obj aTrait |
 	Smalltalk globals at: #ClassForObsoleteTest ifPresent: [ :cls | cls removeFromSystem ].
 	Smalltalk globals at: #TraitForObsoleteTest ifPresent: [ :tr | tr removeFromSystem ].
 	
 	aTrait := classFactory newTrait.
 	aClass := classFactory newClassUsing: aTrait.
- 
+
+	obj := aClass new.
 	self deny: aTrait isObsolete.
 	aTrait removeFromSystem.
 	self assert: aTrait isObsolete.

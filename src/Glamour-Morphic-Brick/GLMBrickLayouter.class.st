@@ -39,7 +39,6 @@ Class {
 
 { #category : #examples }
 GLMBrickLayouter class >> example [
-	<sampleInstance>
 
 	|bricks|
 	

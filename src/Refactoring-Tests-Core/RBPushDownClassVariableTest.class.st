@@ -58,7 +58,7 @@ RBPushDownClassVariableTest >> testModelPushDownVariableToClassDownTwoLevels [
 	class 
 		compile: 'bar ^Foo'
 		classified: #(#accessing ).
-	class := class instanceSide.
+	class := class theNonMetaClass.
 	self executeRefactoring: (RBPushDownClassVariableRefactoring 
 			model: model
 			variable: #Foo

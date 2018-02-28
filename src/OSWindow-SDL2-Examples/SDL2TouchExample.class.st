@@ -14,7 +14,6 @@ Class {
 
 { #category : #examples }
 SDL2TouchExample class >> example [
-	<sampleInstance>
 	^ self new open
 ]
 

@@ -87,7 +87,6 @@ PolygonMorph class >> defaultArrowSpec [
 
 { #category : #examples }
 PolygonMorph class >> example1 [
-	<sampleInstance>
 	"self example1"
 	^ (PolygonMorph
 		vertices: {261@400. 388@519. 302@595. 	222@500.	141@583. 34@444}

@@ -23,7 +23,6 @@ Class {
 
 { #category : #examples }
 SDL2TouchGestureExample2 class >> example [
-	<sampleInstance>
 	^ self new open
 ]
 

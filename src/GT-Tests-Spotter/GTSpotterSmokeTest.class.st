@@ -16,9 +16,9 @@ GTSpotterSmokeTest >> setUp [
 
 { #category : #running }
 GTSpotterSmokeTest >> tearDown [
-		
-	window ifNotNil: [ window delete ].
-	super tearDown
+	super tearDown.
+	
+	window ifNotNil: [ window delete ]
 ]
 
 { #category : #tests }

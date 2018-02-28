@@ -2,8 +2,7 @@ Extension { #name : #Object }
 
 { #category : #'*UnifiedFFI-Legacy' }
 Object >> nbCall: fnSpec [
-	"You can override this method if you need to"
-	<ffiCalloutTranslator>
+	" you can override this method if you need to"
 	
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
@@ -12,9 +11,7 @@ Object >> nbCall: fnSpec [
 
 { #category : #'*UnifiedFFI-Legacy' }
 Object >> nbCall: fnSpec module: aModuleNameOrHandle [
-	"You can override this method if you need to"
-	<ffiCalloutTranslator>
-	
+	" you can override this method if you need to"
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
 		function: fnSpec module: aModuleNameOrHandle
@@ -22,9 +19,7 @@ Object >> nbCall: fnSpec module: aModuleNameOrHandle [
 
 { #category : #'*UnifiedFFI-Legacy' }
 Object >> nbCall: fnSpec module: aModuleNameOrHandle options: callOptions [
-	"You can override this method if you need to"
-	<ffiCalloutTranslator>
-	
+	" you can override this method if you need to"
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
 		options: callOptions;
@@ -33,8 +28,7 @@ Object >> nbCall: fnSpec module: aModuleNameOrHandle options: callOptions [
 
 { #category : #'*UnifiedFFI-Legacy' }
 Object >> nbCall: fnSpec options: callOptions [
-	"You can override this method if you need to"
-	<ffiCalloutTranslator>
+	" you can override this method if you need to"
 
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;

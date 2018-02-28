@@ -102,7 +102,7 @@ CriticsCache >> addFalsePositive: aCritic forRule: aRule [
 CriticsCache >> addFalsePositiveClass: aClass [ 
 	
 	| fp |
-	falsePositiveClasses add: aClass instanceSide. 
+	falsePositiveClasses add: aClass theNonMetaClass. 
 	critics keysAndValuesDo: [ :rule :criticss |
 		fp := criticss select: [ :critic | aClass = critic criticTheNonMetaclassClass ].
 		fp do: [ :each | self addFalsePositive: each forRule: rule] ].

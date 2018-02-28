@@ -251,20 +251,6 @@ RGElementDefinition >> hash [
 	^self class hash bitXor: (self parentName hash bitXor: self isMetaSide hash)
 ]
 
-{ #category : #'generic parent api' }
-RGElementDefinition >> instanceSideParentName [
-	"Rejects the prefix ' class' or ' classTrait' of the parentName"
-	| index |
-	index := self parentName
-				indexOfSubCollection: ' class'
-				startingAt: 1
-				ifAbsent: [ ^self parentName ].
-
-	^(self parentName 
-		copyFrom: 1
-		to: index - 1) asSymbol
-]
-
 { #category : #testing }
 RGElementDefinition >> isDefined [
 	"isDefined when the receiver has its realClass defined in the system"
@@ -360,13 +346,13 @@ RGElementDefinition >> setParentInfo: anObject [
 	self isMetaSide: anObject isMeta
 ]
 
-{ #category : #deprecated }
+{ #category : #'class element specific api' }
 RGElementDefinition >> theNonMetaClassName [
 
-	^self instanceSideParentName 
+	^self theNonMetaParentName 
 ]
 
-{ #category : #deprecated }
+{ #category : #'generic parent api' }
 RGElementDefinition >> theNonMetaParentName [
 	"Rejects the prefix ' class' or ' classTrait' of the parentName"
 	| index |

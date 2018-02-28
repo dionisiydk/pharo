@@ -24,7 +24,6 @@ Class {
 	#instVars : [
 		'container',
 		'verticalScrollBar',
-		'horizontalScrollBar',
 		'selectionColor',
 		'showIndex',
 		'dataSource',
@@ -40,8 +39,7 @@ Class {
 		'allowsDeselection',
 		'needToggleAtMouseUp',
 		'function',
-		'resizable',
-		'trialHSB'
+		'resizable'
 	],
 	#category : #'Morphic-Widgets-FastTable'
 }
@@ -86,13 +84,6 @@ FTTableMorph class >> defaultSecondarySelectionColor [
 { #category : #accessing }
 FTTableMorph class >> defaultSelectionColor [
 	^ Smalltalk ui theme selectionColor
-]
-
-{ #category : #temporary }
-FTTableMorph class >> newTrialHorizontalScrollBar [
-	"This method just temporary to guard new changes from hurtingtools durign development"
-	"See GTExamples class >> exampleTableHorizontalScroll"
-	^self basicNew initializeTrialHorizontalScrollBar
 ]
 
 { #category : #'drag and drop' }
@@ -424,29 +415,6 @@ FTTableMorph >> highlightedRowIndexes [
 	^ highlightedRowIndexes
 ]
 
-{ #category : #private }
-FTTableMorph >> horizontalScrollBar [
-	^ horizontalScrollBar
-]
-
-{ #category : #private }
-FTTableMorph >> horizontalScrollBarHeight [
-	^trialHSB 
-		ifNil: [ 0 ] 
-		ifNotNil: [ 
-			self isHorizontalScrollBarVisible ifFalse: [ ^ 0 ].
-			self scrollBarThickness
-			] 
-]
-
-{ #category : #private }
-FTTableMorph >> horizontalScrollBarValue: aNumber [
-	trialHSB ifNotNil: [ 
-		self inform: 'FTTableMorph>>#horizontalScrollBarValue: ', aNumber printString , String cr, 
-			'Does nothing yet.' , String cr, 'Need some advise here.'
-	].
-]
-
 { #category : #initialization }
 FTTableMorph >> initialize [ 
 	super initialize.
@@ -498,21 +466,7 @@ FTTableMorph >> initializeScrollBars [
 		model: self; 
 		setValueSelector: #verticalScrollBarValue:;
 		yourself.
-	self addMorph: verticalScrollBar.
-
-	trialHSB ifNotNil: [ 	
-		horizontalScrollBar := ScrollBar new 
-			model: self; 
-			setValueSelector: #horizontalScrollBarValue:;
-			yourself.
-		self addMorph: horizontalScrollBar
-		].
-]
-
-{ #category : #initialization }
-FTTableMorph >> initializeTrialHorizontalScrollBar [
-	trialHSB := true.
-	self initialize.
+	self addMorph: verticalScrollBar
 ]
 
 { #category : #accessing }
@@ -526,15 +480,6 @@ FTTableMorph >> intercellSpacing: aNumberOrPoint [
 		x: space between cells 
 		y: space between rows"
 	intercellSpacing := aNumberOrPoint asPoint 
-]
-
-{ #category : #private }
-FTTableMorph >> isHorizontalScrollBarVisible [
-	^trialHSB 
-		ifNil: [ false ] 
-		ifNotNil: [ 
-			self horizontalScrollBar owner isNotNil.
-			]
 ]
 
 { #category : #testing }
@@ -785,7 +730,6 @@ FTTableMorph >> refresh [
 	self ensureAtLeastOneColumn.
 	self recalculateVerticalScrollBar.
 	self verticalScrollBar changed.
-	trialHSB ifNotNil: [ self horizontalScrollBar changed ].
 	self container changed
 	
 ]
@@ -800,7 +744,6 @@ FTTableMorph >> resetPosition [
 	"Resets all values to original value"
 	showIndex := 0.
 	self verticalScrollBar value: 0.
-	trialHSB ifNotNil: [	self horizontalScrollBar value: 0 ].
 	self container setNeedsRefreshExposedRows.
 	self container updateExposedRows.
 ]
@@ -808,7 +751,6 @@ FTTableMorph >> resetPosition [
 { #category : #private }
 FTTableMorph >> resizeAllSubviews [
 	self resizeVerticalScrollBar.
-	trialHSB ifNotNil: [ self resizeHorizontalScrollBar ].
 	"if we resized scrollbar, we need to recalculate it because values change (and now visibility 
 	 can be toggled, shown items can change, etc.)"
 	self recalculateVerticalScrollBar.
@@ -832,11 +774,10 @@ FTTableMorph >> resizeColumns [
 ]
 
 { #category : #private }
-FTTableMorph >> resizeContainer [ 
+FTTableMorph >> resizeContainer [
 	| topLeft bottomRight |
 	topLeft := (self bounds left - self borderWidth) @ self bounds top - self borderWidth.
-	bottomRight := (self bounds right  - self verticalScrollBarWidth    - self borderWidth) 
-					 @ (self bounds bottom - self horizontalScrollBarHeight - self borderWidth).
+	bottomRight := (self bounds right - self verticalScrollBarWidth - self borderWidth) @ self bounds bottom - self borderWidth.
 	self container
 		bounds:
 			(function isExplicite
@@ -845,22 +786,10 @@ FTTableMorph >> resizeContainer [
 ]
 
 { #category : #private }
-FTTableMorph >> resizeHorizontalScrollBar [
-	| width height corner |
-	trialHSB ifNotNil: [ 
-		width := self bounds width - (self borderWidth * 2) - self verticalScrollBarWidth.
-		height := self scrollBarThickness.
-		corner := self bounds bottomLeft - ((width + self borderWidth)@(0 - self borderWidth)).
-		corner := self bounds bottomLeft - ((0 - self borderWidth)@(height+self borderWidth)).
-		self horizontalScrollBar bounds: (corner extent: width@height).
-		]
-]
-
-{ #category : #private }
 FTTableMorph >> resizeVerticalScrollBar [
 	| width height corner |
 	width := self scrollBarThickness.
-	height := self bounds height - (self borderWidth * 2) - self horizontalScrollBarHeight.
+	height := self bounds height - (self borderWidth * 2).
 	corner := self bounds topRight - ((width + self borderWidth)@(0 - self borderWidth)).
 	self verticalScrollBar bounds: (corner extent: width@height)
 ]

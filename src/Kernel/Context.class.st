@@ -127,7 +127,7 @@ Context class >> initializePrimitiveSimulators [
 
 	Class allSubclassesDo: [:metaclass |
 		(metaclass includesSelector: #registerPrimitiveSimulators) ifTrue: [
-			metaclass instanceSide registerPrimitiveSimulators.
+			metaclass theNonMetaClass registerPrimitiveSimulators.
 			]
 		].
 ]
@@ -1118,21 +1118,6 @@ Context >> longStack [
 	^ String streamContents: [ :stream |
 		(self stackOfSize: 100) do: [ :item | 
 			stream print: item; cr ]]
-]
-
-{ #category : #accessing }
-Context >> lookupSymbol: aSymbol [
-	| scope var |
-	scope := self sourceNodeExecuted scope.
-	var := scope lookupVar: aSymbol asString.
-	"Local variables"
-	(var isKindOf: OCTempVariable) ifTrue: [^ var searchFromContext: self scope: scope].
-	"Instance variables"
-	(var isKindOf: OCSlotVariable) ifTrue: [^ self receiver instVarNamed: aSymbol].
-	"Class variables and globals"
-	(var isKindOf: OCLiteralVariable) ifTrue: [ ^ var assoc value ].
-	^ nil.
-	
 ]
 
 { #category : #accessing }

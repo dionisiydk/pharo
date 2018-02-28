@@ -37,6 +37,5 @@ NECOverrideModel >> methodAt: aNumber [
 
 { #category : #action }
 NECOverrideModel >> title [
-	^ '(override) ' , 
-            (clazz superclass ifNotNil: #name ifNil: [ clazz name ])
+	^ '(override) ' , clazz superclass name
 ]

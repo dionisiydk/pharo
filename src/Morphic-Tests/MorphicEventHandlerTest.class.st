@@ -17,8 +17,7 @@ MorphicEventHandlerTest >> setUp [
 { #category : #running }
 MorphicEventHandlerTest >> tearDown [
 
-	morph := nil.
-	super tearDown
+	morph := nil
 ]
 
 { #category : #tests }

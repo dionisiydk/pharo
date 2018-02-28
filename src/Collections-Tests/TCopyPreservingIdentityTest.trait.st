@@ -13,6 +13,7 @@ TCopyPreservingIdentityTest >> nonEmpty [
 
 { #category : #'tests - copy' }
 TCopyPreservingIdentityTest >> testCopyReturnsIdentity [
+	"self debug: #testCopyReturnsIdentity"
 	
 	| copy | 
 	copy := self nonEmpty copy.

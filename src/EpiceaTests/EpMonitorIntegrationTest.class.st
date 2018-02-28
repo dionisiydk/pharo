@@ -44,10 +44,9 @@ EpMonitorIntegrationTest >> setUp [
 
 { #category : #running }
 EpMonitorIntegrationTest >> tearDown [
+	super tearDown.
 
 	monitor disable.	
 	classFactory cleanUp.
 	logBuilder cleanUp.
-
-	super tearDown.
 ]

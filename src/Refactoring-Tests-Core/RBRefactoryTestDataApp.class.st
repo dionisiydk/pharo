@@ -189,7 +189,6 @@ RBRefactoryTestDataApp >> equalsTrue [
 
 { #category : #test }
 RBRefactoryTestDataApp >> exampleCall [
-	<sampleInstance>
 	^self rename: 1 two: 2
 ]
 

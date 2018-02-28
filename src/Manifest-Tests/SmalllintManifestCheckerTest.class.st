@@ -48,8 +48,7 @@ SmalllintManifestCheckerTest >> setUp [
 SmalllintManifestCheckerTest >> tearDown [
 	
 	self cleaningResources.
-	ASTCache reset.
-	super tearDown 
+	ASTCache reset
 ]
 
 { #category : #tests }

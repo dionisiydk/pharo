@@ -12,7 +12,6 @@ Class {
 
 { #category : #examples }
 SimplestPaginatedClassListExample class >> example [
-	<sampleInstance>
 
 	^SimplestPaginatedClassListExample new openOn: Object
 ]

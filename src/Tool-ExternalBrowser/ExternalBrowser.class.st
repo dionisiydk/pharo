@@ -101,7 +101,7 @@ ExternalBrowser >> classesOfPackage: aPackage [
 	| theClasses |
 	theClasses := aPackage classes.
 	^ self showClassSide state
-		ifTrue: [ theClasses collect: #classSide ]
+		ifTrue: [ theClasses collect: #theMetaClass ]
 		ifFalse: [ theClasses ]
 ]
 
@@ -267,7 +267,7 @@ ExternalBrowser >> selectorsOfProtocol: aProtocol [
 	| theSelectedClass |
 	theSelectedClass := self showClassSide state
 		ifFalse: [ self classes selectedItem ]
-		ifTrue: [ self classes selectedItem classSide ].
+		ifTrue: [ self classes selectedItem theMetaClass ].
 	^ (theSelectedClass 
 		methodsInProtocol: self protocols selectedItem) collect: #selector
 ]

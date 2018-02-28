@@ -42,9 +42,9 @@ Class {
 
 { #category : #private }
 RenderBugsTest >> long [
-	"Return time limit in milliseconds for tests"
+	"return time limit in milliseconds for tests"
 
-	^50
+	^ 50
 ]
 
 { #category : #private }
@@ -58,21 +58,31 @@ RenderBugsTest >> shouldntTakeLong: aBlock [
 RenderBugsTest >> testForward [
 	"If the bug exist there will be an infinte recursion."
 
+	"self new testForward"
+
+	"self run: #testForward"
+
 	| t |
 	cases := {(t := TransformationMorph new openCenteredInWorld)}.
-	self shouldntTakeLong: [ self assert: t forwardDirection equals: 0.0 ]
+	self shouldntTakeLong: [ self assert: t forwardDirection = 0.0 ].
+	^ true
 ]
 
 { #category : #tests }
 RenderBugsTest >> testHeading [
 	"If the bug exist there will be an infinte recursion."
 
+	"self new testHeading"
+
+	"self run: #testHeading"
+
 	| t |
 	cases := {(t := TransformationMorph new openCenteredInWorld)}.
 	self
 		shouldntTakeLong: [ 
-			[ self assert: t heading equals: 0.0 ]
-				ensure: [ t delete ] ]
+			[ self assert: t heading = 0.0 ]
+				ensure: [ t delete ] ].
+	^ true
 ]
 
 { #category : #tests }
@@ -93,20 +103,31 @@ RenderBugsTest >> testNilExtensionOnDraw [
 RenderBugsTest >> testSetForward [
 	"If the bug exist there will be an infinte reccursion."
 
+	"self new testSetForward"
+
+	"self run: #testSetForward"
+
 	| t |
 	cases := {(t := TransformationMorph new openCenteredInWorld)}.
 	self
 		shouldntTakeLong: [ 
 			t forwardDirection: 180.0.
-			self assert: t forwardDirection equals: 0.0 ].	"and without a rendee it should not change things." 
+			self assert: t forwardDirection = 0.0 ].	"and without a rendee it should not change things."
+	^ true
 ]
 
 { #category : #tests }
 RenderBugsTest >> testTestTime [
-	"This is a control case. Should always pass. If it does not something external to the tests 
-	 are slowing things down past the 1 millisecond mark."
+	"This is a control case. Should always pass. 
+If it does not something external to the tests are slowing things down 
+past the 1 millisecond mark."
+
+	"self new testTestTime"
+
+	"self run: #testTestTime"
 
 	| t |
 	cases := {(t := TransformationMorph new openCenteredInWorld)}.
-	self shouldntTakeLong: [ self assert: true ]
+	self shouldntTakeLong: [ self assert: true ].
+	^ true
 ]

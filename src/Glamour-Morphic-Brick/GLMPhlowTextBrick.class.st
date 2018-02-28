@@ -9,7 +9,6 @@ Class {
 
 { #category : #examples }
 GLMPhlowTextBrick class >> example [
-	<sampleInstance>
 	
 	^ GLMCompositeBrick gtExamplePharoMethod
 ]

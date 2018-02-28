@@ -49,7 +49,7 @@ RBSmalllintTest >> assertIsValidRule: aRule [
 RBSmalllintTest >> assertResult: critiques hasAllClassesInEnvironment: anEnvironment [
 	anEnvironment classesDo: [ :class |
 		self assert: (critiques anySatisfy: [ :crit |
-			crit sourceAnchor entity instanceSide = class theNonMetaClass ]) ]
+			crit sourceAnchor entity theNonMetaClass = class theNonMetaClass ]) ]
 ]
 
 { #category : #asserting }
@@ -87,7 +87,7 @@ RBSmalllintTest >> classAndMetaClassRuleFor: aTestSelector plusClasses: aCollect
 	expectedResultEnvironment :=
 		self classEnvironmentWithAll: expectedResultClasses.
 	expectedResultClasses do: [ :each |
-		expectedResultEnvironment addClass: each classSide ].
+		expectedResultEnvironment addClass: each theMetaClass ].
 	self
 		assertResultOfRule: result
 		hasSameClassesAsEnvironment: expectedResultEnvironment

@@ -11,7 +11,7 @@ Class {
 	#category : #'Reflectivity-Tools-Tests'
 }
 
-{ #category : #utilities }
+{ #category : #utils }
 BreakpointTest >> newDummyClass [
 	^ Object
 		subclass: #DummyClassForBreakpoint
@@ -30,12 +30,12 @@ BreakpointTest >> setUp [
 
 { #category : #running }
 BreakpointTest >> tearDown [
-	| pkg |	
+	| pkg |
+	super tearDown.
 	Breakpoint all addAll: previousBreakpoints.
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
 	pkg := 'DummyPackage' asPackageIfAbsent: [ ]. 
-	pkg ifNotNil: [ pkg removeFromSystem ].
-	super tearDown.
+	pkg ifNotNil: [ pkg removeFromSystem ]
 ]
 
 { #category : #tests }

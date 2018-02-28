@@ -50,7 +50,6 @@ TreePresenter class >> defaultSpec [
 
 { #category : #examples }
 TreePresenter class >> example [
-	<sampleInstance>
 	| m |
 
 	m := self new.

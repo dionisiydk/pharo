@@ -36,9 +36,9 @@ SlotAnnouncementsTest >> subscribeOn: anAnnouncement [
 
 { #category : #running }
 SlotAnnouncementsTest >> tearDown [ 
-
-	SystemAnnouncer uniqueInstance unsubscribe: collectedAnnouncements.
 	super tearDown.
+	
+	SystemAnnouncer uniqueInstance unsubscribe: collectedAnnouncements.
 ]
 
 { #category : #tests }

@@ -41,7 +41,7 @@ EpClassModification >> behaviorAffectedName [
 EpClassModification >> hasMetaclassChanges [
 	"FIX should compare metaclasses as a whole"
 
-	^ oldClass classSide instVarNames ~= newClass classSide instVarNames
+	^ oldClass theMetaClass instVarNames ~= newClass theMetaClass instVarNames
 ]
 
 { #category : #testing }
@@ -57,8 +57,8 @@ EpClassModification >> hasNonMetaclassChanges [
 EpClassModification >> initializeOldClass: anOldClass newClass: aNewClass [
 
 	self initialize.
-	oldClass := anOldClass asEpiceaRingDefinition instanceSide.
-	newClass := aNewClass asEpiceaRingDefinition instanceSide.
+	oldClass := anOldClass asEpiceaRingDefinition theNonMetaClass.
+	newClass := aNewClass asEpiceaRingDefinition theNonMetaClass.
 ]
 
 { #category : #accessing }

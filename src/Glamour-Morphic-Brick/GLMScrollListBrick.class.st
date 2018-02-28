@@ -11,7 +11,6 @@ Class {
 
 { #category : #examples }
 GLMScrollListBrick class >> example [
-	<sampleInstance>
 	|adaptor|
 	adaptor := nil.
 	adaptor := GLMBrickListModel new
@@ -33,7 +32,6 @@ GLMScrollListBrick class >> example [
 
 { #category : #examples }
 GLMScrollListBrick class >> exampleCollection [
-	<sampleInstance>
 
 	^ GLMFoundationBrick new
 		brickRoot: (self new model: (GLMBrickListModel new on: Smalltalk allClasses));
@@ -43,7 +41,6 @@ GLMScrollListBrick class >> exampleCollection [
 
 { #category : #examples }
 GLMScrollListBrick class >> exampleDifferentHeights [
-	<sampleInstance>
 	|adaptor|
 	adaptor := nil.
 	adaptor := GLMBrickListModel new
@@ -66,7 +63,6 @@ GLMScrollListBrick class >> exampleDifferentHeights [
 
 { #category : #examples }
 GLMScrollListBrick class >> exampleEmptyCollection [
-	<sampleInstance>
 	|adaptor|
 	adaptor := nil.
 	adaptor := GLMBrickListModel new
@@ -88,7 +84,6 @@ GLMScrollListBrick class >> exampleEmptyCollection [
 
 { #category : #examples }
 GLMScrollListBrick class >> exampleInfinity [
-	<sampleInstance>
 	|adaptor|
 	adaptor := nil.
 	adaptor := GLMBrickListModel new

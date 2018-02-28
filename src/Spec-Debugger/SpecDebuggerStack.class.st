@@ -137,7 +137,7 @@ SpecDebuggerStack class >> spec [
 SpecDebuggerStack >> browseClassRefs [
 
 	self currentContext ifNotNil: [ :aContext || class|
-		class := aContext methodClass instanceSide.
+		class := aContext methodClass theNonMetaClass.
 		class isTrait 
 			ifTrue: [ self systemNavigation browseAllUsersOfTrait: class ]
 			ifFalse: [ self systemNavigation browseAllCallsOnClass: class ] ]
@@ -376,7 +376,7 @@ SpecDebuggerStack >> inspectInstances [
 	"Inspect all instances of the selected class."
 
 	self currentClassOrMetaClass ifNotNil: [ :aClass |
-		aClass instanceSide inspectAllInstances ]
+		aClass theNonMetaClass inspectAllInstances ]
 ]
 
 { #category : #'actions browsing' }
@@ -384,7 +384,7 @@ SpecDebuggerStack >> inspectSubInstances [
 	"Inspect all instances of the selected class and all its subclasses"
 
 	self currentClassOrMetaClass ifNotNil: [ :aClass |
-		aClass instanceSide inspectSubInstances ]
+		aClass theNonMetaClass inspectSubInstances ]
 ]
 
 { #category : #accessing }

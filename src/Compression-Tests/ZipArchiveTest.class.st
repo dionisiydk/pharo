@@ -36,7 +36,6 @@ ZipArchiveTest >> tearDown [
 	zip close.	
 	subdir ensureDeleteAll.
 	zipFile ensureDelete.
-	super tearDown 
 ]
 
 { #category : #tests }

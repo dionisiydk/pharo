@@ -18,7 +18,9 @@ SHStyleElementTest >> setUp [
 
 { #category : #tests }
 SHStyleElementTest >> testPrintOn [
- 
+	"
+	self debug: #testPrintOn
+	"
 	self assert: element printString =  'a SHStyleElement tokens: #(#self #super #true #false)'
 
 	
@@ -26,7 +28,9 @@ SHStyleElementTest >> testPrintOn [
 
 { #category : #tests }
 SHStyleElementTest >> testStyleForTable [
- 
+	"
+	self debug: #testStyleForTable
+	"
 	| table |
 	table := element styleForTable.
 	self assert: table size = 4.

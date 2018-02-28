@@ -45,8 +45,7 @@ GLMPagerMorphTest >> setUp [
 { #category : #running }
 GLMPagerMorphTest >> tearDown [
 
-	window ifNotNil: [ window delete ].
-	super tearDown
+	window ifNotNil: [ window delete ]
 ]
 
 { #category : #tests }

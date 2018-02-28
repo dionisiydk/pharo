@@ -6,6 +6,8 @@ Class {
 
 { #category : #'testing-applying trait composition' }
 TraitPureBehaviorTest >> testChangeSuperclass [
+	"self run: #testChangeSuperclass"
+
 	"Test that when the superclass of a class is changed the non-local methods
 	of the class sending super are recompiled to correctly store the new superclass."
 
@@ -18,9 +20,10 @@ TraitPureBehaviorTest >> testChangeSuperclass [
 	self deny: (self c2 localSelectors includes: #m51).
 	self deny: (self c2 >> #m52) == (self t5 >> #m52). "no sharing!!"
 	
-	self assert: self c2 traitCompositionString equals: 'T5 - {#m11}'.
-	self assert: self c2 selectors sorted equals: #(bar foo m12 m13 m21 m22 m51 m52 m53).
-	self assert: self c2 localSelectors sorted equals: #(bar foo).
+	self assert: self c2 traitCompositionString = 'T5 - {#m11}'.
+	self assert: self c2 selectors sorted =  #(bar foo m12 m13 m21 m22 m51 m52 m53).
+	self assert: self c2 localSelectors sorted =  #(bar foo).
+
 
 	"change superclass of C2 from C1 to X"
 	newSuperclass := self createClassNamed: #X superclass: Object uses: {}.
@@ -35,17 +38,17 @@ TraitPureBehaviorTest >> testChangeSuperclass [
 	self assert: self c2 superclass == newSuperclass.
 
 	newSuperclass compile: 'foo ^17'.
-	self assert: aC2 m51 equals: 17.
+	self assert: aC2 m51 = 17.
 	self deny: (self c2 localSelectors includes: #m51).
 
 	self c2 compile: 'm51 ^19'.
-	self assert: aC2 m51 equals: 19.
+	self assert: aC2 m51 = 19.
 	
 	self deny: (self c2 >> #m52) == (self t5 >> #m52). "no sharing!!"
 
-	self assert: self c2 traitCompositionString equals: 'T5 - {#m11}'.
-	self assert: self c2 selectors sorted equals: #(bar foo m12 m13 m21 m22 m51 m52 m53).
-	self assert: self c2 localSelectors sorted equals: #(bar foo m51).
+	self assert: self c2 traitCompositionString = 'T5 - {#m11}'.
+	self assert: self c2 selectors sorted =  #(bar foo m12 m13 m21 m22 m51 m52 m53).
+	self assert: self c2 localSelectors sorted =  #(bar foo m51).
 
 	"change superclass of C2 back to C1"
 	self c1
@@ -56,18 +59,19 @@ TraitPureBehaviorTest >> testChangeSuperclass [
 		poolDictionaries: ''
 		category: self c2 category.
 
-	self assert: aC2 m51 equals: 19.
+	self assert: (aC2 m51 = 19).
 	self assert: self c2 superclass == self c1.
 	self assert: (self c2 localSelectors includes: #m51).
 	self deny: (self c2 >> #m52) == (self t5 >> #m52). "no sharing!!"
 
-	self assert: self c2 traitCompositionString equals: 'T5 - {#m11}'.
-	self assert: self c2 selectors sorted equals: #(bar foo m12 m13 m21 m22 m51 m52 m53).
-	self assert: self c2 localSelectors sorted equals: #(bar foo m51).
+	self assert: self c2 traitCompositionString = 'T5 - {#m11}'.
+	self assert: self c2 selectors sorted =  #(bar foo m12 m13 m21 m22 m51 m52 m53).
+	self assert: self c2 localSelectors sorted =  #(bar foo m51).
 ]
 
 { #category : #'testing-applying trait composition' }
-TraitPureBehaviorTest >> testClassesWithTraits [	
+TraitPureBehaviorTest >> testClassesWithTraits [
+	"self debug: #testClassesWithTraits"
 
 	self assert: (self c1 methodDict includesKey: #foo).
 	self assert: (self c2 methodDict includesKey: #bar).
@@ -116,49 +120,54 @@ TraitPureBehaviorTest >> testIsLocalAliasSelector [
 
 { #category : #testing }
 TraitPureBehaviorTest >> testLocalSelectors [
+	"self run: #testLocalSelectors"
 
-	self assert: self t3 localSelectors size equals: 3.
+	self assert: self t3 localSelectors size = 3.
 	self assert: (self t3 localSelectors includesAll: #(#m31 #m32 #m33 )).
 	self assert: (self t3 includesLocalSelector: #m32).
 	self deny: (self t3 includesLocalSelector: #inexistantSelector).
-	self assert: self t5 localSelectors size equals: 3.
+	self assert: self t5 localSelectors size = 3.
 	self assert: (self t5 localSelectors includes: #m51).
 	self assert: (self t5 includesLocalSelector: #m51).
 	self deny: (self t5 includesLocalSelector: #m11).
 	self t5 removeSelector: #m51.
 	self deny: (self t3 includesLocalSelector: #m51).
 	self deny: (self t5 includesLocalSelector: #m11).
-	self assert: self t5 localSelectors size equals: 2.
+	self assert: self t5 localSelectors size = 2.
 	self t5 compile: 'm52 ^self'.
-	self assert: self t5 localSelectors size equals: 2.
+	self assert: self t5 localSelectors size = 2.
 	self assert: (self t5 localSelectors includes: #m52).
 
 	"test that propagated methods do not get in as local methods"
 	self t2 compile: 'local2 ^self'.
 	self deny: (self t5 includesLocalSelector: #local2).
-	self assert: self t5 localSelectors size equals: 2.
+	self assert: self t5 localSelectors size = 2.
 	self assert: (self t5 localSelectors includes: #m52).
-	self assert: self c2 localSelectors size equals: 2.
+	self assert: self c2 localSelectors size = 2.
 	self assert: (self c2 localSelectors includesAll: #(#foo #bar ))
 ]
 
 { #category : #testing }
 TraitPureBehaviorTest >> testMethodCategoryReorganization [
+	"self run: #testMethodCategory"
 
 	self t1 compile: 'm1' classified: 'category1'.
-	self assert: (self t5 organization categoryOfElement: #m1) equals: #category1.
-	self assert: (self c2 organization categoryOfElement: #m1) equals: #category1.
+	self assert: (self t5 organization categoryOfElement: #m1) = #category1.
+	self assert: (self c2 organization categoryOfElement: #m1) = #category1.
 	self t1 organization 
 		classify: #m1
 		under: #category2
 		suppressIfDefault: true.
-	self assert: (self t5 organization categoryOfElement: #m1) equals: #category2.
-	self assert: (self c2 organization categoryOfElement: #m1) equals: #category2
+	self assert: (self t5 organization categoryOfElement: #m1) = #category2.
+	self assert: (self c2 organization categoryOfElement: #m1) = #category2
 ]
 
 { #category : #'testing-applying trait composition' }
 TraitPureBehaviorTest >> testMethodClass [
 	"Test sharing of compiled methods between traits and their users. Methods are installed in exactly one behavior, however, the source pointers of methods are shared (unless sources or changes have been condensed). Verify	that methodClass properties are set correctly."
+	
+	"self debug: #testMethodClass"
+
 	| m1 m2 |
 	m1 := self t5 >> #m51.
 	m2 := self c2 >> #m51.
@@ -271,7 +280,10 @@ TraitPureBehaviorTest >> testRemovingMethods [
 	from the trait is installed instead and that the users are 
 	updated."
 
+	"self run: #testRemovingMethods"
+
 	"Classes"
+
 	self c2 compile: 'm12 ^0' classified: #xxx.
 	self assert: (self c2 includesLocalSelector: #m12).
 	self c2 removeSelector: #m12.
@@ -280,37 +292,40 @@ TraitPureBehaviorTest >> testRemovingMethods [
 
 	"Traits"
 	self t5 compile: 'm12 ^0' classified: #xxx.
-	self assert: self c2 new m12 equals: 0.
+	self assert: self c2 new m12 = 0.
 	self t5 removeSelector: #m12.
 	self deny: (self t5 includesLocalSelector: #m12).
 	self assert: (self t5 selectors includes: #m12).
-	self assert: self c2 new m12 equals: 12
+	self assert: self c2 new m12 = 12
 ]
 
 { #category : #'testing-applying trait composition' }
 TraitPureBehaviorTest >> testReshapeClass [
+	"self run: #testReshapeClass"
+
 	"Ensure that reshaping a class has no impact on its traits"
 
-	self assert: self c2 traitCompositionString equals: 'T5 - {#m11}'.
-	self assert: self c2 selectors sorted equals: #(bar foo m12 m13 m21 m22 m51 m52 m53).
-	self assert: self c2 localSelectors sorted equals: #(bar foo).
+	self assert: self c2 traitCompositionString = 'T5 - {#m11}'.
+	self assert: self c2 selectors sorted =  #(bar foo m12 m13 m21 m22 m51 m52 m53).
+	self assert: self c2 localSelectors sorted =  #(bar foo).
 
 	self c2 addInstVarNamed: 'foobar'.
 
-	self assert: self c2 traitCompositionString equals: 'T5 - {#m11}'.
-	self assert: self c2 selectors sorted equals: #(bar foo m12 m13 m21 m22 m51 m52 m53).
-	self assert: self c2 localSelectors sorted equals: #(bar foo).
+	self assert: self c2 traitCompositionString = 'T5 - {#m11}'.
+	self assert: self c2 selectors sorted =  #(bar foo m12 m13 m21 m22 m51 m52 m53).
+	self assert: self c2 localSelectors sorted =  #(bar foo).
 
 	self c2 removeInstVarNamed: 'foobar'.
 
-	self assert: self c2 traitCompositionString equals: 'T5 - {#m11}'.
-	self assert: self c2 selectors sorted equals: #(bar foo m12 m13 m21 m22 m51 m52 m53).
-	self assert: self c2 localSelectors sorted equals: #(bar foo).
+	self assert: self c2 traitCompositionString = 'T5 - {#m11}'.
+	self assert: self c2 selectors sorted =  #(bar foo m12 m13 m21 m22 m51 m52 m53).
+	self assert: self c2 localSelectors sorted =  #(bar foo).
 ]
 
 { #category : #'testing-applying trait composition' }
 TraitPureBehaviorTest >> testSuperSends [
-
+	"self debug: #testSuperSends"
+	
 	| aC2 |
 	aC2 := self c2 new.
 	self assert: aC2 m51.
@@ -346,7 +361,7 @@ TraitPureBehaviorTest >> testTraitCompositionWithCycles [
 
 { #category : #testing }
 TraitPureBehaviorTest >> testTraitsAccessor [
-	
+	"self debug: #testTraitsAccessor"
 	self assert: self c1 traits isEmpty.
 	self assert: (self c2 traits hasEqualElements: (Array with: self t5))
 ]
@@ -363,24 +378,26 @@ TraitPureBehaviorTest >> testUpdateWhenLocalMethodRemoved [
 
 { #category : #testing }
 TraitPureBehaviorTest >> traitOrClassOfSelector [
+	"self run: #traitOrClassOfSelector"
 
 	"locally defined in trait or class"
-	self assert: (self t1 traitOrClassOfSelector: #m12) equals: self t1.
-	self assert: (self c1 traitOrClassOfSelector: #foo) equals: self c1.
+
+	self assert: (self t1 traitOrClassOfSelector: #m12) = self t1.
+	self assert: (self c1 traitOrClassOfSelector: #foo) = self c1.
 
 	"not locally defined - simple"
-	self assert: (self t4 traitOrClassOfSelector: #m21) equals: self t2.
-	self assert: (self c2 traitOrClassOfSelector: #m51) equals: self t5.
+	self assert: (self t4 traitOrClassOfSelector: #m21) = self t2.
+	self assert: (self c2 traitOrClassOfSelector: #m51) = self t5.
 
 	"not locally defined - into nested traits"
-	self assert: (self c2 traitOrClassOfSelector: #m22) equals: self t2.
+	self assert: (self c2 traitOrClassOfSelector: #m22) = self t2.
 
 	"not locally defined - aliases"
-	self assert: (self t6 traitOrClassOfSelector: #m22Alias) equals: self t2.
+	self assert: (self t6 traitOrClassOfSelector: #m22Alias) = self t2.
 
 	"class side"
 	self assert: (self t2 classSide traitOrClassOfSelector: #m2ClassSide:) 
-		  equals: self t2 classSide.
+				= self t2 classSide.
 	self assert: (self t6 classSide traitOrClassOfSelector: #m2ClassSide:) 
-		  equals: self t2 classSide
+				= self t2 classSide
 ]

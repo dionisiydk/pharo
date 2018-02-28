@@ -62,7 +62,6 @@ OCCompilerExceptionsTest >> setUp [
 OCCompilerExceptionsTest >> tearDown [
 	self removeGeneratedMethods.
 	SmalltalkImage compilerClass: currentCompiler.
-	super tearDown
 ]
 
 { #category : #tests }

@@ -22,7 +22,6 @@ LabelledTextInput class >> defaultSpec [
 
 { #category : #example }
 LabelledTextInput class >> example [
-	<sampleInstance>
 	| example |
 	example := self abstractExample.
 	example input ghostText: 'Tilt'.

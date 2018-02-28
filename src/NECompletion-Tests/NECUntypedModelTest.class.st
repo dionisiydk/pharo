@@ -16,9 +16,7 @@ NECUntypedModelTest >> setUp [
 
 { #category : #running }
 NECUntypedModelTest >> tearDown [
-
-	NECPreferences caseSensitive: prefValueCase.
-	super tearDown
+	NECPreferences caseSensitive: prefValueCase
 ]
 
 { #category : #tests }

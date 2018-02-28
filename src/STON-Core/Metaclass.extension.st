@@ -18,5 +18,5 @@ Metaclass >> stonName [
 Metaclass >> stonOn: stonWriter [
 	stonWriter
 		writeObject: self 
-		listSingleton: self instanceSide name asSymbol
+		listSingleton: self theNonMetaClass name asSymbol
 ]

@@ -13,9 +13,7 @@ OCArrayLiteralTest >> runCase [
 
 { #category : #running }
 OCArrayLiteralTest >> tearDown [
-
-	self class removeSelector: #array.
-	super tearDown
+	self class removeSelector: #array
 ]
 
 { #category : #tests }

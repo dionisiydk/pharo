@@ -32,6 +32,5 @@ MCDirectoryRepositoryTest >> setUp [
 { #category : #running }
 MCDirectoryRepositoryTest >> tearDown [
 	self directory ensureDeleteAll.
-	super tearDown
 	
 ]

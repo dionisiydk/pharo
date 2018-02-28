@@ -561,7 +561,8 @@ RectangleTest >> testWithBottom [
 
 { #category : #tests }
 RectangleTest >> testWithBottomDoesNotProduceInvalidRectangle [
-	
+	"self debug: #testWithBottomDoesNotProduceInvalidRectangle"
+
 	| rect1 rect2 |
 	rect1 := 0@10 corner: 50@60.
 	
@@ -591,7 +592,8 @@ RectangleTest >> testWithHeight [
 ]
 
 { #category : #tests }
-RectangleTest >> testWithLeftDoesNotProduceInvalidRectangle [	
+RectangleTest >> testWithLeftDoesNotProduceInvalidRectangle [
+	"self debug: #testWithLeftDoesNotProduceInvalidRectangle"
 
 	| rect1 rect2 |
 	rect1 := 0@10 corner: 50@60.
@@ -613,7 +615,8 @@ RectangleTest >> testWithLeftDoesNotProduceInvalidRectangle [
 ]
 
 { #category : #tests }
-RectangleTest >> testWithRightDoesNotProduceInvalidRectangle [	
+RectangleTest >> testWithRightDoesNotProduceInvalidRectangle [
+	"self debug: #testWithRightDoesNotProduceInvalidRectangle"
 
 	| rect1 rect2 |
 	rect1 := 0@10 corner: 50@60.
@@ -645,7 +648,8 @@ RectangleTest >> testWithTop [
 ]
 
 { #category : #tests }
-RectangleTest >> testWithTopDoesNotProduceInvalidRectangle [	
+RectangleTest >> testWithTopDoesNotProduceInvalidRectangle [
+	"self debug: #testWithTopDoesNotProduceInvalidRectangle"
 
 	| rect1 rect2 |
 	rect1 := 0@10 corner: 50@60.

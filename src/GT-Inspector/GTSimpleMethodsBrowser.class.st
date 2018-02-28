@@ -3,7 +3,7 @@ This browser is used to browse the class structure of every object in the inspec
 
 Example:
 self openOn: World
-" 
+"
 Class {
 	#name : #GTSimpleMethodsBrowser,
 	#superclass : #GLMCompositePresentation,
@@ -21,7 +21,6 @@ GTSimpleMethodsBrowser >> accumulatedSourceOf: m for: object in: composite [
 { #category : #building }
 GTSimpleMethodsBrowser >> classesIn: a [
 	^ a fastList
-		title: 'Class Hierarchy';
 		display: [ :object | 
 			| all |
 			all := OrderedCollection new.
@@ -29,7 +28,6 @@ GTSimpleMethodsBrowser >> classesIn: a [
 			all ];
 "		initialize: [ :list | list selection: list entity class ];"
 		format: [ :class | class name ];
-		enableFilter;
 		morphicSelectionAct: [ :list | Smalltalk tools browser openOnClass: list selection ]
 			icon: GLMUIThemeExtraIcons glamorousBrowse
 			on: $b
@@ -91,7 +89,6 @@ GTSimpleMethodsBrowser >> methodActionsFor: aMethod [
 { #category : #building }
 GTSimpleMethodsBrowser >> methodsIn: a [
 	^ a list
-		title: 'Methods';
 		display: [ :object :class | class methods collect: #asRingDefinition];
 		filterOn: [ :text :each | (text , '*') match: each selector ];
 		helpMessage:  'Wildcard filtering (e.g., "*pattern*")';

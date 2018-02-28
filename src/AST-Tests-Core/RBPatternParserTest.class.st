@@ -23,7 +23,7 @@ RBPatternParserTest >> testParseFaultyPatternBlock [
 	patternBlockNoArgButColon := '`{ : }'.
 	unfinishedBlock := '`{ :  '.
 	varWithUnfinishedBlock := '`sth `{ :  '.
-	{patternBlockNoArgButBar. patternBlockNoArgButColon. unfinishedBlock. varWithUnfinishedBlock}
+	{patternBlockNoArgButBar . patternBlockNoArgButColon .varWithUnfinishedBlock}
 		do: [ :faultyExpression | 
 			node := self parseFaultyExpression: faultyExpression.
 			self assert: node isBlock.

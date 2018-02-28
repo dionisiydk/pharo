@@ -27,8 +27,7 @@ DirectoryEntryTest >> testIsDirectory [
 	| ref entry |
 	ref := FileLocator imageDirectory resolve.
 	entry := ref entry.
-	self assert: entry isDirectory.
-	self assert: FileLocator imageDirectory resolve equals: Smalltalk imageDirectory
+	self assert: entry isDirectory
 ]
 
 { #category : #tests }

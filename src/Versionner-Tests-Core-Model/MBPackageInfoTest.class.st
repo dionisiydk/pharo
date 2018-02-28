@@ -24,6 +24,13 @@ MBPackageInfoTest >> setUp [
 	package := MBPackageInfo named: 'FooBarZork'.
 ]
 
+{ #category : #running }
+MBPackageInfoTest >> tearDown [
+"	(Smalltalk includesKey: #TMPClass)
+		ifTrue: [ (Smalltalk at: #TMPClass) removeFromSystem ].
+"
+]
+
 { #category : #tests }
 MBPackageInfoTest >> testInstantiation [
 	self should: [ MBPackageInfo new ] raise: Error.

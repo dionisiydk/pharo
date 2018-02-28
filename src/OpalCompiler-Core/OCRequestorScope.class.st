@@ -47,11 +47,13 @@ OCRequestorScope >> lookupGlobalVar: aName [
 
 { #category : #lookup }
 OCRequestorScope >> lookupVar: name [
-
-	name = 'self' ifTrue: [ ^ outerScope lookupVar: name ].
-	name = 'super' ifTrue: [ ^ outerScope lookupVar: name ].
-	name first isUppercase ifTrue: [ ^ outerScope lookupVar: name].
-	
+	| global |
+	name = 'self'
+		ifTrue: [ ^ outerScope lookupVar: name ].
+	name = 'super'
+		ifTrue: [ ^ outerScope lookupVar: name ].
+	global := self lookupGlobalVar: name.
+	global ifNotNil: [ ^ global ].
 	"do not 'create bindings' in requestor scope if we just want to style a possible unknown variable"
 	(compilationContext forSyntaxHighlighting
 		and: [ (requestor hasBindingOf: name asSymbol) not ])

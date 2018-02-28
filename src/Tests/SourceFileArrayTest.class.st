@@ -221,7 +221,8 @@ SourceFileArrayTest >> testForkedWrite [
 { #category : #testing }
 SourceFileArrayTest >> testProtocol [
 	"Test that we can access protocol correctly"
-	
+	"self debug: #testProtocol"
+
 	| okCm notOkCm |
 	okCm := Point>>#distanceTo: .
 	self assert: (((SourceFiles sourcedDataAt: okCm sourcePointer)) beginsWith:   
@@ -313,6 +314,7 @@ SourceFileArrayTest >> testSourcesFileStream [
 { #category : #testing }
 SourceFileArrayTest >> testTimeStamp [
 	"Test that we can access timeStamp correctly"
+	"self debug: #testTimeStamp"
 
 	| okCm |
 	okCm := Point>>#distanceTo: .

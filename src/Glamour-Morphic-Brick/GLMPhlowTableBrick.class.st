@@ -10,7 +10,6 @@ Class {
 
 { #category : #examples }
 GLMPhlowTableBrick class >> example [
-	<sampleInstance>
 	
 	^ GLMCompositeBrick gtExampleTable
 ]

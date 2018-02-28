@@ -1,23 +1,5 @@
 "
-Used for cleaning the image.
-
-You can use one of my 2 methods: 
-- CleanUpForRelease
-	reinitialize the fonts
-	reset metacello registry
-	remove Empty Categories
-	remove Empty Packages
-	sort Categories
-	remove undeclared globals
-	remove obsolete references
-	Launch the smalltalk cleanup
-		run clean up on all the instances of the classes that implement cleanUp
-- CleanUpForProduction
-	All the previous actions +
-	remove the background logo
-	remove the tests
-	remove the tools
-	remove the versionner
+Used for cleaning the image
 "
 Class {
 	#name : #ImageCleaner,
@@ -38,23 +20,58 @@ ImageCleaner class >> cleanUpForRelease [
 { #category : #api }
 ImageCleaner >> cleanUpForProduction [
 	"self new cleanUpForProduction"
-
-	"delete logo"
-
+	"delete logo"	
 	PolymorphSystemSettings showDesktopLogo: false.
-	self packagesForCleanUpInProduction
-		do: [ :each | (MCPackage named: each) unload ].
-	self helpPackages do: [ :each | (MCPackage named: each) unload ].
+
+	self packagesForCleanUpInProduction do: [ :each | (MCPackage named: each) unload ].	
+	self helpPackages do: [ :each | (MCPackage named: each) unload ].	
 	self testPackages do: [ :each | (MCPackage named: each) unload ].
 	self examplePackages do: [ :each | (MCPackage named: each) unload ].
-	self cleanUpForRelease
+	(MCPackage named: 'ScriptLoader40') unload.	
+		
+		
+	(MCPackage named: 'MonticelloMocks') unload.	
+	(MCPackage named: 'ToolsTest') unload.	
+	(MCPackage named: 'Announcements-Tests-Core') unload.	
+	(MCPackage named: 'AST-Tests-Core') unload.	
+	(MCPackage named: 'AST-Interpreter-Test') unload.	
+	(MCPackage named: 'Ring-Tests-Containers') unload.	
+	(MCPackage named: 'Ring-Tests-Kernel') unload.	
+	(MCPackage named: 'Ring-Tests-Monticello') unload.	
+	(MCPackage named: 'Regex-Tests-Core') unload.	
+	(MCPackage named: 'Refactoring-Tests-Changes') unload.	
+	(MCPackage named: 'Refactoring-Tests-Core') unload.	
+	(MCPackage named: 'Refactoring-Tests-Critics') unload.	
+	(MCPackage named: 'Refactoring-Tests-Environment') unload.	
+	(MCPackage named: 'FileSystem-Tests-Core') unload.	
+	(MCPackage named: 'FileSystem-Tests-Disk') unload.	
+	(MCPackage named: 'FileSystem-Tests-Memory') unload.		
+			
+	(MCPackage named: 'GT-Tests-Inspector') unload.		
+	(MCPackage named: 'Glamour-Tests-Core') unload.		
+	(MCPackage named: 'Glamour-Tests-Morphic') unload.		
+	(MCPackage named: 'Glamour-Tests-Resources') unload.		
+	(MCPackage named: 'Glamour-Tests-Rubric') unload.		
+			
+	(MCPackage named: 'Versionner-Core-Model') unload.
+	(MCPackage named: 'Versionner-Core-DependenciesModel') unload.		
+	(MCPackage named: 'Versionner-Core-Announcements') unload.	
+	(MCPackage named: 'Versionner-Core-Commands') unload.	
+	(MCPackage named: 'Versionner-Spec-Browser') unload.				
+	(MCPackage named: 'Versionner-Tests-Core-Commands') unload.	
+	(MCPackage named: 'Versionner-Tests-Core-DependenciesModel') unload.	
+	(MCPackage named: 'Versionner-Tests-Core-Model') unload.			
+	(MCPackage named: 'Versionner-Tests-Resources') unload.												
+	
+	self cleanUpForRelease.
+	
 ]
 
 { #category : #api }
 ImageCleaner >> cleanUpForRelease [
 	"self new cleanUpForRelease"
 
-	Author fullName: 'MrCleaner'.
+	Author fullName: 'Mr.Cleaner'.
 	self cleanUpMethods.
 	
 	FreeTypeFontProvider current initialize.
@@ -106,7 +123,6 @@ ImageCleaner >> cleanUpProcesses [
 
 { #category : #cleaning }
 ImageCleaner >> examplePackages [
-	<sampleInstance>
 	^RPackageOrganizer default packageNames select: [ :each | each endsWith: 'Examples' ]
 ]
 
@@ -141,16 +157,7 @@ ImageCleaner >> packagesForCleanUpInProduction [
 	'Metacello-TestsPharo20MC'
 	'Metacello-TestsPlatform'
 	'Metacello-TestsTutorial'
-	"Other packages"
-	'ScriptLoader40'
-	'MonticelloMocks'
-	'ToolsTest'	
-	'AST-Interpreter-Test'	
-	'Versionner-Core-Model'
-	'Versionner-Core-DependenciesModel'
-	'Versionner-Core-Announcements'
-	'Versionner-Core-Commands'
-	'Versionner-Spec-Browser'
+
 	)
 
 ]
@@ -180,7 +187,5 @@ ImageCleaner >> removeEmptyPackages [
 
 { #category : #cleaning }
 ImageCleaner >> testPackages [
-	^ (RPackageOrganizer default packageNames
-		select: [ :each | (each endsWith: '-Tests') or: [ each includesSubstring: '-Tests-' ] ])
-		copyWithout: 'ReleaseTests'
+	^(RPackageOrganizer default  packageNames select: [ :each | each endsWith: 'Tests' ]) copyWithout: 'ReleaseTests'
 ]

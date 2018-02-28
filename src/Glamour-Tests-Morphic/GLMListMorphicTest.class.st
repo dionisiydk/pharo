@@ -88,7 +88,8 @@ GLMListMorphicTest >> testMultipleSelectionWithChangeFromModel [
 
 { #category : #tests }
 GLMListMorphicTest >> testOnlyOneMorphPerRowInList [
-	| browser listMorph nodeMorphs|	
+	| browser listMorph nodeMorphs|
+	"self debug: #testOnlyOneMorphPerRowInList"
 	browser := GLMTabulator new.
 	browser
 		column: #one.

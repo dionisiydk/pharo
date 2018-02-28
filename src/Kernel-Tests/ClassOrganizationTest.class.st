@@ -35,8 +35,7 @@ ClassOrganizationTest >> setUp [
 
 { #category : #running }
 ClassOrganizationTest >> tearDown [
-	class removeFromSystem.
-	super tearDown.
+	class removeFromSystem
 ]
 
 { #category : #tests }

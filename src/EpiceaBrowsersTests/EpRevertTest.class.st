@@ -170,7 +170,7 @@ EpRevertTest >> testClassRemoval [
 
 	| aClass className category |
 	aClass := classFactory newClass.
-	aClass classSide instanceVariableNames: 'hey'.
+	aClass theMetaClass instanceVariableNames: 'hey'.
 	className := aClass name.
 	category := aClass category.
 	aClass removeFromSystem.
@@ -181,7 +181,7 @@ EpRevertTest >> testClassRemoval [
 	self revertInputEntry.
 	self assert: (self class environment hasClassNamed: className).
 	self assert: (self class environment classNamed: className) category equals: category.
-	self assert: (self class environment classNamed: className) classSide instVarNames equals: #('hey').
+	self assert: (self class environment classNamed: className) theMetaClass instVarNames equals: #('hey').
 ]
 
 { #category : #tests }

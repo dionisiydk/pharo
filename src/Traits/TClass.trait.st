@@ -322,12 +322,18 @@ TClass >> classVariables [
 ]
 
 { #category : #compiling }
+TClass >> compileAll [
+	super compileAll.
+	self classSide compileAll.
+]
+
+{ #category : #compiling }
 TClass >> compileAllFrom: oldClass [
 	"Recompile all the methods in the receiver's method dictionary (not the
 	subclasses). Also recompile the methods in the metaclass."
 
 	super compileAllFrom: oldClass.
-	self classSide compileAllFrom: oldClass classSide
+	self theMetaClass compileAllFrom: oldClass theMetaClass
 ]
 
 { #category : #copying }
@@ -436,6 +442,13 @@ TClass >> ephemeronSubclass: t instanceVariableNames: f
 			copyClassSlotsFromExistingClass ].
 ]
 
+{ #category : #viewer }
+TClass >> externalName [
+	"Answer a name by which the receiver can be known."
+
+	^ self name
+]
+
 { #category : #private }
 TClass >> getName [
 	^ self name
@@ -445,7 +458,7 @@ TClass >> getName [
 TClass >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 
-	^ super hasAbstractMethods or: [ self classSide hasAbstractMethods ]
+	^ super hasAbstractMethods or: [ self theMetaClass hasAbstractMethods ]
 ]
 
 { #category : #'accessing parallel hierarchy' }
@@ -473,7 +486,7 @@ TClass >> hasMethods [
 	receiver (includes whether there are methods defined in the receiver's 
 	metaclass)."
 
-	^super hasMethods or: [ self classSide hasMethods ]
+	^super hasMethods or: [ self theMetaClass hasMethods ]
 ]
 
 { #category : #'pool variables' }
@@ -644,7 +657,7 @@ TClass >> obsolete [
 		[:i | self instVarAt: i put: nil]. "Store nil over class instVars."
 	self classPool: nil.
 	self sharedPools: nil.
-	self hasClassSide ifTrue: [ self classSide obsolete].
+	self hasClassSide ifTrue: [ self theMetaClass obsolete].
 	self propertyAt: #obsolete put: true.
 	super obsolete.
 ]
@@ -668,11 +681,6 @@ TClass >> private_subclass: t instanceVariableNames: f classVariableNames: d poo
 	^self explicitRequirement.
 ]
 
-{ #category : #'subclass creation' }
-TClass >> private_subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [ 
-	^self explicitRequirement.
-]
-
 { #category : #'class variables' }
 TClass >> readClassVariableNamed: aString [
 	"Answer the content of the Class Variable"
@@ -686,7 +694,7 @@ TClass >> reformatAll [
 	Leaves old code accessible to version browsing"
 
 	super reformatAll.		"me..."
-	self classSide reformatAll.	"...and my metaclass"
+	self theMetaClass reformatAll.	"...and my metaclass"
 ]
 
 { #category : #'class variables' }

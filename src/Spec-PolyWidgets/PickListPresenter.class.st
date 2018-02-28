@@ -31,7 +31,6 @@ PickListPresenter class >> defaultSpec [
 
 { #category : #example }
 PickListPresenter class >> example [
-	<sampleInstance>
 	| example |
 	example := self new.
 	example

@@ -136,6 +136,7 @@ FractionTest >> testCeiling [
 
 { #category : #'tests - mathematical functions' }
 FractionTest >> testDegreeCos [
+	"self run: #testDegreeCos"
 
 	(4 / 3) degreeCos.
 	-361 / 3 to: 359 / 3 do: [ :i | self assert: (i degreeCos closeTo: i degreesToRadians cos) ]
@@ -143,6 +144,7 @@ FractionTest >> testDegreeCos [
 
 { #category : #'tests - mathematical functions' }
 FractionTest >> testDegreeSin [
+	"self run: #testDegreeSin"
 
 	(4 / 3) degreeSin.
 	-361 / 3 to: 359 / 3 do: [ :i | self assert: (i degreeSin closeTo: i degreesToRadians sin) ]
@@ -445,8 +447,11 @@ FractionTest >> testRounded [
 
 { #category : #'tests - rounding' }
 FractionTest >> testRounding [
-	
-	self assert: ((6/90) round: 2) equals: 7/100
+        "
+        self debug: #testRounding
+        "
+
+        self assert: ((6/90) round: 2) equals: 7/100
 ]
 
 { #category : #'tests - mathematical functions' }

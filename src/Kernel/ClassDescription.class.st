@@ -187,10 +187,10 @@ ClassDescription >> applyChangesOfNewTraitCompositionReplacing: oldComposition [
 ClassDescription >> authors [
 	"Returns a bag representing the author frequency based on the latest version of the methods of the receiver."
 
-	^(self methods, self classSide methods) collect: [ :each | each author ] as: Bag
+	^(self methods, self theMetaClass methods) collect: [ :each | each author ] as: Bag
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy ' }
+{ #category : #'accessing parallel hierarchy' }
 ClassDescription >> baseClass [
 	^self subclassResponsibility.
 ]
@@ -205,7 +205,7 @@ ClassDescription >> basicOrganization: aClassOrg [
 	organization := aClassOrg
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy ' }
+{ #category : #'accessing parallel hierarchy' }
 ClassDescription >> classClass [
 	^self subclassResponsibility.
 ]
@@ -271,7 +271,7 @@ ClassDescription >> classComment: aString stamp: aStamp [
 ClassDescription >> classCommentBlank [
 
 	| existingComment stream |
-	existingComment := self instanceSide organization classComment.
+	existingComment := self theNonMetaClass organization classComment.
 	existingComment isEmpty
 		ifFalse: [^existingComment].
 
@@ -311,11 +311,7 @@ stream cr; cr; nextPutAll: '    Implementation Points'.
 
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> classSide [
-	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
-	"Point classSide >>> Point class"
-	"Point class classSide >>> Point class"
-	
-	^ self subclassResponsibility
+	^self theMetaClass.
 ]
 
 { #category : #'instance variables' }
@@ -764,11 +760,7 @@ ClassDescription >> instVarNamesAndOffsetsDo: aBinaryBlock [
 
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> instanceSide [
-	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
-	"Point instanceSide >>> Point"
-	"Point class instanceSide >>> Point"
-	
-	^ self subclassResponsibility
+	^ self theNonMetaClass
 ]
 
 { #category : #accessing }
@@ -788,20 +780,12 @@ ClassDescription >> instanceVariablesString [
 
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> isClassSide [
-	"Return true whether the receiver is a metaclass (in a couple class/metaclass sense)."
-	"Point isClassSide >>> false"
-	"Point class isClassSide >>> true"
-	
 	^self == self classSide
 ]
 
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> isInstanceSide [
-	"Return true whether the receiver is a class (in a couple class/metaclass sense)."
-	"Point isClassSide >>> true"
-	"Point class isClassSide >>> false"
-	
-	^ self isClassSide not
+	^self isClassSide not
 ]
 
 { #category : #testing }
@@ -811,7 +795,7 @@ ClassDescription >> isLocalMethodsProtocol: aProtocol [
 	^aProtocol methods anySatisfy: [ :each | self isLocalSelector: each]
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy ' }
+{ #category : #'accessing parallel hierarchy' }
 ClassDescription >> isMeta [
 	^self isClassSide
 ]
@@ -830,7 +814,7 @@ ClassDescription >> linesOfCode [
 	lines := self localMethods inject: 0 into: [ :sum :each | sum + each linesOfCode ].
 	^ self isMeta 
 		ifTrue: [ lines ]
-		ifFalse: [ lines + self classSide linesOfCode ]
+		ifFalse: [ lines + self theMetaClass linesOfCode ]
 ]
 
 { #category : #'accessing tags' }
@@ -1016,7 +1000,7 @@ ClassDescription >> numberOfMethods [
 	num := self localMethods size.
 	^ self isMeta  
 		ifTrue: [ num ]
-		ifFalse: [ num + self classSide numberOfMethods ] 
+		ifFalse: [ num + self theMetaClass numberOfMethods ] 
 ]
 
 { #category : #'initialize-release' }
@@ -1289,16 +1273,14 @@ ClassDescription >> tagsForMethods [
 	^tags
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy ' }
+{ #category : #'accessing parallel hierarchy' }
 ClassDescription >> theMetaClass [
-	"This method is deprecated so consider to migrate."
-	^ self classSide
+	^self classClass
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy ' }
+{ #category : #'accessing parallel hierarchy' }
 ClassDescription >> theNonMetaClass [
-	"This method is deprecated so consider to migrate."
-	^ self instanceSide
+	^self baseClass
 ]
 
 { #category : #'accessing method dictionary' }

@@ -73,7 +73,7 @@ RBExpandReferencedPoolsRefactoring >> hasPoolsToMove [
 { #category : #transforming }
 RBExpandReferencedPoolsRefactoring >> movePool: aSymbol toClass: aClass [ 
 	| nonMetaClass |
-	nonMetaClass := aClass instanceSide.
+	nonMetaClass := aClass theNonMetaClass.
 	(nonMetaClass definesPoolDictionary: aSymbol) ifFalse: [ nonMetaClass addPoolDictionary: aSymbol ]
 ]
 

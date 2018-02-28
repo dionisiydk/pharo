@@ -1,5 +1,5 @@
 "
-SUnit tests for class BitBlt 
+SUnit tests for class BitBlt
 "
 Class {
 	#name : #BitBltTest,
@@ -9,6 +9,7 @@ Class {
 
 { #category : #'tests - bugs' }
 BitBltTest >> testAlphaCompositing [
+	"self run: #testAlphaCompositing"
 
 	| bb f1 f2 mixColor result eps |
 	f1 := Form extent: 1@1 depth: 32.
@@ -32,6 +33,7 @@ BitBltTest >> testAlphaCompositing [
 
 { #category : #'tests - bugs' }
 BitBltTest >> testAlphaCompositing2 [
+	"self run: #testAlphaCompositing2"
 
 	| bb f1 f2 mixColor result eps |
 	f1 := Form extent: 1@1 depth: 32.
@@ -54,6 +56,7 @@ BitBltTest >> testAlphaCompositing2 [
 
 { #category : #'tests - bugs' }
 BitBltTest >> testAlphaCompositing2Simulated [
+	"self run: #testAlphaCompositing2Simulated"
 
 	Smalltalk globals
 		at: #BitBltSimulation
@@ -77,6 +80,7 @@ BitBltTest >> testAlphaCompositing2Simulated [
 
 { #category : #'tests - bugs' }
 BitBltTest >> testAlphaCompositingSimulated [
+	"self run: #testAlphaCompositingSimulated"
 
 	Smalltalk globals
 		at: #BitBltSimulation
@@ -101,6 +105,7 @@ BitBltTest >> testAlphaCompositingSimulated [
 
 { #category : #'tests - bugs' }
 BitBltTest >> testPeekerUnhibernateBug [
+	"self run: #testPeekerUnhibernateBug"
 
 	| bitBlt |
 	bitBlt := BitBlt bitPeekerFromForm: Display.
@@ -110,6 +115,7 @@ BitBltTest >> testPeekerUnhibernateBug [
 
 { #category : #'tests - bugs' }
 BitBltTest >> testPokerUnhibernateBug [
+	"self run: #testPokerUnhibernateBug"
 
 	| bitBlt |
 	bitBlt := BitBlt bitPokerToForm: Display.

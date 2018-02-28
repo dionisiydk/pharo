@@ -29,11 +29,6 @@ Class {
 	#category : #'OpalCompiler-Core-Translator'
 }
 
-{ #category : #private }
-OCCompilerASTPlugin class >> priority [
-	self subclassResponsibility
-]
-
 { #category : #'instance creation' }
 OCCompilerASTPlugin class >> transform: ast [
 	^self new

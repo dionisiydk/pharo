@@ -18,7 +18,6 @@ Class {
 
 { #category : #example }
 ColorPresenterMorph class >> example [
-	<sampleInstance>
 
 	^ (ColorPresenterMorph on: (BorderedMorph new) color: #color) openInWorld
 ]

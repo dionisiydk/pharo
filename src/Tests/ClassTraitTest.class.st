@@ -9,6 +9,8 @@ ClassTraitTest >> testChanges [
 	"Test the most important features to ensure that
 	general functionality of class traits are working."
 
+	"self run: #testChanges"
+
 	| classTrait |
 	classTrait := self t1 classTrait.
 	self deny: (self t5 classSide includesSelector: #m1ClassSide).
@@ -51,7 +53,7 @@ ClassTraitTest >> testConflictsAliasesAndExclusions [
 
 { #category : #testing }
 ClassTraitTest >> testInitialization [
-
+	"self run: #testInitialization"
 	| classTrait |
 	classTrait := self t1 classTrait.
 	self assert: self t1 hasClassSide.

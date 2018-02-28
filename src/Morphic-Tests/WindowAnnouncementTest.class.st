@@ -9,9 +9,8 @@ Class {
 
 { #category : #running }
 WindowAnnouncementTest >> tearDown [ 
-	window ifNotNil: [ window delete ].
 	super tearDown.
-
+	window ifNotNil: [ window delete ]
 ]
 
 { #category : #'tests - window change' }

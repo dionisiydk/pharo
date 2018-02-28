@@ -47,7 +47,6 @@ GLMExamplesBrowser >> compose [
 
 { #category : #private }
 GLMExamplesBrowser >> exampleBrowserForPragma: each in: aClass [
-	<sampleInstance>
 	| exampleBrowser wrapperBrowser |
 	exampleBrowser := aClass new perform: each methodSelector.
 	wrapperBrowser := GLMTabulator new.
@@ -62,7 +61,6 @@ GLMExamplesBrowser >> exampleBrowserForPragma: each in: aClass [
 
 { #category : #building }
 GLMExamplesBrowser >> exampleIn: composer [
-
 	| dynamicPresentation |
 	dynamicPresentation := composer dynamic
 		title: 'Browser';
@@ -93,24 +91,9 @@ GLMExamplesBrowser >> exampleIn: composer [
 
 { #category : #building }
 GLMExamplesBrowser >> exampleListIn: a [
-	<sampleInstance>
 	^ a list
 		title: 'Examples';
 		display: [ :exampleClass | exampleClass allExamples ];
 		sorted: [ :x :y | (x argumentAt: 1) < (y argumentAt: 1) ];
-		format: [ :each | each argumentAt: 1 ];
-		filterOn: [ :pattern :each | 
-			self satisfy: each pattern: pattern ];
-		helpMessage: 'Filter example names and source code';
-		yourself
-]
-
-{ #category : #testing }
-GLMExamplesBrowser >> satisfy: aPragma pattern: patternString [ 
-	"aPragma holds the example.
-	example name: aPragma argumentAt: 1.
-	Return true if the example satisfy the pattern, false otherwise.
-	"
-	^ (('*', patternString asString, '*') match: (aPragma argumentAt: 1)) or: [ 
-		 ('*', patternString asString, '*') match: aPragma method sourceCode ]
+		format: [ :each | each argumentAt: 1 ]
 ]

@@ -20,7 +20,6 @@ Class {
 
 { #category : #examples }
 FTBasicTreeListDataSource class >> exampleBasicInspect: anObject [
-	<sampleInstance>
 
 	| ds ft |
 
@@ -43,7 +42,6 @@ FTBasicTreeListDataSource class >> exampleBasicInspect: anObject [
 
 { #category : #examples }
 FTBasicTreeListDataSource class >> exampleInspect: anObject [
-	<sampleInstance>
 
 	| ds ft |
 

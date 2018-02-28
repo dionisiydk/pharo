@@ -56,8 +56,7 @@ FileSystemTest >> setUp [
 FileSystemTest >> tearDown [
 	toDelete
 		select: [ :path | filesystem exists: path ]
-		thenDo: [ :path | filesystem delete: path ].
-	super tearDown	
+		thenDo: [ :path | filesystem delete: path ]
 ]
 
 { #category : #'tests-streams-compatibility' }

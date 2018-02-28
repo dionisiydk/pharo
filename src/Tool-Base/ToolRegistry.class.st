@@ -121,11 +121,12 @@ ToolRegistry >> initDefaultToolSet [
 	
 	[	
 	Object withAllSubclassesDo: [:ea | 
+		
 	"evaluate only for classes which directly implement this message,
 	not via subclassing"
 		(ea isMeta  and: [
 			ea includesSelector: #registerToolsOn: ]) ifTrue: [
-			 ea instanceSide registerToolsOn: self  ]].
+			 ea theNonMetaClass registerToolsOn: self  ]].
 	] on: Warning do: [:ex | ex resume ]
 ]
 

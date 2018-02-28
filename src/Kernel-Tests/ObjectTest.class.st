@@ -52,7 +52,8 @@ ObjectTest >> shouldntHaltWhen: aBlock [
 ]
 
 { #category : #tests }
-ObjectTest >> testBecome [	
+ObjectTest >> testBecome [
+	"self debug: #testBecome"
 	"this test should that all the variables pointing to an object are pointing now to another one, and all
       object pointing to the other are pointing to the object"
 
@@ -68,7 +69,8 @@ ObjectTest >> testBecome [
 ]
 
 { #category : #tests }
-ObjectTest >> testBecomeForward [	
+ObjectTest >> testBecomeForward [
+	"self debug: #testBecomeForward"
 	"this test should that all the variables pointing to an object are pointing now to another one.
 	Not that this inverse is not true. This kind of become is called oneWayBecome in VW"
 

@@ -134,7 +134,7 @@ TClassDescription >> applyChangesOfNewTraitCompositionReplacing: oldComposition 
 TClassDescription >> authors [
 	"Returns a bag representing the author frequency based on the latest version of the methods of the receiver."
 
-	^(self methods, self classSide methods) collect: [ :each | each author ] as: Bag
+	^(self methods, self theMetaClass methods) collect: [ :each | each author ] as: Bag
 ]
 
 { #category : #organization }
@@ -208,7 +208,7 @@ TClassDescription >> classComment: aString stamp: aStamp [
 TClassDescription >> classCommentBlank [
 
 	| existingComment stream |
-	existingComment := self instanceSide organization classComment.
+	existingComment := self theNonMetaClass organization classComment.
 	existingComment isEmpty
 		ifFalse: [^existingComment].
 
@@ -248,9 +248,7 @@ stream cr; cr; nextPutAll: '    Implementation Points'.
 
 { #category : #'accessing parallel hierarchy' }
 TClassDescription >> classSide [
-	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
-	^ self explicitRequirement.
-	
+	^self theMetaClass.
 ]
 
 { #category : #'instance variables' }
@@ -687,8 +685,7 @@ TClassDescription >> instVarNamesAndOffsetsDo: aBinaryBlock [
 
 { #category : #'accessing parallel hierarchy' }
 TClassDescription >> instanceSide [
-	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
-	^ self explicitRequirement
+	^ self theNonMetaClass
 ]
 
 { #category : #accessing }
@@ -708,7 +705,7 @@ TClassDescription >> instanceVariablesString [
 
 { #category : #'accessing parallel hierarchy' }
 TClassDescription >> isClassSide [
-	^ self == self classSide
+	^self == self classSide
 ]
 
 { #category : #'accessing parallel hierarchy' }
@@ -725,7 +722,7 @@ TClassDescription >> isLocalMethodsProtocol: aProtocol [
 
 { #category : #'accessing parallel hierarchy' }
 TClassDescription >> isMeta [
-	^ self isClassSide
+	^self isClassSide
 ]
 
 { #category : #testing }
@@ -742,7 +739,7 @@ TClassDescription >> linesOfCode [
 	lines := self localMethods inject: 0 into: [ :sum :each | sum + each linesOfCode ].
 	^ self isMeta 
 		ifTrue: [ lines ]
-		ifFalse: [ lines + self classSide linesOfCode ]
+		ifFalse: [ lines + self theMetaClass linesOfCode ]
 ]
 
 { #category : #'accessing tags' }
@@ -918,7 +915,7 @@ TClassDescription >> numberOfMethods [
 	num := self localMethods size.
 	^ self isMeta  
 		ifTrue: [ num ]
-		ifFalse: [ num + self classSide numberOfMethods ] 
+		ifFalse: [ num + self theMetaClass numberOfMethods ] 
 ]
 
 { #category : #'initialize-release' }
@@ -1191,14 +1188,14 @@ TClassDescription >> tagsForMethods [
 	^tags
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy' }
+{ #category : #'accessing parallel hierarchy' }
 TClassDescription >> theMetaClass [
-	^self classSide
+	^self explicitRequirement.
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy' }
+{ #category : #'accessing parallel hierarchy' }
 TClassDescription >> theNonMetaClass [
-	^self instanceSide
+	^self explicitRequirement.
 ]
 
 { #category : #'accessing method dictionary' }

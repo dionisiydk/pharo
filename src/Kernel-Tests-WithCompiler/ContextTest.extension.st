@@ -5,13 +5,9 @@ ContextTest >> testSourceNodeOptimizedBlock [
 	"When asking for the sourceNode of a block that is not there at runtime, we nevertheless what to 
 	get the corresponding ASTnode of the inlined Block"
 	
-	| sourceNode method |
+	| sourceNode |
 	
-	method := Smalltalk compiler
-							  class: Object;
-							  compile:  'test 1 to: 1 do: [ :i | ^ thisContext sourceNode ]'.
-	sourceNode := method valueWithReceiver: nil arguments: #(). 
-	
+	sourceNode := Smalltalk compiler evaluate: '1 to: 1 do: [ :i | ^ thisContext sourceNode ]'.
 	self assert: sourceNode isBlock.
 ]
 

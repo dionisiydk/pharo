@@ -44,6 +44,7 @@ TDictionaryKeyAccessTest >> testKeyAtIdentityValue [
 { #category : #'tests - dictionary key access' }
 TDictionaryKeyAccessTest >> testKeyAtIdentityValueIfAbsent [
 	"self run: #testKeyAtValue"
+	"self debug: #testKeyAtValue"
 	
 	| dict value result |
 	dict := self nonEmpty .
@@ -59,6 +60,7 @@ TDictionaryKeyAccessTest >> testKeyAtIdentityValueIfAbsent [
 { #category : #'tests - dictionary key access' }
 TDictionaryKeyAccessTest >> testKeyAtValue [
 	"self run: #testKeyAtValue"
+	"self debug: #testKeyAtValue"
 	
 	| dict value result |
 	dict := self nonEmpty .
@@ -75,6 +77,7 @@ TDictionaryKeyAccessTest >> testKeyAtValue [
 { #category : #'tests - dictionary key access' }
 TDictionaryKeyAccessTest >> testKeyAtValueIfAbsent [
 	"self run: #testKeyAtValue"
+	"self debug: #testKeyAtValue"
 	
 	| dict value result |
 	dict := self nonEmpty .

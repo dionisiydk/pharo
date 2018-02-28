@@ -12,7 +12,6 @@ Class {
 		'session'
 	],
 	#classVars : [
-		'AllowDropFiles',
 		'CursorOwnerWorld',
 		'ExtraWorldList'
 	],
@@ -22,18 +21,6 @@ Class {
 { #category : #'extra worlds' }
 WorldMorph class >> addExtraWorld: aWorld [
 	ExtraWorldList := self extraWorldList copyWith: aWorld
-]
-
-{ #category : #accessing }
-WorldMorph class >> allowDropFiles [
-	"If this option is set to false, the world morph will no longer be able to receive droped files. This help to protect private code while deploying an application."
-	
-	^ AllowDropFiles ifNil: [ AllowDropFiles := true ]
-]
-
-{ #category : #accessing }
-WorldMorph class >> allowDropFiles: anObject [
-	AllowDropFiles := anObject
 ]
 
 { #category : #'system startup' }
@@ -548,9 +535,7 @@ WorldMorph >> wantsDirectionHandles [
 
 { #category : #'event handling' }
 WorldMorph >> wantsDropFiles: anEvent [
-	"We check if the WorldMorph is configured to be able to receive droped files. During the deployment of an application this option might be disabled."
-	
-	^ self class allowDropFiles
+	^ true
 ]
 
 { #category : #private }

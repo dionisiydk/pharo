@@ -38,12 +38,12 @@ SystemNavigation >> allBehaviorsDo: aBlock [
 	self environment allClassesDo: [ :aClass | 
 		aBlock
 			value: aClass;
-			value: aClass classSide ].
+			value: aClass theMetaClass ].
 
 	self environment allTraitsDo: [ :aTrait | 
 		aBlock
 			value: aTrait;
-			value: aTrait classSide ]
+			value: aTrait theMetaClass ]
 ]
 
 { #category : #query }
@@ -130,13 +130,13 @@ SystemNavigation >> allExistingProtocolsFor: instanceSide [
 	"answer all protocols on instance or class side"
 	
 	| allExistingProtocols |
-	allExistingProtocols := Smalltalk globals allClassesAndTraits
+	allExistingProtocols := Smalltalk allClassesAndTraits
 		inject: IdentitySet new
 		into: [ :col :e | 
 			| class |
 			class := instanceSide
-				ifTrue: [ e instanceSide ]
-				ifFalse: [ e classSide ].
+				ifTrue: [ e theNonMetaClass ]
+				ifFalse: [ e theMetaClass ].
 			col
 				addAll: class protocols;
 				yourself ].
@@ -182,7 +182,7 @@ SystemNavigation >> allLocalCallsOn: aSymbol ofClass: aClass [
 	
 	| aSet cls |
 	aSet := Set new.
-	cls := aClass instanceSide.
+	cls := aClass theNonMetaClass.
 	cls withAllSuperAndSubclassesDo: [ :class |
 		(class whichSelectorsReferTo: aSymbol)
 			do: [:sel |
@@ -219,7 +219,7 @@ SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive
 	"Answer a SortedCollection of all the methods that contain, in source code, aString as a substring.  Search the class comments also"
 
 	| list addMethod addComment |
-	list := OrderedCollection new.
+	list := Set new.
 	
 	addMethod := [ :mrClass :mrSel | list add: (self createMethodNamed: mrSel realParent:  mrClass)].									
 	addComment := [ :mrClass | list add: (RGCommentDefinition realClass: mrClass)].
@@ -235,7 +235,7 @@ SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive
 								 addMethod value: each value: sel]].
 					(each organization classComment asString includesSubstring: aString caseSensitive: caseSensitive) ifTrue: [
 								addComment value: each]	]].
-	^ list 
+			^ list asSortedCollection
 ]
 
 { #category : #query }

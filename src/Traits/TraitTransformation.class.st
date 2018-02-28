@@ -109,11 +109,6 @@ TraitTransformation >> copyTraitExpression [
 		yourself
 ]
 
-{ #category : #'accessing parallel hierarchy' }
-TraitTransformation >> instanceSide [
-	^ self subject instanceSide  
-]
-
 { #category : #testing }
 TraitTransformation >> isEmpty [
 	self subclassResponsibility
@@ -121,7 +116,7 @@ TraitTransformation >> isEmpty [
 
 { #category : #'accessing parallel hierarchy' }
 TraitTransformation >> isMeta [
-	^ self subject isMeta
+	^self subject isMeta
 ]
 
 { #category : #accessing }
@@ -173,9 +168,9 @@ TraitTransformation >> syntacticallyEquals: aTraitTransformation [
 	^ self subclassResponsibility 
 ]
 
-{ #category : #'accessing - deprecated parallel hierarchy' }
+{ #category : #'accessing parallel hierarchy' }
 TraitTransformation >> theNonMetaClass [ 
-	^ self subject instanceSide  
+	^ self subject theNonMetaClass  
 ]
 
 { #category : #enquiries }

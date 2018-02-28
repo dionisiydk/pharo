@@ -2,6 +2,7 @@ Extension { #name : #RGTraitDefinitionTest }
 
 { #category : #'*Ring-Tests-Monticello' }
 RGTraitDefinitionTest >> testAsFullTraitDefinition [
+	"self debug: #testAsFullTraitDefinition"
 	
 	| rgClass |
 	rgClass := TBehavior asRingDefinition.
@@ -17,13 +18,13 @@ RGTraitDefinitionTest >> testAsFullTraitDefinition [
 	self assert: rgClass superclass name = #Trait.
 	self assert: rgClass subclasses isEmpty.
 	self assert: rgClass package notNil.
-	self assert: rgClass package = rgClass instanceSide package.
+	self assert: rgClass package = rgClass theNonMetaClass package.
 	self assert: rgClass package name = #Traits.
 	self assert: rgClass category = #'Traits-Kernel-Traits'.
 	
 	self assert: rgClass superclass superclass isNil.
 	self assert: rgClass superclass package name equals: #Traits.
 	
-	rgClass := TBehavior classSide asFullRingDefinition.
-	self assert: rgClass package = rgClass classSide package.
+	rgClass := TBehavior theMetaClass asFullRingDefinition.
+	self assert: rgClass package = rgClass theNonMetaClass package.
 ]

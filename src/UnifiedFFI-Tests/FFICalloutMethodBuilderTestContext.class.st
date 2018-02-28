@@ -38,13 +38,6 @@ FFICalloutMethodBuilderTestContext >> methodClass: anObject [
 	methodClass := anObject
 ]
 
-{ #category : #accesing }
-FFICalloutMethodBuilderTestContext >> methodProperties [
-	"stub"
-
-	^ nil
-]
-
 { #category : #accessing }
 FFICalloutMethodBuilderTestContext >> selector [
 	^ selector

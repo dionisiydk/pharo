@@ -39,7 +39,6 @@ TOccurrencesForMultiplinessTest >> empty [
 
 { #category : #'tests - fixture' }
 TOccurrencesForMultiplinessTest >> test0FixtureOccurrencesForMultiplinessTest [
-
 	| cpt anElement collection |
 	self collectionWithEqualElements.
 	self collectionWithEqualElements.
@@ -56,7 +55,6 @@ TOccurrencesForMultiplinessTest >> test0FixtureOccurrencesForMultiplinessTest [
 
 { #category : #'tests - fixture' }
 TOccurrencesForMultiplinessTest >> test0FixtureOccurrencesTest [
-
 	| tmp |
 	self empty.
 	self assert: self empty isEmpty.
@@ -76,31 +74,29 @@ TOccurrencesForMultiplinessTest >> testOccurrencesOf [
 	| collection |
 	collection := self collectionWithoutEqualElements .
 	
-	collection do: [ :each | self assert: (collection occurrencesOf: each) equals: 1 ]
+	collection do: [ :each | self assert: (collection occurrencesOf: each) = 1 ].
 ]
 
 { #category : #'tests - occurrencesOf' }
 TOccurrencesForMultiplinessTest >> testOccurrencesOfEmpty [
-
 	| result |
 	result := self empty occurrencesOf: (self collectionWithoutEqualElements anyOne).
-	self assert: result equals: 0
+	self assert: result = 0
 ]
 
 { #category : #'tests - occurrencesOf for multipliness' }
 TOccurrencesForMultiplinessTest >> testOccurrencesOfForMultipliness [
 
-	| collection elem |
-	collection := self collectionWithEqualElements.
-	elem := self elementTwiceInForOccurrences.
+| collection elem |
+collection := self collectionWithEqualElements .
+elem := self elementTwiceInForOccurrences .
 
-	self assert: (collection occurrencesOf: elem ) equals: 2.  
+self assert: (collection occurrencesOf: elem ) = 2.  
 ]
 
 { #category : #'tests - occurrencesOf' }
 TOccurrencesForMultiplinessTest >> testOccurrencesOfNotIn [
-
 	| result |
 	result := self collectionWithoutEqualElements occurrencesOf: self elementNotInForOccurrences.
-	self assert: result equals: 0
+	self assert: result = 0
 ]

@@ -155,7 +155,7 @@ SingleCodeCriticResultList >> browseCritic [
 			| entity |
 			entity := element sourceAnchor entity.
 			entity isBehavior 
-				ifTrue: [ entity instanceSide browse ]
+				ifTrue: [ entity theNonMetaClass browse ]
 				ifFalse: [ entity browse ] ] 
 ]
 
@@ -429,11 +429,14 @@ SingleCodeCriticResultList >> selectionIntervalFor: aString [
 
 { #category : #menu }
 SingleCodeCriticResultList >> sendersOfCritic [
+
+	| abstractTool |
+	abstractTool := AbstractTool new. 	
 	criticsModel selectedItem
 		ifNotNil: [ :elem | 
-			elem isBehavior
-				ifTrue: [ self systemNavigation browseAllCallsOnClass: elem ]
-				ifFalse: [ self systemNavigation browseAllSendersOf: elem selector ] ]
+			elem isBehavior 
+				ifTrue: [ abstractTool browseClassRefsOf: elem ]
+				ifFalse: [ abstractTool browseSendersOfMessagesFrom: elem selector ] ] 
 ]
 
 { #category : #initialization }

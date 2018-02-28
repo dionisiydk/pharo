@@ -120,7 +120,7 @@ RingChunkImporter >> metaClassDefinition: string with: chgRec [
 	tokens := self scannedSource: string.
 	
 	theClass := self classNamed: tokens first.
-	theClass classSide definitionSource: string;
+	theClass theMetaClass definitionSource: string;
 			  instanceVariables: (tokens fourth findTokens: ' ')
 ]
 
@@ -134,7 +134,7 @@ RingChunkImporter >> metaTraitDefinition: string with: chgRec [
 	trait isTrait
 		ifFalse:[ trait:= self createTraitNamed: tokens first ].
 	
-	trait classSide definitionSource: string
+	trait theMetaClass definitionSource: string
 ]
 
 { #category : #private }
@@ -148,7 +148,7 @@ RingChunkImporter >> msgClassComment: string with: chgRec [
 	ifTrue:[
 		theClass := self classNamed: tokens first.
 		((tokens at: (tokens size - 1)) == #class
-		ifTrue: [ theClass classSide ]
+		ifTrue: [ theClass theMetaClass ]
 		ifFalse:[ theClass ]) comment: tokens last asString ]
 ]
 
@@ -166,7 +166,7 @@ RingChunkImporter >> removedMethod: string with: aChunk [
 	tokens size >= 3
 		ifTrue:[ orClass := self classNamed: tokens first. 
 		^ (tokens second == #class
-			ifTrue: [ orClass classSide ]
+			ifTrue: [ orClass theMetaClass ]
 			ifFalse:[ orClass ]) removeSelector: tokens last ].
 	doIts add: aChunk
 ]
@@ -240,7 +240,7 @@ RingChunkImporter >> visitMethodChunk: aChunk [
 	aChunk isMeta 
 		ifTrue: [ 
 			theMethod isMetaSide: true.
-			theClass classSide addMethod: theMethod. ] 
+			theClass theMetaClass addMethod: theMethod. ] 
 		ifFalse:[ theClass addMethod: theMethod ]
 ]
 

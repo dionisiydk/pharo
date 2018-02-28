@@ -79,9 +79,8 @@ MCModel2MTModelVisitorTest >> setUp [
 
 { #category : #running }
 MCModel2MTModelVisitorTest >> tearDown [
-	
+	super tearDown.
 	classFactory cleanUp.
-	super tearDown
 ]
 
 { #category : #tests }

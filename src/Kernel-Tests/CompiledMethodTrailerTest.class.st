@@ -47,6 +47,8 @@ CompiledMethodTrailerTest >> testEmbeddingCompressedSourceCode [
 
 { #category : #tests }
 CompiledMethodTrailerTest >> testEmbeddingSourceCode [
+
+	self testEmbeddingSourceCode: 'foo'.
 	
 	self testEmbeddingSourceCode: 'testEmbeddingSourceCode
 
@@ -61,8 +63,6 @@ CompiledMethodTrailerTest >> testEmbeddingSourceCode [
 	
 	"Test a big string"
 	self testEmbeddingSourceCode: (String loremIpsum: 30000).
-	
-	""
 ]
 
 { #category : #tests }
@@ -74,27 +74,11 @@ CompiledMethodTrailerTest >> testEmbeddingSourceCode: sourceCode [
 	trailer embeddedSourceCode: sourceCode.
 	newTrailer := trailer testEncoding.
 	
-	self assert: (trailer kind == #EmbeddedSource or: [trailer kind == #EmbeddedSourceWide]).
+	self assert: (trailer kind == #EmbeddedSource ).
 	self assert: (newTrailer sourceCode = sourceCode).
 
 	"the last bytecode index must be at 0"
 	self assert: (newTrailer endPC = 0).
-]
-
-{ #category : #tests }
-CompiledMethodTrailerTest >> testEmbeddingSourceCodeBig [
-	
-	"Test a big string"
-	self testEmbeddingSourceCode: (String loremIpsum: 30000).
-	
-]
-
-{ #category : #tests }
-CompiledMethodTrailerTest >> testEmbeddingSourceCodeWide [
-	
-	"Test that wide strings survive"
-	self testEmbeddingSourceCode: 'doit ^''Под южно дърво, цъфтящо в синьо, бягаше малко пухкаво зайче.'' '.
-	
 ]
 
 { #category : #tests }

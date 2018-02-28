@@ -90,7 +90,7 @@ FuelOutStackDebugAction >> serializeStack [
 	fileName := String streamContents: [ :s|
 		s 
 			<< 'Debugger-Stack-';
-			<< self interruptedContext receiver class instanceSide name;
+			<< self interruptedContext receiver class theNonMetaClass name;
 			<< '-'.
 		date printYMDOn: s.
 		s 

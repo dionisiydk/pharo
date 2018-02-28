@@ -27,7 +27,6 @@ FFICallback class >> asExternalTypeOn: generator [
 
 { #category : #examples }
 FFICallback class >> exampleCqsort [
-	<sampleInstance>
 	| cb rand values orig sort |
 
 	rand := Random new.

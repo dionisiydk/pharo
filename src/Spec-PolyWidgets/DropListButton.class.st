@@ -28,9 +28,7 @@ DropListButton class >> defaultSpec [
 
 { #category : #example }
 DropListButton class >> example [
-	<sampleInstance>
 	| example |
-	
 	example := self new.
 	example
 		displayBlock: [ :item | item asString ];
