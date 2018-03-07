@@ -1,3 +1,6 @@
+"
+An utility class for exporting code to changesets (*.cs) or Smalltalk source (*.st) files
+"
 Class {
 	#name : #CodeExporter,
 	#superclass : #Object,
@@ -20,4 +23,17 @@ CodeExporter class >> writeSourceCodeFrom: aStream baseName: baseName isSt: stOr
 	outputStream close.
 
 	self inform: 'Filed out to: ', String cr, fileName.
+]
+
+{ #category : #'file-out' }
+CodeExporter class >> writeSourceCodeFrom: aStream toFileReference: aFileReference [
+	"Write the supplied changes to aFileReference"
+
+	aFileReference binaryWriteStreamDo: [ :outputStream |
+		(ZnCrPortableWriteStream on: (ZnCharacterWriteStream
+			on: outputStream
+			encoding: 'utf8')) nextPutAll: aStream contents.
+	].
+
+	self inform: 'Filed out to: ', String cr, aFileReference basename
 ]

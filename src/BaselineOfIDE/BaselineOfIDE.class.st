@@ -97,7 +97,8 @@ BaselineOfIDE >> additionalInitialization [
 		Smalltalk garbageCollect.
 		Undeclared removeUnreferencedKeys.].
 	
-	self loadIceberg.
+	self loadIceberg.	
+	self loadCalypso.
 ]
 
 { #category : #baseline }
@@ -150,6 +151,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Tests'.
 		spec package: 'Ring-Tests-Kernel'.
 		spec package: 'AST-Tests-Core'.
+		spec package: 'Compiler-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
 		spec package: 'FuelTests'.
 		spec package: 'Gofer-Tests'.
@@ -157,7 +159,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Kernel-Tests-WithCompiler'.
 		spec package: 'Manifest-Core'.
 		spec package: 'Manifest-Resources-Tests'.
-		spec package: 'Monticello-Tests'.
 		spec package: 'OpalCompiler-Tests'.
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
@@ -183,6 +184,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Metacello-TestsReference'.	"standalone"
 
 		spec package: 'RPackage-Tests'.
+		spec package: 'Monticello-Tests'.
 
 		spec package: 'Glamour-Announcements'.
 		spec package: 'Glamour-Helpers'.
@@ -250,7 +252,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Athens-Cairo'.
 		spec package: 'Athens-Examples'.
 
-		spec package: 'NautilusGroupAutoBuilder'.
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
 		
@@ -266,7 +267,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'GeneralRules'.
 		spec package: 'ReflectionMirrors-Primitives'.
 		spec package: 'FuzzyMatcher'.
-		spec package: 'Versionner-Nautilus'.
 		spec package: 'STON-Text support'.
 		
 		"SortFunctions (standalone)"
@@ -312,7 +312,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Kernel-Tests-Rules'.
 		spec package: 'Keymapping-Tests'.
 		spec package: 'Manifest-Tests'.
-		spec package: 'MessageBrowserRefactoringAddition'.
 		spec package: 'Morphic-Tests'.
 		spec package: 'Multilingual-Tests'.
 		spec package: 'NECompletion-Tests'.
@@ -344,11 +343,13 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'ScriptingExtensions-Tests'.
 		spec package: 'STON-Tests'.
 		spec package: 'SUnit-Tests'.
+		spec package: 'SUnit-Support-UITesting-Tests'.
 		spec package: 'Shout-Tests'.
 		spec package: 'Slot-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
 		spec package: 'Spec-Help'.	
 		spec package: 'Spec-Tests'.
+		spec package: 'System-BasicCommandLineHandler-Tests'.
 		spec package: 'System-Caching-Tests'.
 		spec package: 'System-Hashing-Tests'.
 		spec package: 'System-History-Tests'.
@@ -397,7 +398,6 @@ spec group: 'Optional-Group' with: #(
 	'System-CommandLine-TextSupport'	"standalone?"
 	'System-Serial Port'	"standalone?"
 	'Gofer-UI'	"standalone"
-	'MessageBrowserRefactoringAddition' 	"standalone"
 	'PerformMessageCommandLineHandler' 	"standalone"
 	'Files-Prompt'
 ).	
@@ -456,7 +456,6 @@ spec group: 'General-Tests-Group' with: #(
 	'IssueTracking-Tests'
 	'Keymapping-Tests'
 
-	'MessageBrowserRefactoringAddition'
 	'Morphic-Tests'
 	'NECompletion-Tests'
 	'Nautilus-Tests'
@@ -470,6 +469,7 @@ spec group: 'General-Tests-Group' with: #(
 	'ScriptingExtensions-Tests'
 	'STON-Tests'
 	'SUnit-Tests'
+	'SUnit-Support-UITesting-Tests' 
 	'Slot-Tests'
 	'Spec-Tests'
 	'System-Caching-Tests'
@@ -488,6 +488,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"
 	'System-Identification-Tests'		
 	'System-DependenciesTests'
+	'System-BasicCommandLineHandler-Tests'
 ).	
 
 spec group: 'FuzzyMatcher-Core-Group' with: #(
@@ -796,8 +797,6 @@ spec group: 'Versionner-Tests-Group' with: #(
 spec group: 'Versionner-Group' with: #(
 	'Versionner-Core-Group'
 	'Versionner-Tests-Group'
-	'NautilusGroupAutoBuilder'	"required by Versionner-Nautilus"
-	'Versionner-Nautilus'	
 ).
 
 spec group: 'Kernel-Tests-Group' with: #(
@@ -808,6 +807,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Kernel-Tests-WithCompiler' 
 	'AST-Tests-Core' "requires BlueInk-Core"
 	'Announcements-Tests-Core'
+	'Compiler-Tests'
 	'Compression-Tests' 
 	'FileSystem-Tests-Core' 
 	'FileSystem-Tests-Disk'
@@ -842,7 +842,7 @@ spec group: 'GT&QA-Group' with: #(
 	'Manifest-Group'
 	'DependencyAnalyser-Group'
 	'QualityAssistant-Group'
-	'Reflectivity-Group'	
+	'Reflectivity-Group'
 ).		
 
 
@@ -891,10 +891,41 @@ spec group: #default with: #(
 ]
 
 { #category : #actions }
+BaselineOfIDE >> loadCalypso [
+
+	"Load Calypso without Iceberg Metacello integration"
+	(self class environment at: #Iceberg) enableMetacelloIntegration: false.
+
+	Metacello new
+		baseline: 'ClassAnnotation';
+		repository: 'github://dionisiydk/ClassAnnotation:v0.3.1';
+		load.
+		
+	Metacello new
+		baseline: 'Commander';
+		repository: 'github://dionisiydk/Commander:v0.5.3';
+		load: #(default #'Commander-SpecSupport' #'Commander-Examples').
+	
+	Metacello new
+		baseline: 'SystemCommands';
+		repository: 'github://dionisiydk/SystemCommands:v0.7.1';
+		load.
+			
+	Metacello new
+		baseline: 'Calypso';
+		repository: 'github://dionisiydk/Calypso:v0.10.3';
+		load: #('FullEnvironment' 'SystemBrowser' 'Tests').
+
+	(self class environment at: #ClyBrowser) beAllDefault.
+	
+	(self class environment at: #Iceberg) enableMetacelloIntegration: true.
+]
+
+{ #category : #actions }
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v0.6.5';
+		repository: 'github://pharo-vcs/iceberg:v0.6.8';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 

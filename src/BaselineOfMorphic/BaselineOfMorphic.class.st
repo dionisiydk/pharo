@@ -53,7 +53,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Fuel'.
 		spec package: 'FuelPlatform-Core'.
 		spec package: 'FuelPlatform-Pharo-Core'.
-		spec package: 'FuelPlatform-Pharo-06'.
+		spec package: 'FuelPlatform-Pharo-07'.
 	
 		spec package: 'FuelCommandLineHandler'.
 		spec package: 'FuelSystem-FileRegistry'.
@@ -70,6 +70,8 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Keymapping-Core'.
 		spec package: 'Keymapping-KeyCombinations'.
 		spec package: 'Keymapping-Pragmas'.
+
+		spec package: 'Transcript-Core'.
 
 		spec package: 'Morphic-Base'.
 		spec package: 'Morphic-Examples'.
@@ -257,7 +259,7 @@ BaselineOfMorphic >> loadBitmapSourcePro [
 { #category : #actions }
 BaselineOfMorphic >> postload: loader package: packageSpec [
 
-	| dejavu array |
+	| array |
 
 	'Starting postload action' logCr.
 
@@ -269,7 +271,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	"Initialize Fuel"
 
 	FLLargeIdentityHashedCollection initialize.
-	FLPlatform classPool at: #Current put: FLPharo6Platform new.
+	FLPlatform classPool at: #Current put: FLPharo7Platform new.
 
 	Stdio stdout nextPutAll: 'starting...'; lf.
 
@@ -294,7 +296,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	JPEGReadStream JPEGReadWriter Locale
 	MczInstaller MD5NonPrimitive MenuItemMorph MenuMorph  
 	RxMatcher RxParser RxsPredicate
-	SHA1 ShortIntegerArray SimpleEditor
+	SHA1 ShortIntegerArray
 	SystemProgressMorph SystemWindow TestCase TextContainer TextDiffBuilder
 	ThemeIcons ThumbnailMorph TransferMorph UITheme ZnByteEncoder
 	ZnConstants ZnMimeType ZnNetworkingUtils ZnServer ZnSingleThreadedServer
