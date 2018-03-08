@@ -38,7 +38,6 @@ LabelPresenter class >> defaultSpec [
 
 { #category : #'instance creation' }
 LabelPresenter class >> on: aString [
-
 	^self new 
 		label: aString;
 		yourself
