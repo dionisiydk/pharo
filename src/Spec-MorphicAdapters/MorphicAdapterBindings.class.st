@@ -26,6 +26,7 @@ MorphicAdapterBindings >> initializeBindings [
 		at: #ListAdapter				put: #MorphicListAdapter;
 		at: #IconListAdapter			put: #MorphicIconListAdapter;
 		at: #FastTableAdapter			put: #MorphicFastTableAdapter;
+		at: #SpecTableAdapter			put: #MorphicDispatchToModelAdapter;
 		at: #ImageAdapter			put: #MorphicImageAdapter;
 		at: #MultiColumnListAdapter	put: #MorphicMultiColumnListAdapter;
 		at: #MenuAdapter				put: #MorphicMenuAdapter;

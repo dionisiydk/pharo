@@ -36,6 +36,14 @@ LabelPresenter class >> defaultSpec [
 		adapt: #(model))
 ]
 
+{ #category : #'instance creation' }
+LabelPresenter class >> on: aString [
+
+	^self new 
+		label: aString;
+		yourself
+]
+
 { #category : #specs }
 LabelPresenter class >> title [
 
