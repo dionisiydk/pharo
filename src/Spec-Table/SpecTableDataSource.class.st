@@ -2,10 +2,22 @@ Class {
 	#name : #SpecTableDataSource,
 	#superclass : #Object,
 	#instVars : [
-		'tablePresenter'
+		'tablePresenter',
+		'announcer'
 	],
 	#category : #'Spec-Table'
 }
+
+{ #category : #events }
+SpecTableDataSource >> announceChanges [
+
+	self announcer announce: (SpecDataSourceChanged dataSource: self)
+]
+
+{ #category : #accessing }
+SpecTableDataSource >> announcer [
+	^announcer ifNil: [ announcer := Announcer new ]
+]
 
 { #category : #API }
 SpecTableDataSource >> cellColumn: column row: rowIndex [
@@ -60,4 +72,11 @@ SpecTableDataSource >> tablePresenter [
 { #category : #accessing }
 SpecTableDataSource >> tablePresenter: anObject [
 	tablePresenter := anObject
+]
+
+{ #category : #events }
+SpecTableDataSource >> whenChangedSend: selector to: anObserver [
+
+	self announcer when: SpecDataSourceChanged send: selector to: anObserver
+	
 ]

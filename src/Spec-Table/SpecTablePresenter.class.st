@@ -114,6 +114,7 @@ SpecTablePresenter >> createMorphicWidget [
 	
 	table announcer when: FTStrongSelectionChanged send: #doubleClick: to: self.
 	table announcer when: FTSelectionChanged send: #selectionChanged: to: self.
+	dataSource whenChangedSend: #refresh to: table.
 	^table
 ]
 
