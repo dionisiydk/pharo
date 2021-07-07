@@ -321,11 +321,10 @@ OpalCompiler >> compilationContextClass: aClass [
 
 { #category : #'public access' }
 OpalCompiler >> compile [
-	^[compilationContext noPattern 
-		ifTrue: [ self compileDoit ]
-		ifFalse: [ self compileMethod ]]
-		on: SyntaxErrorNotification 
-		do: [ :exception | 
+	^[
+		self parse.
+		self semanticScope compileMethodFromASTBy: self
+	] on: SyntaxErrorNotification do: [ :exception | 
 			self compilationContext requestor
                 ifNotNil: [
 						self compilationContext requestor 
@@ -345,31 +344,23 @@ OpalCompiler >> compile: textOrString [
 ]
 
 { #category : #private }
-OpalCompiler >> compileDoit [
-	| cm |
-	"We need to first compile with the AST having the text 
-	offset of the original selected code. This way the #location 
-	will be correct regarding the requestor"
-	self parseDoIt.
-	self callPlugins.
-	cm := ast generateWithSource.
-	"We need to re-parse so that the AST is in sync with the 
-	bytecode to be able to debug the doit. Recompile not needed"
+OpalCompiler >> compileDoItFromAST [ 
+	| method |
+	ast := self semanticScope transformDoItExpressionToMethodAST: ast.
+	ast compilationContext: self compilationContext.
+	self doSemanticAnalysis.
+	method := self compileMethodFromAST.
 	ast := RBParser parseMethod: ast formattedCode.
 	ast compilationContext: self compilationContext.
 	self doSemanticAnalysis.
-	"we store the ast in the doit method so that the debugger can read variables from the requestor"
-	cm propertyAt: #ast put: ast.
-	^cm
+	method propertyAt: #ast put: ast.
+	^method
 ]
 
-{ #category : #'public access' }
-OpalCompiler >> compileMethod [
-	[self parse.
-	self callPlugins] 	on: ReparseAfterSourceEditing do: [:notification | 
-			self source: notification newSource. 
-			notification retry ]. 
-	^ast generateMethod.
+{ #category : #private }
+OpalCompiler >> compileMethodFromAST [ 
+	self callPlugins.
+	^ast generateMethod
 ]
 
 { #category : #accessing }
@@ -380,18 +371,17 @@ OpalCompiler >> compiledMethodTrailer: bytes [
 { #category : #accessing }
 OpalCompiler >> context: aContext [
 	aContext ifNil: [ ^self ]. "there are such users"
-	self semanticScope: (self semanticScope asDoItForContext: aContext)
+	self semanticScope: (self semanticScope asDoItScopeForContext: aContext)
 ]
 
 { #category : #private }
 OpalCompiler >> createParser [ 
 
 	| parser |
-	parser := self parserClass new
-		        initializeParserWith: source contents. 
+	parser := self parserClass new. 
 	(self compilationContext optionParseErrors or: [ self allowParseErrorsNonInteractive ])
 		ifTrue: [ parser beFaulty ].
-	
+	parser	 initializeParserWith: source contents.
 	^parser 
 ]
 
@@ -437,19 +427,9 @@ OpalCompiler >> evaluate [
 	| value doItMethod |
 	self noPattern: true.
 	self getSourceFromRequestorSelection.
-	value := [ 
-		doItMethod := self compileDoit.
-		self semanticScope evaluateDoIt: doItMethod ]
-		on: SyntaxErrorNotification 
-		do: [ :exception | 
-			self compilationContext requestor
-                ifNotNil: [
-						self compilationContext requestor 
-							notify: exception errorMessage , ' ->'
-							at: exception location
-							in: exception errorCode.
-                    self compilationContext failBlock value ]
-                ifNil: [ exception pass ]].
+	doItMethod := self compile.
+	doItMethod ifNotNil: [ 
+			value := self semanticScope evaluateDoIt: doItMethod ].
 	self logDoIt.
 	^ value
 ]
@@ -528,17 +508,16 @@ OpalCompiler >> options: anOptionsArray [
 
 { #category : #'public access' }
 OpalCompiler >> parse [
-	[ast := self compilationContext noPattern 
-		ifTrue: [ self parseExpression ]
-		ifFalse: [ self parseMethod ].
-	ast methodNode compilationContext: self compilationContext.
-	self doSemanticAnalysis]
-	on: ReparseAfterSourceEditing 
-			do: 
-			[  	:notification | 
-				self source: notification newSource. 
-				notification retry.  
-			]. 
+	| parser |
+	[
+		parser := self createParser.
+		ast := self semanticScope parseASTBy: parser.
+		
+		ast methodNode compilationContext: self compilationContext.
+		self doSemanticAnalysis]
+	on: ReparseAfterSourceEditing do: [:notification | 
+			self source: notification newSource. 
+			notification retry ]. 
 	^ast
 ]
 
@@ -550,30 +529,9 @@ OpalCompiler >> parse: textOrString [
 		parse
 ]
 
-{ #category : #private }
-OpalCompiler >> parseDoIt [
-	"we parse doits without doing name analysis here, it is done in #transformDoit"
-	ast := self parseExpression.
-	^self transformDoit
-]
-
-{ #category : #private }
-OpalCompiler >> parseExpression [
-	^ (self compilationContext optionParseErrors or: [ self allowParseErrorsNonInteractive ])
-		ifTrue: [self parserClass parseFaultyExpression: source contents]
-		ifFalse: [self parserClass parseExpression: source contents]
-]
-
 { #category : #'public access' }
 OpalCompiler >> parseLiterals: aString [
 	^self parserClass parseLiterals: aString
-]
-
-{ #category : #private }
-OpalCompiler >> parseMethod [
-	^ (self compilationContext optionParseErrors or: [ self allowParseErrorsNonInteractive ])
-		ifTrue: [self parserClass parseFaultyMethod: source contents]
-		ifFalse: [self parserClass parseMethod: source contents]
 ]
 
 { #category : #'public access' }
@@ -595,7 +553,7 @@ OpalCompiler >> productionEnvironment: anObject [
 
 { #category : #accessing }
 OpalCompiler >> receiver: anObject [
-	self semanticScope: (self semanticScope asDoItForReceiver: anObject)
+	self semanticScope: (self semanticScope asDoItScopeForReceiver: anObject)
 ]
 
 { #category : #accessing }
@@ -623,16 +581,4 @@ OpalCompiler >> semanticScope: anObject [
 { #category : #accessing }
 OpalCompiler >> source: aString [
 	source := aString readStream.
-]
-
-{ #category : #'public access' }
-OpalCompiler >> transformDoit [
-	"if we compile an expression, we wrap it in a method here"
-	self compilationContext noPattern ifFalse: [ ^ast ].
-		
-	ast := self semanticScope transformDoItExpressionToMethodAST: ast.
-	"we need to set the compilation context in the new method node"
-	ast compilationContext: self compilationContext.
-	self doSemanticAnalysis.
-	^ast
 ]

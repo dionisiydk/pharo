@@ -27,17 +27,6 @@ OCReceiverDoItSemanticScope class >> targetingReceiver: anObject [
 		targetReceiver: anObject
 ]
 
-{ #category : #'code compilation' }
-OCReceiverDoItSemanticScope >> buildASTBy: aParser [
-
-	| ast |
-	ast := aParser parseExpression.
-	ast := ast asDoit.
-	ast semanticScope: self.
-	^ast
-	
-]
-
 { #category : #'code evaluation' }
 OCReceiverDoItSemanticScope >> evaluateDoIt: doItMethod [
 

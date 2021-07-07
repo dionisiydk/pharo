@@ -24,22 +24,18 @@ OCMethodSemanticScope class >> targetingClass: aClass [
 
 { #category : #converting }
 OCMethodSemanticScope >> asDoItScope [
-	^self asDoItForReceiver: nil
+	^self asDoItScopeForReceiver: nil
 ]
 
 { #category : #'code compilation' }
-OCMethodSemanticScope >> buildASTBy: aParser [
-
-	| ast |
-	ast := aParser parseMethod.
-	ast semanticScope: self.
-	^ast
+OCMethodSemanticScope >> compileMethodFromASTBy: aCompiler [
+	^aCompiler compileMethodFromAST
 ]
 
-{ #category : #'code evaluation' }
-OCMethodSemanticScope >> evaluateDoIt: doItMethod [
+{ #category : #'code compilation' }
+OCMethodSemanticScope >> parseASTBy: aParser [
 
-	^nil withArgs: #() executeMethod: doItMethod
+	^aParser parseMethod
 ]
 
 { #category : #accessing }
@@ -52,9 +48,4 @@ OCMethodSemanticScope >> targetClass [
 OCMethodSemanticScope >> targetClass: anObject [
 
 	targetClass := anObject
-]
-
-{ #category : #'code compilation' }
-OCMethodSemanticScope >> transformDoItExpressionToMethodAST: expressionAST [
-	^expressionAST asDoit
 ]

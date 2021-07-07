@@ -32,21 +32,11 @@ OCContextualDoItSemanticScope >> announceDoItEvaluation: aSourceString by: aSyst
 ]
 
 { #category : #converting }
-OCContextualDoItSemanticScope >> asDoItForReceiver: anObject [ 
+OCContextualDoItSemanticScope >> asDoItScopeForReceiver: anObject [ 
 	anObject == targetContext receiver ifFalse: [ 
 		self error: 'Receiver is not same as context receiver' ].
 	
 	^self
-]
-
-{ #category : #'code compilation' }
-OCContextualDoItSemanticScope >> buildASTBy: aParser [
-
-	| ast |
-	ast := aParser parseExpression.
-	ast := ast asDoitForContext: targetContext.
-	ast semanticScope: self.
-	^ast
 ]
 
 { #category : #'code evaluation' }
@@ -118,5 +108,5 @@ OCContextualDoItSemanticScope >> targetContext: aContext [
 
 { #category : #'code compilation' }
 OCContextualDoItSemanticScope >> transformDoItExpressionToMethodAST: expressionAST [
-	^expressionAST asDoitForContext: targetContext
+	^expressionAST asDoItScopeForContext: targetContext
 ]

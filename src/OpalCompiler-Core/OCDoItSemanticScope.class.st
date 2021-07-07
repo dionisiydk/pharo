@@ -17,7 +17,27 @@ OCDoItSemanticScope >> asDoItScope [
 	^self
 ]
 
+{ #category : #'code compilation' }
+OCDoItSemanticScope >> compileMethodFromASTBy: aCompiler [
+	^aCompiler compileDoItFromAST
+]
+
+{ #category : #'code evaluation' }
+OCDoItSemanticScope >> evaluateDoIt: doItMethod [
+	self subclassResponsibility 
+]
+
 { #category : #testing }
 OCDoItSemanticScope >> isDoItScope [ 
 	^true
+]
+
+{ #category : #parsing }
+OCDoItSemanticScope >> parseASTBy: aParser [
+	^aParser parseExpression
+]
+
+{ #category : #'code compilation' }
+OCDoItSemanticScope >> transformDoItExpressionToMethodAST: expressionAST [
+	self subclassResponsibility 
 ]

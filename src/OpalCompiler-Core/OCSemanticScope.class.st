@@ -1,16 +1,28 @@
 "
 I am an abstract class. My subclasses represent the meaning of the code: is it a method or a doIt expression.
 
-The source code is parsed or compiled using configured semantic scope, one of my subclasses. The actual form of a final method AST or a compiled method depends on the scope: 
-- doIt expressions should be converted to the doIt method
-- method definition should be just parsed as a method
-Subclasses define this logic using #transformDoItExpressionToMethodAST: method. 
+The source code is parsed or compiled using a configured semantic scope, one of my subclasses:
 
-Another responsibility of subclasses is to define the visibility of variables for the code by implementing #targetClass method. 
+- parsing is delegated to the scope with:
+	
+		 aSemanticScope parseASTBy: aParser
+		
+Depending on a scope the parser performs #parseMethod or #parseExpression operations.
+
+- compilation is delegated to the scope with:
+
+	aSemanticScope compileMethodFromASTBy: aCompiler
+
+Depending on a scope the compiler performs #compileMethodFromAST or #compileDoItFromAST operations.
+
+Another responsibility of subclasses is to define the visibility of variables by implementing #targetClass method. 
 Target class is used for the variable lookup logic: all instance variables and shared variables are visible for the code compiled for the target class.
 
-To be able evaluate given source code as expression the scope implements #evaluateDoIt: method
-
+For the current integration into the compilation logic a several converting methods are implemented to simplify the initialization of scopes:
+- asDoItScope
+- asDoItForContext:
+- asDoItForReceiver: 
+Configuration methods like #class:, #context:, #receiver:, #noPattern: perform the initialization of scope in the compilation context. They convert existing scope using new parameters. It allows to keep the current API allowing different combination of these method calls which we have in the system. In future it needs to be cleaned.
 
 "
 Class {
@@ -36,28 +48,22 @@ OCSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [
 ]
 
 { #category : #converting }
-OCSemanticScope >> asDoItForContext: aContext [ 
-	^OCContextualDoItSemanticScope targetingContext: aContext
-]
-
-{ #category : #converting }
-OCSemanticScope >> asDoItForReceiver: anObject [
-	^OCReceiverDoItSemanticScope targetingReceiver: anObject
-]
-
-{ #category : #converting }
 OCSemanticScope >> asDoItScope [
 	self subclassResponsibility 
 ]
 
-{ #category : #'code compilation' }
-OCSemanticScope >> buildASTBy: aParser [
-
-	self subclassResponsibility 
+{ #category : #converting }
+OCSemanticScope >> asDoItScopeForContext: aContext [ 
+	^OCContextualDoItSemanticScope targetingContext: aContext
 ]
 
-{ #category : #'code evaluation' }
-OCSemanticScope >> evaluateDoIt: doItMethod [
+{ #category : #converting }
+OCSemanticScope >> asDoItScopeForReceiver: anObject [
+	^OCReceiverDoItSemanticScope targetingReceiver: anObject
+]
+
+{ #category : #'code compilation' }
+OCSemanticScope >> compileMethodFromASTBy: aCompiler [
 	self subclassResponsibility 
 ]
 
@@ -84,6 +90,11 @@ OCSemanticScope >> lookupVar: name declare: aBoolean [
 	
 ]
 
+{ #category : #'code compilation' }
+OCSemanticScope >> parseASTBy: aParser [
+	self subclassResponsibility 
+]
+
 { #category : #accessing }
 OCSemanticScope >> targetClass [ 
 	self subclassResponsibility  
@@ -92,9 +103,4 @@ OCSemanticScope >> targetClass [
 { #category : #accessing }
 OCSemanticScope >> targetEnvironment [ 
 	^self targetClass environment 
-]
-
-{ #category : #'code compilation' }
-OCSemanticScope >> transformDoItExpressionToMethodAST: expressionAST [
-	self subclassResponsibility 
 ]
