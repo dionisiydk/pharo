@@ -1,5 +1,5 @@
 "
-I am a root scope for the AST of method definition (compiled in the browser for example).
+I am a semantic scope for the AST of method definition.
 
 I define the visibility of #targetClass variables from the source code of the method.
 

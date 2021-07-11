@@ -1,12 +1,18 @@
 "
-I am a root scope for any DoIt expression evaluated in given context (doIt in the debugger).
+I am a scope for DoIt expressions targeting a given context (doIt/printIt in the debugger).
 
-I extend the variable visibility to allow the usage of targetContext variables. 
-In debugger it means that users can execute or debug the code containing local variables. They are indirectly accessible from the expression doIt methods.
+I implement a visibility of varibles defined in the target context:
+- temps of context 
+- inst vars of context receiver
+- etc
+Thus the doIt expressions can transparently access ""external"" variables.
+In debugger it means that users can execute or debug the code containing local variables. 
+
+Internally I convert all external variables using #asDoItVariable message and cache them in #importedVariables dictionary. This way I ensure the only instance of DoItVariable per each external variable (the variable lookup can happens multiple times for same name).  
 
 My instances can be created using following expression:
 
-	OCContextualDoItSemanticScope targetingContext: thisContext
+	OCContextualDoItSemanticScope targetingContext: thisContext 
 
 "
 Class {

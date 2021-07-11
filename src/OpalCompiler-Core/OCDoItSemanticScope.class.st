@@ -1,5 +1,13 @@
 "
-I am a root of hierarchy of scopes representing the various kindos of DoIt expressions
+I am a root of hierarchy of scopes representing a various kinds of of DoIt expressions.
+
+My subclasses must implement several methods for doIt method compilation and evaluation:
+
+- transformDoItExpressionToMethodAST: anAST
+
+- evaluateDoIt: aMethod
+
+See subclasses for examples
 "
 Class {
 	#name : #OCDoItSemanticScope,

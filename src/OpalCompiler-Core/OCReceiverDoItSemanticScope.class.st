@@ -1,7 +1,12 @@
 "
-I am a root scope for any DoIt expression evaluated for given receiver object (doIt in the inspector).
+I am a scope for DoIt expressions targeting a given receiver (doIt/printIt in the inspector).
 
-I allow scripts to see instance and shared varibales of the class of #targetReceiver.
+I implement a visibility of varibles defined in the target receiver:
+- inst vars
+- class vars 
+- etc
+Thus the doIt expressions can transparently access variables of target receiver.
+In inspector it means that users can execute or debug the code containing instance and shared variables. 
 
 My instances can be created using following expression:
 
