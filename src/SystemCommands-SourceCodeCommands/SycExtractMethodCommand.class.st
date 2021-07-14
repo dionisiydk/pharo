@@ -3,7 +3,9 @@ I am a command to extract selected ast node into separate method
 "
 Class {
 	#name : #SycExtractMethodCommand,
-	#superclass : #SycSourceCodeCommand,
+	#superclass : #SycSourceCodeRefactoringCommand,
+	#traits : 'TRefactoringCommandSupport',
+	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
 		'selectedTextInterval'
 	],
@@ -42,20 +44,9 @@ SycExtractMethodCommand >> defaultMenuItemName [
 ]
 
 { #category : #execution }
-SycExtractMethodCommand >> execute [
-
-	self executeRefactoring: self asRefactorings
-]
-
-{ #category : #testing }
-SycExtractMethodCommand >> isComplexRefactoring [
-	^ true
-]
-
-{ #category : #execution }
 SycExtractMethodCommand >> readParametersFromContext: aSourceCodeContext [
 	super readParametersFromContext: aSourceCodeContext.
-	
+	self setUpModelFromContext: aSourceCodeContext.
 	selectedTextInterval := aSourceCodeContext selectedTextInterval.
 ]
 
@@ -81,10 +72,14 @@ SycExtractMethodCommand >> setUpOptionToChangeExtractionClass: refactoring [
 SycExtractMethodCommand >> setUpOptionToChangeMethodNameDuring: refactoring [
 
 	| dialog |
-	refactoring setOption: #methodName toUse: [ :ref :methodName | 
+	refactoring setOption: #methodName toUse: [ :methodName | | invalidArgs |
+		invalidArgs := self computeInvalidArgNamesForSelector: method selector.
 		dialog := SycMethodNameEditorPresenter
-			          openOn: methodName
-			          withRefactoring: ref.
+			openOn: methodName
+			withInvalidArgs: invalidArgs
+			canRenameArgs: true
+			canRemoveArgs: false
+			canAddArgs: false.
 		dialog cancelled ifTrue: [ CmdCommandAborted signal ].
 		methodName ]
 ]

@@ -41,10 +41,10 @@ SycMoveMethodsToClassCommand >> defaultMenuItemName [
 
 { #category : #execution }
 SycMoveMethodsToClassCommand >> execute [
-	
 	methods 
 		collect: [ :each | RBMoveMethodToClassRefactoring model: model method: each class: targetClass ]
-		thenDo: [ :each | each execute ]
+		thenDo: [ :each | each execute ].
+	methods do: [ :each | each origin organization removeEmptyCategories ].
 ]
 
 { #category : #'drag and drop support' }

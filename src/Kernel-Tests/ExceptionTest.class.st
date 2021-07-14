@@ -52,7 +52,17 @@ ExceptionTest >> runWithNoHandlers: aBlock [
 	^result
 ]
 
-{ #category : #test }
+{ #category : #'tests - handling' }
+ExceptionTest >> testCaptureIfSignalledWhenStepping [
+	self deny: Exception captureIfSignalledWhenStepping.
+	self assert: Error captureIfSignalledWhenStepping.
+	self deny: (Error allSubclasses anySatisfy: [ :c| c  captureIfSignalledWhenStepping]).
+	self assert: (UnhandledException withAllSubclasses select:[:c| c captureIfSignalledWhenStepping]) size equals: 1.
+	self assert: (UnhandledException withAllSubclasses select:[:c| c captureIfSignalledWhenStepping]) first identicalTo: Halt.
+	
+]
+
+{ #category : #tests }
 ExceptionTest >> testDefaultAction [
 	"Ensure that the resuming an UnhandledError when the underlying
 	Exception is resumable, results in the resumption value serving
@@ -67,7 +77,7 @@ ExceptionTest >> testDefaultAction [
 	self assert: result equals: expected
 ]
 
-{ #category : #test }
+{ #category : #tests }
 ExceptionTest >> testDefaultDescription [
    "Tests that the description of an Exception, is the defaultDescription"
    |anException|
@@ -76,7 +86,7 @@ ExceptionTest >> testDefaultDescription [
 	
 ]
 
-{ #category : #test }
+{ #category : #tests }
 ExceptionTest >> testDescription [
    |anException|
 	anException := Exception new.
@@ -336,7 +346,7 @@ ExceptionTest >> testResumablePass [
 	self assert: result equals: 4
 ]
 
-{ #category : #test }
+{ #category : #tests }
 ExceptionTest >> testResumeNonresumableUnhandledError [
 
 	"Ensure that the resuming an UnhandledError results in

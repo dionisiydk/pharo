@@ -4,13 +4,13 @@ Class {
 	#category : #'SystemCommands-RefactoringSupport'
 }
 
-{ #category : #example }
+{ #category : #examples }
 RBSelectClassAndMethodsPresenter class >> example [
 	<script>
 	^ (self label: 'example ...' 
 		dropLabel: 'Pull up methods'
 		withItems: SycExtractMethodCommand methods
-		selecting: {}
+		selecting: OrderedCollection new
 		dropItems: SycExtractMethodCommand allSuperclasses
 		acceptBlock: [ :item :items |  ] )
 ]

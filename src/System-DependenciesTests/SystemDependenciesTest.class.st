@@ -83,7 +83,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 	
-	^ #()
+	^ #('NewTools-Spotter')
 ]
 
 { #category : #'known dependencies' }
@@ -107,7 +107,7 @@ SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
 	^ #(#'Fonts-Chooser' #'Refactoring-Critics' #'Refactoring-Environment' #Shout #'Spec-Core' "Spec-Core should be removed later." #'Spec2-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
-	#'Athens-Morphic' #'Tools-CodeNavigation' "Rubric has a dependency on It" 'Debugger-Oups' 'Debugger-Model')
+	#'Athens-Morphic' #'Tools-CodeNavigation' "Rubric has a dependency on It" 'Debugger-Oups')
 ]
 
 { #category : #'known dependencies' }
@@ -209,7 +209,8 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfSpec2 name }, (BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
 		{ BaselineOfNewTools name }, (BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
-		{ BaselineOfFuel name }, (BaselineOfFuel packagesOfGroupNamed: #Core) ).
+		{ BaselineOfFuel name }, (BaselineOfFuel packagesOfGroupNamed: #Core),
+		{ BaselineOfFuelPlatform name }, BaselineOfFuelPlatform allPackageNames ).
 	
 	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies.
 ]
@@ -293,7 +294,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfGeneralTests.
 	BaselineOfMisc.
 	BaselineOfEpicea.
-	BaselineOfCatalog.
 	BaselineOfRefactoring.
 	BaselineOfOSWindow.
 	BaselineOfQA.
@@ -310,7 +310,6 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfShout.
 	BaselineOfKernelTests.
 	BaselineOfHeuristicCompletion.
-	BaselineOfFuel.
 	 } do: [ :baseline | packages := packages , {baseline name} , baseline allPackageNames ].
 
 	packages := packages ,  { BaselineOfSpecCore name }, (self packagesOfGroupNamed: 'default' on: BaselineOfSpecCore ).
@@ -332,6 +331,8 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	packages := packages , {BaselineOfThreadedFFI name} ,  
 		(self packagesOfGroupNamed: 'default' on: BaselineOfThreadedFFI ).
 	packages := packages ,  #('TaskIt').
+	packages := packages , { BaselineOfFuel name } , (BaselineOfFuel packagesOfGroupNamed: #Core).
+	packages := packages , {BaselineOfFuelPlatform name } , BaselineOfFuelPlatform allPackageNames.
 
 	dependencies := self externalDependendiesOf: packages.
 	self assertCollection: dependencies hasSameElements: self knownIDEDependencies
@@ -443,7 +444,8 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
-		(BaselineOfFuel packagesOfGroupNamed: #Core) ).
+		(BaselineOfFuel packagesOfGroupNamed: #Core),
+		BaselineOfFuelPlatform allPackageNames ).
 	
 	self assertCollection: dependencies hasSameElements: self knownMorphicDependencies.
 ]
@@ -502,6 +504,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
 		(BaselineOfFuel packagesOfGroupNamed: #Core),
+		BaselineOfFuelPlatform allPackageNames,
 
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 		
@@ -557,7 +560,8 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		(BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
-		(BaselineOfFuel packagesOfGroupNamed: #Core) )).
+		(BaselineOfFuel packagesOfGroupNamed: #Core),
+		BaselineOfFuelPlatform allPackageNames )).
 	
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies.
 ]

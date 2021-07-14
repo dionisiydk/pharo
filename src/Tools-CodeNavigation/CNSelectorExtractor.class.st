@@ -80,14 +80,18 @@ CNSelectorExtractor >> extractSelectorFromNode: aNode [
 		(node ~= originalNode and: [ 
 			 node parent notNil and: [ node parent isCascade ] ]) ifTrue: [ 
 			node := node parent messages first ] ].
+	
+	"In the case of doIt methods"
+	(node selector = #noMethod and: [ aNode isVariable ])
+		ifTrue: [  ^ aNode name ].
+
 
 	^ node selector
 ]
 
 { #category : #'public - extraction' }
 CNSelectorExtractor >> extractSelectorFromSelection: aString [ 
-
-	"Extract a selector from the given string in isolation, regarless of the context around it"
+   "Extract a selector from the given string in isolation, regardless of the context around it"
 	
 	| node |
 	node := RBParser parseFaultyExpression: aString.
@@ -106,12 +110,16 @@ CNSelectorExtractor >> extractSelectorFromSelection: aString [
 
 { #category : #'public - extraction' }
 CNSelectorExtractor >> extractSelectorFromSource: aString atPosition: aPosition [
-
 	"Receives a string with the source code, and a number which indicates the position (of the caret) where the selectors will be extracted."
-
+	
+	| position |
 	aString ifNil: [ ^ nil ].
 	aString ifEmpty: [ ^ nil ].
-	((aPosition < 0) or: (aPosition > aString size)) ifTrue: [ ^nil ].
+	position := (aPosition < 0 or: [ aPosition > aString size ]) 
+		ifTrue: [
+			(aString size + 1) = aPosition 
+				ifTrue: [ aPosition -1 ]
+				ifFalse: [ ^ nil ]].
 	^ self
 		  extractSelectorFromAST: (RBParser parseFaultyExpression: aString)
 		  atPosition: aPosition

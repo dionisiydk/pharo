@@ -17,7 +17,8 @@ Class {
 		'sourceParseTree',
 		'sourceSelector',
 		'sourceMessage',
-		'inlineClass'
+		'inlineClass',
+		'checkOverridden'
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -53,6 +54,16 @@ RBInlineMethodRefactoring >> addTemporary: sourceNode assignedTo: replacementNod
 		addTemporaryNamed: newName;
 		addNodeFirst: (RBAssignmentNode variable: (RBVariableNode named: newName)
 					value: replacementNode)
+]
+
+{ #category : #accessing }
+RBInlineMethodRefactoring >> checkOverridden [
+	^ checkOverridden ifNil: [ checkOverridden := true ]
+]
+
+{ #category : #accessing }
+RBInlineMethodRefactoring >> checkOverridden: aBoolean [
+	checkOverridden := aBoolean
 ]
 
 { #category : #transforming }
@@ -172,7 +183,7 @@ RBInlineMethodRefactoring >> insertInlinedMethod [
 			node := node parent].
 	node parent isReturn 
 		ifTrue: [node := node parent]
-		ifFalse: [self removeReturns].
+		ifFalse: [inlineParseTree := self removeReturnsOf: inlineParseTree].
 	self replaceArguments.
 	self inlineSourceReplacing: node.
 	sourceParseTree removeDeadCode.
@@ -272,12 +283,13 @@ RBInlineMethodRefactoring >> preconditions [
 	^(RBCondition definesSelector: sourceSelector in: class) 
 		& (RBCondition withBlock: 
 					[self findSelectedMessage.
-					self isOverridden 
+					self checkOverridden ifTrue: [
+						self isOverridden 
 						ifTrue: 
 							[self 
 								refactoringWarning: ('<1p>>><2s> is overriden. Do you want to inline it anyway?' 
 										expandMacrosWith: self inlineClass
-										with: self inlineSelector)].
+										with: self inlineSelector)] ].
 					self parseInlineMethod.
 					self isPrimitive 
 						ifTrue: [self refactoringError: 'Cannot inline primitives'].
@@ -320,15 +332,6 @@ RBInlineMethodRefactoring >> removeImmediateBlocks [
 		with: '| `@temps `@bTemps | ``@.Stmts1. ``@.bStmts. ``@.Stmts2'.
 	(rewriter executeTree: sourceParseTree) 
 		ifTrue: [sourceParseTree := rewriter tree]
-]
-
-{ #category : #transforming }
-RBInlineMethodRefactoring >> removeReturns [
-	| rewriter |
-	rewriter := self parseTreeRewriter.
-	rewriter replace: '^``@object' with: '``@object'.
-	(rewriter executeTree: inlineParseTree) 
-		ifTrue: [inlineParseTree := rewriter tree]
 ]
 
 { #category : #transforming }
@@ -399,7 +402,7 @@ RBInlineMethodRefactoring >> rewriteCascadedMessage [
 				detect: [:i | sourceMessage == (messages at: i)]
 				ifNone: [0].
 	inlineParseTree body addNodesFirst: (messages copyFrom: 1 to: index - 1).
-	self removeReturns.
+	inlineParseTree := self removeReturnsOf: inlineParseTree.
 	inlineParseTree body 
 		addNodes: (messages copyFrom: index + 1 to: messages size).
 	inlineParseTree addReturn

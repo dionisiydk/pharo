@@ -186,10 +186,26 @@ PharoLightTheme class >> veryLightSelectionColor [
 	^ self lightSelectionColor muchLighter
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 PharoLightTheme >> balloonBackgroundColor [
 
 	^ (Color r: 1.0 g: 1.0 b: 0.71 alpha: 1.0)
+]
+
+{ #category : #'fill-styles-buttons' }
+PharoLightTheme >> buttonDisabledBorderStyleFor: aButton [
+	"Return the disabled button fillStyle for the given color."
+
+	^ BorderStyle
+		width: 0
+		color: Color transparent
+]
+
+{ #category : #'fill-styles-buttons' }
+PharoLightTheme >> buttonDisabledFillStyleFor: aButton [
+	"Return the disabled button fillStyle for the given color."
+
+	^ SolidFillStyle color: Color transparent
 ]
 
 { #category : #'border-styles-buttons' }
@@ -217,7 +233,7 @@ PharoLightTheme >> configureWindowBorderFor: aWindow [
 	aWindow borderStyle: aStyle
 ]
 
-{ #category : #'accessing colors' }
+{ #category : #'accessing - colors' }
 PharoLightTheme >> ghostTextColor [
 
 	^ Color darkGray

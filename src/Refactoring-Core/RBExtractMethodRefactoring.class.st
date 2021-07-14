@@ -249,6 +249,7 @@ RBExtractMethodRefactoring >> getNewMethodName [
 	newSelector isNil] 
 			whileTrue: [].
 	parameters := newMethodName arguments asOrderedCollection.
+	newMethodName renameMap ifNotEmpty: [parameterMap := newMethodName renameMap].
 	^newSelector asSymbol
 ]
 
@@ -271,6 +272,7 @@ RBExtractMethodRefactoring >> isParseTreeEquivalentTo: aSelector [
 	tree := definingClass parseTreeFor: aSelector.
 	tree ifNil: [^false].
 	tree isPrimitive ifTrue: [^false].
+	needsReturn ifFalse: [ tree := self removeReturnsOf: tree ].
 	(tree body equalTo: extractedParseTree body
 		exceptForVariables: (tree arguments collect: [:each | each name])) 
 			ifFalse: [^false].
@@ -313,7 +315,9 @@ RBExtractMethodRefactoring >> nameNewMethod: aSymbol [
 						nextPut: $ ;
 						nextPutAll: arg asString;
 						nextPut: $  ] ].
-	modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: newSend in: modifiedParseTree
+	modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: newSend in: modifiedParseTree.
+	self parameterMap do: [ :e |
+	(self parseTreeRewriterClass rename: e newName to: e name) executeTree: modifiedParseTree ]
 ]
 
 { #category : #transforming }
@@ -323,7 +327,7 @@ RBExtractMethodRefactoring >> newExtractedSelector [
 
 { #category : #accessing }
 RBExtractMethodRefactoring >> parameterMap [
-	^ parameterMap
+	^ parameterMap ifNil: [ parameterMap := { } ]
 ]
 
 { #category : #accessing }
@@ -369,10 +373,8 @@ RBExtractMethodRefactoring >> remainingTemporaries [
 
 { #category : #transforming }
 RBExtractMethodRefactoring >> renameAllParameters [
-	parameterMap ifNotNil: [
-		parameterMap keysAndValuesDo: [ :key : value | 
-			key ~= value ifTrue: [ self renameParameterWith: key to: value ]]
-	]
+	self parameterMap do: [ :each | 
+			self renameParameterWith: each name to: each newName ]
 ]
 
 { #category : #renaming }
@@ -390,6 +392,7 @@ RBExtractMethodRefactoring >> renameParameterWith: oldName to: newName [
 RBExtractMethodRefactoring >> reorderParametersToMatch: aSelector [ 
 	| tree dictionary |
 	tree := class parseTreeFor: aSelector.
+	needsReturn ifFalse: [ tree := self removeReturnsOf: tree ].
 	dictionary := Dictionary new.
 	tree body equalTo: extractedParseTree body withMapping: dictionary.
 	parameters := tree arguments collect: 
@@ -471,7 +474,7 @@ RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldNam
 			block
 				ifNotNil: [ self refactoringError: conditions errorString with: block ]
 				ifNil: [ self refactoringError: conditions errorString ] ].
-	(parameterMap values includes: newName) ifTrue: [
+	(self parameterMap values includes: newName) ifTrue: [
 		self refactoringError: newName asString , ' is already defined as parameter' ].
 	(aParseTree whoDefines: newName)
 		ifNotNil: [ self refactoringError: newName asString , ' is already defined' ].

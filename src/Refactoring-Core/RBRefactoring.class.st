@@ -56,7 +56,7 @@ RBRefactoring class >> initializeRefactoringOptions [
 		put: [ :ref :imps | self error: #implementorToInline ];
 		
 		at: #methodName
-		put: [ :ref :methodName | self error: #methodName ];
+		put: [ :methodName | self error: #methodName ];
 		
 		at: #selfArgumentName
 		put: [ :ref | self error: #selfArgumentName ];
@@ -361,7 +361,7 @@ RBRefactoring >> primitiveExecute [
 { #category : #private }
 RBRefactoring >> refactoringConfirmWarning: aString [
 	| ret |
-	ret := UIManager default confirm: aString orCancel: [ ^ RBRefactoringFailure signal: 'aborted' ].
+	ret := self uiManager confirm: aString orCancel: [ ^ RBRefactoringFailure signal: 'aborted' ].
 	^ ret
 ]
 
@@ -390,6 +390,16 @@ RBRefactoring >> refactoringWarning: aString [
 	^ RBRefactoringWarning signal: aString
 ]
 
+{ #category : #removing }
+RBRefactoring >> removeReturnsOf: parseTree [
+	| rewriter |
+	rewriter := self parseTreeRewriter.
+	rewriter replace: '^``@object' with: '``@object'.
+	(rewriter executeTree: parseTree) 
+		ifTrue: [ ^ rewriter tree].
+	^ parseTree
+]
+
 { #category : #requests }
 RBRefactoring >> requestImplementorToInline: implementorsCollection [ 
 	^(self options at: #implementorToInline) value: self
@@ -398,7 +408,7 @@ RBRefactoring >> requestImplementorToInline: implementorsCollection [
 
 { #category : #requests }
 RBRefactoring >> requestMethodNameFor: aMethodName [ 
-	^(self options at: #methodName) value: self value: aMethodName
+	^(self options at: #methodName) value: aMethodName
 ]
 
 { #category : #requests }

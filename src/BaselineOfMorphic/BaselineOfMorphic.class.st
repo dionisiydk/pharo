@@ -51,7 +51,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'System-Clipboard'.
 		
 		spec package: 'EmbeddedFreeType'.
-		spec package: 'EmergencyDebugger'.
 		spec package: 'FileSystem-Zip'.
 		spec package: 'Fonts-Infrastructure'.
 		spec package: 'FreeType'.
@@ -292,9 +291,8 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	TextConstants initialize.
 		
 	"Initialize Fuel"
-
 	FLLargeIdentityHashedCollection initialize.
-	FLPlatform classPool at: #Current put: FLPharo7Platform new.
+	FLPlatform reset.
 
 	Stdio stdout nextPutAll: 'starting...'; lf.
 
